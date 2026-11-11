@@ -1,0 +1,224 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Method &middot; Beat the Spreadsheet</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="theme.css">
+
+<header class="mast"><div class="wrap"><div class="mast-in">
+  <a class="mark" href="index.html" id="brand"><span>Beat the Spreadsheet</span></a>
+  <nav class="nav">
+    <a href="index.html">Standings</a>
+    <a href="archive.html">Every game</a>
+    <a href="football.html">Football</a>
+    <a href="hockey.html">Hockey</a>
+    <a href="basketball.html">Basketball</a>
+    <a href="study.html" aria-current="page">Method</a>
+  </nav>
+</div></div></header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow acc">A season-long field experiment &middot; football, hockey, basketball</p>
+    <h1>How the experiment works</h1>
+    <p class="lede">How good are frontier AI models at real-world decision-making? Eleven of them are finding out the hard way: each manages a real fantasy team, reading the news, setting lineups, bidding sealed dollars, pitching trades and forecasting scores, while the actual games grade every decision. Alongside them runs a control that applies ESPN&rsquo;s projections mechanically. So far, across all three leagues, the best two models and the control are statistically level, and most of the field is behind all three.</p>
+    <div class="keyline">
+      <div><span class="eyebrow">Sports</span><span class="v">3</span></div>
+      <div><span class="eyebrow">AI managers</span><span class="v">11</span></div>
+      <div><span class="eyebrow">Teams</span><span class="v">32</span></div>
+      <div><span class="eyebrow">Scored predictions</span><span class="v" id="npred">664</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band band-fill sect">
+  <div class="wrap essay">
+    <div class="rail">
+      <p class="eyebrow">Why fantasy sports</p>
+      <h2>A game about information, wearing a jersey</h2>
+    </div>
+    <div class="prose">
+      <p>Fifty-seven million people in North America play fantasy sports, and what separates the good managers from the rest isn&rsquo;t fandom or luck. It&rsquo;s a bundle of skills that look a lot like knowledge work: forecasting under uncertainty, deciding which of a thousand available facts to look up, which sources to trust, negotiating with rivals who have their own incentives, budgeting against a hard cap, and committing before a deadline that does not move.</p>
+      <p>That makes a fantasy season an unusually honest exam for an AI. The relevant information is scattered across projections, rankings, depth charts, beat reporters and injury designations, far more than anyone can use, and the skill is prioritizing it. And none of it can be memorized: this season hadn&rsquo;t happened when these models were trained, so every answer has to be looked up that week and acted on.</p>
+      <div class="pull">Benchmarks of this kind of decision-making exist, but they replay seasons that already happened. This one is graded by games that haven&rsquo;t been played yet.</div>
+      <p>It also tests everything at once. One weekly turn demands fresh facts, arithmetic inside a budget, a forecast with a stated probability, a negotiation, and a plan for a week that hasn&rsquo;t happened. Academic benchmarks isolate those skills on purpose. Here they arrive together, and a failure in any one of them lands on the same scoreboard.</p>
+      <p>So eleven models each manage a team, with identical information relayed word for word across three sports. One more team plays in every league: a spreadsheet, with no model behind it at all.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sect">
+  <div class="wrap essay">
+    <div class="rail">
+      <p class="eyebrow ctl">The control group</p>
+      <h2>A solid strategy, with no model behind it</h2>
+    </div>
+    <div class="prose">
+      <p>In every league, one roster is run by a spreadsheet, not a language model: I follow a fixed set of rules built on ESPN&rsquo;s numbers and make no judgment calls of my own. It stands in for the most sensible basic strategy a casual player can use, which is outsourcing the thinking to ESPN&rsquo;s fantasy experts: draft straight down ESPN&rsquo;s rankings, start whoever ESPN projects highest among players actually playing (anyone ruled out projects at zero and sits automatically), add a free agent only when both his projection and his ownership percentage beat someone it holds, judge trades by the same two numbers, and call every game for the side with the higher projected total.</p>
+      <p>That is the entire operation. Every piece of it is a lookup, and any person with ten minutes a week could run it by hand.</p>
+      <p><strong>It exists because a leaderboard of models only says which model is best, not how good any of them actually is.</strong> The spreadsheet is the baseline every model has to clear: if reading, reasoning and negotiating are worth anything in fantasy sports, a frontier model ought to beat a manager that does nothing but follow ESPN&rsquo;s projections.</p>
+      <p>So far, few have. Averaged across all three leagues, the spreadsheet ranks first on the <a href="index.html">standings</a>, though not by a settled margin: no model is better at both jobs, though Grok and Mistral manage better and ChatGPT and Claude Fable forecast better. In football and hockey no model has beaten it at both managing and forecasting; in basketball, two weeks in, four have.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band band-fill sect">
+  <div class="wrap">
+    <div class="sect-head">
+      <p class="eyebrow">The field</p>
+      <h2>Eleven managers, and why these eleven</h2>
+      <p style="color:var(--ink-2)">The field is the frontier, as people actually meet it: each model runs in its ordinary chat interface, with whatever search, tools and memory it ships with. Five American labs against three Chinese ones, a French entrant, one anonymous forecaster, and nine free tiers up against the two paid Claudes. Every rivalry you could want is in the bracket.</p>
+    </div>
+    <div id="field-grid" class="sm-grid"></div>
+  </div>
+</section>
+
+<section class="sect">
+  <div class="wrap">
+    <div class="sect-head">
+      <p class="eyebrow">The research questions</p>
+      <h2>Four questions, one scoreboard</h2>
+    </div>
+    <div id="hyps" class="rows"></div>
+  </div>
+</section>
+
+<section class="band band-fill sect">
+  <div class="wrap essay">
+    <div class="rail">
+      <p class="eyebrow">Why three sports</p>
+      <h2>One season, hundreds of decisions. Three leagues, one design.</h2>
+    </div>
+    <div class="prose">
+      <p>A season carries far more information than its standings. Decisions compound: a wasted bid shapes a roster for months, and a dead start costs a whole week. Every week brings a new lineup, sealed bids, trade offers and a card of scored predictions, so alongside the standings the study tracks missed opportunities and mistakes directly: every start priced against the projections and against hindsight, every fabricated claim logged. Running three sports at once tests how far performance generalizes across contexts. The same models manage football, hockey and basketball simultaneously, so a manager who wins for stable reasons should win in more than one place. Three is also the practical ceiling: every message in every league is relayed and refereed by hand.</p>
+      <p>The three sports also differ in exactly the dimension this study cares about: <strong>how much public information exists</strong>. Fantasy football dominates the hobby, accounting for roughly four in five fantasy players in FSGA industry surveys, and the coverage matches: projections, rankings and analysis everywhere. Basketball adds a twist of its own: lineups lock for a week while players play anywhere from two to seven games, so a start is quality times quantity and the schedule itself becomes homework. Fantasy hockey is the most niche of the three, with the thinnest coverage, late-breaking goalie decisions, and far less for a model to lean on. If the gap between strong and weak models widens where information is thin, the advantage lies in finding and weighing information, not in recalling it.</p>
+      <p>Each league adds its own test. In hockey, teammates play different numbers of games in the same week, two of the eleven starting slots belong to goalies, who can score negative, and goalie starts are confirmed in public only hours before puck drop; in Week 1 the goalie slots alone accounted for more than a third of all the points left on benches. In hockey and basketball the schedule is withheld, so the models have to find and multiply game counts themselves. A manager who never counts games keeps starting the better player and losing to someone who started a slightly worse one twice as often.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sect">
+  <div class="wrap">
+    <div class="sect-head">
+      <p class="eyebrow">Method</p>
+      <h2>How a week runs</h2>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="lhs"><h3>The loop</h3><p class="eyebrow">One chat per team</p></div>
+        <div class="rhs"><p>Each model runs in its own chat, ten to twelve per league. Every week it receives the same packet: results, standings, all rosters, its remaining budget. It replies with sealed waiver bids, a lineup, at least one trade offer, and a prediction card with confidences. A human commissioner relays every message and enters every move by hand; no model sees the league directly or reads another team&rsquo;s reply.</p></div>
+      </div>
+      <div class="row">
+        <div class="lhs"><h3>The budget</h3><p class="eyebrow">$100, sealed bids</p></div>
+        <div class="rhs"><p>Free agents are won by sealed bid from a $100 season budget. Highest bid wins; ties go to the worse team. A claim on a player someone already owns is void, with no second chance that week.</p></div>
+      </div>
+      <div class="row">
+        <div class="lhs"><h3>The trade desk</h3><p class="eyebrow">Every week</p></div>
+        <div class="rhs"><p>Every team reports its trade offers each week, made and received, accepted and declined, and every one is logged. Offers travel between chats through the commissioner, which turns negotiation into a weekly measurement rather than an occasional event: what a model asks for, what it is willing to give up, and whether its pitch rests on facts that are true.</p></div>
+      </div>
+      <div class="row">
+        <div class="lhs"><h3>What is withheld</h3><p class="eyebrow">On purpose</p></div>
+        <div class="rhs"><p>Nothing computed goes back to the teams, and neither do ESPN&rsquo;s projections: the spreadsheet runs on them, but a model that wants projections has to go find its own. Prediction cards are collected after the week&rsquo;s initial lineups are published, so every forecaster prices the same information: results, standings and rosters. No against-the-field records, no efficiency figures, no commissioner analysis. Everything in those tables can be derived from information the teams already hold. Whether a model bothers to derive it is part of what is being measured.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="band band-fill sect">
+  <div class="wrap">
+    <div class="sect-head">
+      <p class="eyebrow">Limits</p>
+      <h2>What this can and cannot say</h2>
+    </div>
+    <div id="limits" class="rows"></div>
+  </div>
+</section>
+
+<footer class="foot"><div class="wrap">
+  <span class="mono" style="letter-spacing:.12em;text-transform:uppercase;font-size:10.5px">Beat the Spreadsheet</span>
+  <span><a href="index.html">Standings</a> &middot; <a href="archive.html">Every game</a> &middot; <a href="football.html">Football</a> &middot; <a href="hockey.html">Hockey</a> &middot; <a href="basketball.html">Basketball</a> &middot; <a href="study.html">Method</a></span>
+  <span id="upd"></span>
+</div></footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+/* scored predictions: every pick on every scored board, all leagues */
+(function(){ var n = 0; Object.keys(LEAGUES).forEach(function(k){ (LEAGUES[k].boards||[]).forEach(function(b){ if(b.scored) b.games.forEach(function(g){ n += Object.keys(g.picks).length; }); }); });
+  document.getElementById("npred").textContent = String(n); })();
+(function(){
+var F = LEAGUES.football, el = CG.el, team = CG.team;
+document.getElementById("brand").prepend(CG.markSvg(18));
+
+/* The field */
+(function(){
+  var order=["fable","sonnet","chatgpt","gemini","grok","meta","deepseek","qwen","kimi","mistral","instinct","espn"];
+  var plays={fable:"All three leagues",sonnet:"All three leagues",chatgpt:"All three leagues",
+    gemini:"All three leagues",grok:"All three leagues",meta:"All three leagues",
+    deepseek:"All three leagues",qwen:"All three leagues",kimi:"All three leagues",
+    mistral:"Basketball only",instinct:"Manages in basketball, forecasts in hockey",espn:"The control, in all three"};
+  var tag={paid:"Paid",free:"Free tier",control:"Control",shadow:"Shadow"};
+  var w=document.getElementById("field-grid");
+  order.forEach(function(k){
+    var t=team(k);
+    var d=el("div","sm");
+    var hd=el("div","sm-head");
+    hd.appendChild(CG.sigil(k,16));
+    var dot=el("i");
+    dot.style.cssText="width:8px;height:8px;border-radius:50%;flex:none;background:var(--t-"+k+")";
+    hd.appendChild(dot);
+    hd.appendChild(el("b",null,t.name));
+    hd.appendChild(el("span","r",tag[t.tier]||""));
+    d.appendChild(hd);
+    var p=el("p",null,t.maker);
+    p.style.cssText="font-size:.82rem;color:var(--ink-2);margin:0";
+    d.appendChild(p);
+    var f=el("div","sm-foot");
+    f.appendChild(el("span",null,plays[k]));
+    d.appendChild(f);
+    w.appendChild(d);
+  });
+})();
+
+/* Questions */
+(function(){
+  var w = document.getElementById("hyps");
+  HYPOTHESES.forEach(function(h){
+    var r = el("div","row");
+    var l = el("div","lhs");
+    l.appendChild(el("p","eyebrow",h.id));
+    l.appendChild(el("h3",null,h.title));
+    var s = el("div"); s.style.marginTop="4px";
+    s.appendChild(el("span","pill "+(h.verdict==="Open"?"soon":"open"),h.verdict));
+    l.appendChild(s);
+    r.appendChild(l);
+    var b = el("div","rhs");
+    b.appendChild(el("p",null,h.q));
+    b.appendChild(el("p","ev",h.detail));
+    var m = el("p",null,h.how);
+    m.style.cssText = "font-family:var(--mono);font-size:11px;color:var(--ink-3);line-height:1.6";
+    b.appendChild(m);
+    r.appendChild(b);
+    w.appendChild(r);
+  });
+})();
+
+/* Limits */
+(function(){
+  var w = document.getElementById("limits");
+  LIMITS.forEach(function(l){
+    var r = el("div","row");
+    var lh = el("div","lhs"); lh.appendChild(el("h3",null,l.n)); r.appendChild(lh);
+    var rh = el("div","rhs"); rh.appendChild(el("p",null,l.t)); r.appendChild(rh);
+    w.appendChild(r);
+  });
+})();
+
+document.getElementById("upd").textContent = "Updated " + SITE.updated + ".";
+})();
+</script>
+
+</body></html>

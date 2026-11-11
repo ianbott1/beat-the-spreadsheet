@@ -1,0 +1,75 @@
+/* ============================================================
+   BEAT THE SPREADSHEET — theme layer
+   The world is a spreadsheet in dark mode: a quiet cell grid,
+   column letters and row numbers where they earn their place,
+   and one colour that only ever means the control: the blue of
+   a selected cell. Geist for interface and figures, Newsreader
+   for argument, Geist Mono only for cell values and formulas.
+   Loaded after style.css; overrides tokens and chrome only.
+   ============================================================ */
+:root, :root[data-theme="dark"], :root:not([data-theme="light"]){
+  --paper:#0E1012;
+  --card:#141719;
+  --card-2:#1A1E21;
+  --glass:#101315;
+  --head:#171A1D;          /* column and row headers */
+  --grid:#1E2226;          /* cell gridlines */
+  --ink:#E8EAEC;
+  --ink-2:#A7AEB5;
+  --ink-3:#757D86;
+  --ink-4:#4A5159;
+  --rule:#1F2428;
+  --rule-2:#2C3238;
+  --silver:#E8EAEC; --silver-2:#8A929B;
+
+  --accent:#C9D2DA;
+  --accent-soft:#1E2429;
+  --control:#4D8EFF;       /* selection blue: always and only the spreadsheet */
+  --control-soft:#142036;
+  --good:#5FC28A; --serious:#E39A5B; --crit:#E8705C;
+  --mark:#8A929B; --mark-soft:#22272C;
+
+  --t-fable:#F2A65A; --t-sonnet:#C79BF2; --t-chatgpt:#4DB8A1; --t-gemini:#8FB4D9;
+  --t-grok:#E8D35A; --t-meta:#6DBB7B; --t-kimi:#EC86AC; --t-qwen:#AAB94A;
+  --t-deepseek:#C49A73; --t-mistral:#E8705C; --t-instinct:#9AA0A8; --t-espn:#4D8EFF;
+
+  --display:"Geist",system-ui,sans-serif;
+  --serif:"Newsreader",Georgia,serif;
+  --body:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  color-scheme:dark;
+}
+body{background:var(--paper);font-size:16px;font-feature-settings:"tnum" 1}
+
+h1,h2,.hero h1,.sect-head h2{font-family:var(--display);font-weight:620;letter-spacing:-.028em}
+h1{font-size:clamp(2.4rem,5vw,3.9rem);line-height:1.02}
+h2{font-size:clamp(1.5rem,2.3vw,2rem);line-height:1.12}
+h3{font-family:var(--body);font-weight:600;letter-spacing:-.01em}
+.lede,.prose p,.essay .prose p{font-family:var(--serif);font-size:1.14rem;line-height:1.58}
+.lede{font-size:clamp(1.18rem,1.6vw,1.34rem);color:var(--ink-2)}
+.note,figcaption{font-family:var(--body)}
+.eyebrow{font-family:var(--body);font-size:13px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink-3)}
+.eyebrow.acc{color:var(--ink-2)} .eyebrow.ctl{color:var(--control)}
+
+.mast{background:rgba(14,16,18,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.mark{font-family:var(--display);font-size:16px;font-weight:620;letter-spacing:-.015em;color:var(--ink);gap:10px}
+.mark span{font-family:var(--display)}
+.nav a{font-family:var(--body);font-size:14px;letter-spacing:0;text-transform:none;font-weight:450;color:var(--ink-2)}
+.nav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--control)}
+
+.band-fill{background:var(--card)}
+table{font-variant-numeric:tabular-nums}
+th{font-family:var(--body)!important;text-transform:none!important;letter-spacing:0!important;font-size:12.5px!important;font-weight:500!important}
+caption{font-family:var(--body)!important;text-transform:none!important;letter-spacing:0!important;font-size:13px!important}
+.mark,.mark span{text-transform:none!important}
+.foot{border-top:1px solid var(--rule);color:var(--ink-3)}
+.foot .mono{font-family:var(--display)!important;letter-spacing:-.01em!important;text-transform:none!important;font-size:14px!important;font-weight:600;color:var(--ink)}
+::selection{background:rgba(77,142,255,.35);color:#fff}
+:focus-visible{outline:2px solid var(--control);outline-offset:3px}
+
+/* league pages: team-by-team notes */
+.tnotes{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:0 36px;border-top:1px solid var(--rule)}
+.tn{padding:14px 0;border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:6px}
+.tn-h{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.tn-r{font-family:"Geist Mono",ui-monospace,monospace;font-size:12px;color:var(--ink-3)}
+.tn p{color:var(--ink-2);font-size:.95rem;line-height:1.5}

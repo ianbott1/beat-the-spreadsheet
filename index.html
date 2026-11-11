@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Beat the Spreadsheet: can an AI model out-manage ESPN's projections?</title>
+<meta name="description" content="Eleven AI models each manage a real ESPN fantasy team in football, hockey and basketball. One team is run by a spreadsheet of ESPN's projections. Can any model beat it?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="v2.css">
+</head>
+<body class="v2">
+
+<header class="mast"><div class="wrap"><div class="mast-in">
+  <a class="mark" href="index.html" id="brand"><span>Beat the Spreadsheet</span></a>
+  <nav class="nav">
+    <a href="index.html" aria-current="page">Standings</a>
+    <a href="archive.html">Every game</a>
+    <a href="football.html">Football</a>
+    <a href="hockey.html">Hockey</a>
+    <a href="basketball.html">Basketball</a>
+    <a href="study.html">Method</a>
+  </nav>
+</div></div></header>
+
+<main id="main">
+<div class="wrap">
+  <section class="bts-hero" aria-labelledby="h1">
+    <h1 id="h1">Beat the Spreadsheet</h1>
+    <p class="lede">Eleven AI models each manage a real ESPN fantasy team for a full season, in football, hockey and basketball. They read the news, set lineups, bid on waivers, trade, and forecast every game. One more team in each league is run by a spreadsheet: I start whoever ESPN projects highest and make every other move by a fixed rule, with no judgment at all. Can any model beat it?</p>
+
+    <div class="sheet" id="sheet">
+      <div class="fbar" aria-hidden="true"><span class="ref" id="fref">B1</span><span class="fx">fx</span><span class="f" id="ff"></span></div>
+      <div class="grid-scroll"><table class="gs" id="gs"></table></div>
+      <div class="tabs2" role="tablist" aria-label="League" id="tabs2"><span class="note2" id="tnote"></span></div>
+    </div>
+    <p class="cap2" id="gcap"></p>
+  </section>
+
+  <section class="q" aria-labelledby="q2">
+    <h2 id="q2">Is running a team the same skill as forecasting?</h2>
+    <p class="ans" id="a2"></p>
+    <div class="panel chart"><svg id="slope" viewBox="0 0 900 520" role="img" aria-label="Each team's managing rank on the left joined to its forecasting rank on the right"></svg></div>
+    <p class="cap2">Ranks across all three leagues. Managing is the share of other weekly scores a team beat; forecasting is the Brier score of its weekly cards. Steep lines are teams that are much better at one job than the other.</p>
+  </section>
+
+  <section class="q" aria-labelledby="q3">
+    <h2 id="q3">Where do the models lose points?</h2>
+    <p class="ans" id="a3"></p>
+    <div class="panel chart"><div class="legend2"><span><i style="background:#39414A"></i>Bad luck</span><span><i style="background:var(--crit)"></i>Started a player who wasn&rsquo;t playing</span><span><i style="background:#E8C27A"></i>Own calls against the projections, net</span></div><svg id="ledger" viewBox="0 0 900 360"></svg></div>
+    <p class="cap2">Football, <span id="lw"></span>. Each team&rsquo;s actual lineup is compared with the best lineup its roster could have set in hindsight. Bad luck is the gap the projections themselves would have suffered; the rest is the manager&rsquo;s. The spreadsheet makes no calls of its own, so everything it loses is bad luck.</p>
+  </section>
+
+  <section class="q" aria-labelledby="q4">
+    <h2 id="q4">Do the models know when they&rsquo;re guessing?</h2>
+    <p class="ans" id="a4"></p>
+    <div class="panel chart"><div class="legend2"><span><i style="background:var(--ink-2)"></i>All AI models</span><span><i style="background:var(--control)"></i>The spreadsheet</span><span><i style="border:1px dashed var(--ink-3);background:none"></i>Perfectly calibrated</span></div><svg id="calib" viewBox="0 0 900 420"></svg></div>
+    <p class="cap2">Every pick made with a confidence, across all three leagues, grouped by the confidence stated. A well-calibrated forecaster&rsquo;s 70% picks come in about 70% of the time. Dot size is the number of picks; groups with fewer than five are left out.</p>
+  </section>
+
+  <section class="q" aria-labelledby="q5" style="padding-bottom:clamp(60px,8vw,100px)">
+    <h2 id="q5">Do they make things up?</h2>
+    <p class="ans" id="a5"></p>
+    <div class="panel chart"><div class="legend2"><span><i style="background:var(--crit)"></i>Confirmed false claims</span><span><i style="background:var(--ink-3)"></i>Bids on players already on another roster</span></div><svg id="fab" viewBox="0 0 900 340"></svg></div>
+    <p class="cap2">All three leagues. Every claim is checked against ESPN&rsquo;s box pages and the rosters the model was sent that week. <a href="study.html" style="color:var(--ink)">How every number is built</a>.</p>
+  </section>
+</div>
+</main>
+
+<footer class="foot"><div class="wrap">
+  <span class="mono">Beat the Spreadsheet</span>
+  <span><a href="index.html">Standings</a> &middot; <a href="archive.html">Every game</a> &middot; <a href="football.html">Football</a> &middot; <a href="hockey.html">Hockey</a> &middot; <a href="basketball.html">Basketball</a> &middot; <a href="study.html">Method</a></span>
+  <span id="upd"></span>
+</div></footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="lb.js"></script>
+<script>
+(function(){
+"use strict";
+var el = CG.el, team = CG.team, NS = "http://www.w3.org/2000/svg";
+document.getElementById("brand").prepend(CG.markSvg(20));
+document.getElementById("upd").textContent = "Updated " + SITE.updated;
+function color(k){ return getComputedStyle(document.documentElement).getPropertyValue("--t-"+k).trim() || "#8A929B"; }
+function nm(k){ return k==="espn" ? "The spreadsheet" : team(k).name; }
+function maker(k){ var t = team(k); return k==="espn" ? "ESPN projections, followed by rule" : (t.maker==="undisclosed" ? "Maker undisclosed" : t.maker); }
+function svg(t,a,p){ var e = document.createElementNS(NS,t); for(var k in a) e.setAttribute(k,a[k]); if(p) p.appendChild(e); return e; }
+function txt(p,x,y,s,a){ var t = svg("text",a||{},p); t.setAttribute("x",x); t.setAttribute("y",y); t.textContent = s; return t; }
+var LG = {football:LEAGUES.football, hockey:LEAGUES.hockey, basketball:LEAGUES.basketball};
+var LN = {overall:"All leagues", football:"Football", hockey:"Hockey", basketball:"Basketball"};
+var O = LB.overall, keys = Object.keys(O).sort(function(a,b){ return O[a].o-O[b].o; });
+var std = function(v){ return 100*(1-v); };
+var pct = function(v){ return Math.round(v*100)+"%"; };
+
+/* ---------- the sheet: standings ---------- */
+var COLS = "ABCDEFGHI".split("");
+function whisker(v, lo, hi, max, col){
+  var w = el("div","whisk"); w.appendChild(el("div","wtr"));
+  var f = el("div","wfill"); f.style.width = (v/max*100)+"%"; f.style.background = col; w.appendChild(f);
+  var c = el("div","wci"); c.style.left = (lo/max*100)+"%"; c.style.width = Math.max(.5,(hi-lo)/max*100)+"%"; w.appendChild(c);
+  return w;
+}
+function who(k){ var d = el("div","who"); d.appendChild(CG.sigil(k,20)); var s = el("div"); s.appendChild(el("b",null,nm(k))); s.appendChild(el("small",null,maker(k))); d.appendChild(s); return d; }
+var tabs = document.getElementById("tabs2"), mode = "overall", tabBtns = [];
+["overall","football","hockey","basketball"].forEach(function(m){
+  var b = el("button",null,LN[m]); b.type = "button"; b.setAttribute("role","tab"); b.setAttribute("aria-selected",m===mode);
+  b.addEventListener("click",function(){ mode = m; tabBtns.forEach(function(x){ x.setAttribute("aria-selected",x===b); }); sheet(); });
+  tabs.insertBefore(b, document.getElementById("tnote")); tabBtns.push(b);
+});
+function sheet(){
+  var t = document.getElementById("gs"); t.innerHTML = "";
+  var head = el("thead"), cr = el("tr","cols"), hr = el("tr","hdr"), body = el("tbody");
+  var H, rows;
+  if(mode==="overall"){
+    H = [["Team",""],["Overall standing","wcell"],["Score","n"],["Ranks first in","n"],["Managing","n"],["Forecasting","n"],["Likely rank","n"]];
+    rows = keys.map(function(k){ var r = O[k]; return {k:k, cells:[
+      who(k), whisker(std(r.o),std(r.o_hi),std(r.o_lo),100,color(k)), std(r.o).toFixed(0),
+      r.p1>=0.01 ? pct(r.p1) : "<1%", std(r.m).toFixed(0), std(r.f).toFixed(0), r.r_lo===r.r_hi ? String(r.r_lo) : r.r_lo+"–"+r.r_hi ]}; });
+    var orank = keys.slice().sort(function(a,b){ return O[a].o-O[b].o; }).indexOf("espn")+1;
+    document.getElementById("ff").innerHTML = '<span class="fn">=RANK</span>(<span class="s">"The spreadsheet"</span>, every team) <span class="r">→ '+orank+', first in '+pct(O.espn.p1)+' of resamples</span>';
+    document.getElementById("gcap").innerHTML = "<b>Score</b>: 100 is first at both managing and forecasting in every league a team plays, 0 is last. Bars run to the score; whiskers are 90% intervals from resampling weeks. <b>Ranks first in</b> is the share of 2,000 resamples in which the team comes out on top; <b>likely rank</b> is the middle 90% of its finishes.";
+    document.getElementById("tnote").textContent = "12 teams · 3 leagues";
+  } else {
+    var L = LG[mode], R = LB.leagues[mode], N = CG.pickCount(L);
+    H = [["Team",""],["Against the field","wcell"],["","n"],["Record","n"],["Brier score","n"],["Picks right","n"],["Points","n"]];
+    rows = L.teams.map(function(x){ return x.k; }).sort(function(a,b){ return R[b].f-R[a].f; }).map(function(k){
+      var x = L.teams.filter(function(q){ return q.k===k; })[0], r = R[k];
+      return {k:k, cells:[ who(k), whisker(r.f*100,r.f_lo*100,r.f_hi*100,100,color(k)), pct(r.f), x.rec, r.b!=null ? r.b.toFixed(3) : "—", x.pred+"/"+N, x.pf.toFixed(1) ]}; });
+    var ix = rows.map(function(r){ return r.k; }).indexOf("espn")+1;
+    document.getElementById("ff").innerHTML = '<span class="fn">=RANK</span>(<span class="s">"The spreadsheet"</span>, '+LN[mode].toLowerCase()+') <span class="r">→ '+ix+' of '+rows.length+' against the field</span>';
+    document.getElementById("gcap").innerHTML = LN[mode]+", "+CG.weekSpan(L)+". <b>Against the field</b> is the share of every other team&rsquo;s weekly score a team beat, so the schedule drops out; whiskers are 90% intervals. <b>Brier score</b> grades the weekly forecasts: 0.250 is what answering 50/50 to everything earns, and lower is better.";
+    document.getElementById("tnote").textContent = rows.length+" teams · "+CG.weekSpan(L);
+  }
+  cr.appendChild(el("th","rn",""));
+  H.forEach(function(h,i){ cr.appendChild(el("th",null,COLS[i])); });
+  hr.appendChild(el("th","rn","")); H.forEach(function(h){ hr.appendChild(el("th",h[1]||null,h[0])); });
+  head.appendChild(cr); head.appendChild(hr); t.appendChild(head);
+  rows.forEach(function(r,i){
+    var tr = el("tr", r.k==="espn" ? "sel" : null);
+    tr.appendChild(el("td","rn",String(i+1)));
+    r.cells.forEach(function(c,j){
+      var td = el("td", H[j][1]==="n" ? (j===2&&mode==="overall"?"n big":"n") : (H[j][1]||null));
+      if(typeof c === "string") td.textContent = c; else td.appendChild(c);
+      tr.appendChild(td);
+    });
+    if(r.k==="espn") document.getElementById("fref").textContent = "A"+(i+1);
+    body.appendChild(tr);
+  });
+  t.appendChild(body);
+}
+sheet();
+
+/* ---------- 2: managing rank vs forecasting rank ---------- */
+(function(){
+  var rk = function(key){ var r = {}; keys.slice().sort(function(a,b){ return O[a][key]-O[b][key]; }).forEach(function(k,i){ r[k] = i+1; }); return r; };
+  var M = rk("m"), F = rk("f"), n = keys.length;
+  /* Spearman rank correlation */
+  var d2 = keys.reduce(function(s,k){ return s + Math.pow(M[k]-F[k],2); },0), rho = 1 - 6*d2/(n*(n*n-1));
+  var grokGap = F.grok-M.grok, cg = M.chatgpt-F.chatgpt;
+  var ord = function(i){ var s = ["th","st","nd","rd"], v = i%100; return i+(s[(v-20)%10]||s[v]||s[0]); };
+  var lead = keys.slice().sort(function(a,b){ return M[a]-M[b]; })[0], flead = keys.slice().sort(function(a,b){ return F[a]-F[b]; })[0];
+  document.getElementById("a2").innerHTML = "<b>Apparently not.</b> The rank correlation between the two is "+rho.toFixed(2)+(Math.abs(rho)<0.3?", close to none":"")+". "+nm(lead)+" manages better than anyone and forecasts "+ord(F[lead])+" of "+n+"; "+nm(flead)+" forecasts best and manages "+ord(M[flead])+". The spreadsheet is "+ord(M.espn)+" at managing and "+ord(F.espn)+" at forecasting. "+(function(){ var top = keys.slice().sort(function(a,b){ return O[a].o-O[b].o; }); return top[0]==="espn" ? "Being merely good at both is enough to put it on top." : "Being merely good at both keeps it "+ord(top.indexOf("espn")+1)+" overall, a whisker behind "+nm(top[0])+" and well inside the margin of error."; })();
+  var s = document.getElementById("slope"), W = 900, top = 44, rowH = 37, xL = 300, xR = 600;
+  txt(s,xL,22,"Managing",{"text-anchor":"middle","class":"lbl"}); txt(s,xR,22,"Forecasting",{"text-anchor":"middle","class":"lbl"});
+  var y = function(r){ return top + (r-1)*rowH; };
+  keys.forEach(function(k){
+    var c = color(k), ctl = k==="espn", g = svg("g",{},s), steep = Math.abs(M[k]-F[k])>=6;
+    svg("line",{x1:xL,y1:y(M[k]),x2:xR,y2:y(F[k]),stroke:c,"stroke-width":ctl?3:(steep?2:1.4),"stroke-opacity":ctl||steep?1:.45},g);
+    svg("circle",{cx:xL,cy:y(M[k]),r:ctl?6:4.5,fill:c},g); svg("circle",{cx:xR,cy:y(F[k]),r:ctl?6:4.5,fill:c},g);
+    var a = {"text-anchor":"end","class":ctl?"lblc":"lbl"}; var t1 = txt(g,xL-16,y(M[k])+4,M[k]+"   "+nm(k),a); if(!ctl) t1.setAttribute("fill",steep?c:"var(--ink-2)");
+    var t2 = txt(g,xR+16,y(F[k])+4,F[k]+"   "+nm(k),{"class":ctl?"lblc":"lbl"}); if(!ctl) t2.setAttribute("fill",steep?c:"var(--ink-2)");
+  });
+  [].forEach.call(s.querySelectorAll(".lblc"),function(t){ t.setAttribute("fill","var(--control)"); });
+})();
+
+/* ---------- 3: where the points go ---------- */
+(function(){
+  var F = LEAGUES.football, rows = F.decisions.ledger.map(function(r){ return {k:r[0],v:r[1],d:r[2],j:Math.max(0,-r[3]),g:Math.max(0,r[3]),t:r[5]}; }).sort(function(a,b){ return b.t-a.t; });
+  var sum = function(f){ return rows.reduce(function(s,r){ return s+f(r); },0); };
+  var V = sum(function(r){return r.v;}), D = sum(function(r){return r.d;}), J = sum(function(r){return r.j-r.g;});
+  document.getElementById("lw").textContent = CG.ledgerSpan(F);
+  var ratio = D/J, rtxt = ratio>=1.8 && ratio<2.3 ? "about twice" : (ratio>=2.3 ? Math.round(ratio)+" times" : ratio.toFixed(1)+" times");
+  document.getElementById("a3").innerHTML = "<b>Mostly to luck, and then to not checking who is playing.</b> Of "+Math.round(V+D+J).toLocaleString()+" football points lost, "+Math.round(V)+" were bad luck the projections would have suffered too. Starting players who weren&rsquo;t playing cost "+Math.round(D)+", "+rtxt+" the "+Math.round(J)+" the models lost, net, on their own calls against the projections.";
+  var s = document.getElementById("ledger"), L0 = 150, rowH = 33, max = 180, sc = function(v){ return v/max*(900-L0-80); };
+  rows.forEach(function(r,i){
+    var yy = 6+i*rowH, xx = L0, ctl = r.k==="espn";
+    var t = txt(s,L0-14,yy+17,nm(r.k),{"text-anchor":"end","class":ctl?"lblc":"lbl"}); if(ctl) t.setAttribute("fill","var(--control)");
+    [[r.v,"#39414A","bad luck"],[r.d,"var(--crit)","dead starts"],[r.j,"#E8C27A","own calls"]].forEach(function(p){ if(!p[0]) return; var rc = svg("rect",{x:xx,y:yy+5,width:sc(p[0]),height:17,fill:p[1],rx:1.5},s); var ti = svg("title",{},rc); ti.textContent = nm(r.k)+": "+p[0].toFixed(1)+" to "+p[2]; xx += sc(p[0]); });
+    txt(s,xx+10,yy+18,r.t.toFixed(0)+(r.g?"  ("+r.g.toFixed(0)+" won back)":""),{"class":"lbl"});
+  });
+})();
+
+/* ---------- 4: calibration ---------- */
+(function(){
+  var B = {models:{}, espn:{}};
+  Object.keys(LG).forEach(function(lg){ LG[lg].boards.forEach(function(b){ if(!b.scored) return; b.games.forEach(function(g){ Object.keys(g.picks).forEach(function(k){
+    var p = g.picks[k]; if(p[1]==null) return; var bin = Math.min(9,Math.floor(p[1]/10)), who = k==="espn" ? "espn" : "models";
+    var o = B[who][bin] = B[who][bin] || {n:0,w:0,c:0}; o.n++; o.c += p[1]; if(p[0]===g.w) o.w++;
+  }); }); }); });
+  var s = document.getElementById("calib"), m = {l:70,r:30,t:16,b:48}, W = 900, H = 420;
+  var x = function(v){ return m.l + (v-50)/50*(W-m.l-m.r); }, y = function(v){ return H-m.b - v/100*(H-m.t-m.b); };
+  [0,25,50,75,100].forEach(function(v){ svg("line",{x1:x(50),y1:y(v),x2:x(100),y2:y(v),"class":"grid"},s); txt(s,m.l-12,y(v)+4,v+"%",{"text-anchor":"end"}); });
+  [50,60,70,80,90,100].forEach(function(v){ svg("line",{x1:x(v),y1:y(0),x2:x(v),y2:y(100),"class":"grid"},s); txt(s,x(v),H-m.b+20,v+"%",{"text-anchor":"middle"}); });
+  svg("line",{x1:x(50),y1:y(50),x2:x(100),y2:y(100),stroke:"var(--ink-3)","stroke-dasharray":"5 5"},s);
+  txt(s,(x(50)+x(100))/2,H-6,"Confidence stated",{"text-anchor":"middle","class":"lbl"});
+  var yl = txt(s,18,y(50),"Share of picks that were right",{"text-anchor":"middle","class":"lbl"}); yl.setAttribute("transform","rotate(-90 18 "+y(50)+")");
+  var notes = {};
+  ["models","espn"].forEach(function(who){
+    var pts = Object.keys(B[who]).map(Number).sort(function(a,b){return a-b;}).map(function(bin){ var o = B[who][bin]; return {cx:o.c/o.n, hit:o.w/o.n*100, n:o.n}; }).filter(function(p){ return p.n>=5; });
+    var col = who==="espn" ? "var(--control)" : "var(--ink-2)";
+    svg("polyline",{points:pts.map(function(p){ return x(p.cx)+","+y(p.hit); }).join(" "),fill:"none",stroke:col,"stroke-width":who==="espn"?2.5:2},s);
+    pts.forEach(function(p){ var c = svg("circle",{cx:x(p.cx),cy:y(p.hit),r:Math.max(4,Math.sqrt(p.n)*1.1),fill:col,"fill-opacity":.9,stroke:"#0E1012","stroke-width":1.5},s); var ti = svg("title",{},c); ti.textContent = (who==="espn"?"Spreadsheet":"Models")+": "+p.n+" picks at about "+Math.round(p.cx)+"%, right "+Math.round(p.hit)+"%"; });
+    notes[who] = pts;
+  });
+  var hitAt = function(who,lo,hi){ var n=0,w=0; Object.keys(B[who]).forEach(function(b){ b=+b; if(b*10>=lo && b*10<hi){ n+=B[who][b].n; w+=B[who][b].w; } }); return {n:n, p:n?w/n:0}; };
+  var m6 = hitAt("models",60,70), m7 = hitAt("models",70,80), mHi = hitAt("models",60,101), sHi = hitAt("espn",60,101);
+  document.getElementById("a4").innerHTML = "<b>No. Their confidence carries almost no information.</b> Picks the models made at 60&ndash;69% came in "+pct(m6.p)+" of the time, and picks at 70&ndash;79% came in "+pct(m7.p)+", worse than a coin flip. Across every pick they made at 60% or more, they were right "+pct(mHi.p)+" of the time ("+mHi.n+" picks). The spreadsheet&rsquo;s confident picks are fewer, "+sHi.n+" of them, and came in "+pct(sHi.p)+".";
+})();
+
+/* ---------- 5: making things up ---------- */
+(function(){
+  var F = {}, V = {};
+  Object.keys(LG).forEach(function(lg){ (LG[lg].counts.fabrications||[]).forEach(function(p){ F[p[0]] = (F[p[0]]||0)+p[1]; }); (LG[lg].counts.voidClaims||[]).forEach(function(p){ V[p[0]] = (V[p[0]]||0)+p[1]; }); });
+  var ks = Object.keys(TEAMS).filter(function(k){ return k!=="espn"; }).sort(function(a,b){ return ((F[b]||0)+(V[b]||0))-((F[a]||0)+(V[a]||0)); });
+  var tf = ks.reduce(function(s,k){return s+(F[k]||0);},0), clean = ks.filter(function(k){ return !F[k]&&!V[k]; });
+  document.getElementById("a5").innerHTML = "<b>Every week.</b> "+tf+" confirmed false claims so far, from players put on the wrong team to byes and injuries that weren&rsquo;t real, plus Gemini&rsquo;s habit of bidding on players other teams already own. "+(clean.length ? clean.map(nm).join(" and ")+(clean.length>1?" have":" has")+" none of either." : "Every model has at least one.")+" The spreadsheet can&rsquo;t make anything up.";
+  var s = document.getElementById("fab"), L0 = 150, rowH = 30, max = 22, sc = function(v){ return v/max*(900-L0-120); };
+  ks.forEach(function(k,i){
+    var yy = 4+i*rowH, f = F[k]||0, v = V[k]||0;
+    txt(s,L0-14,yy+16,nm(k),{"text-anchor":"end","class":"lbl"});
+    if(f) svg("rect",{x:L0,y:yy+5,width:sc(f),height:15,fill:"var(--crit)",rx:1.5},s);
+    if(v) svg("rect",{x:L0+sc(f),y:yy+5,width:sc(v),height:15,fill:"var(--ink-3)",rx:1.5},s);
+    if(!f&&!v){ svg("circle",{cx:L0+6,cy:yy+12.5,r:4.5,fill:"var(--good)"},s); txt(s,L0+18,yy+17,"none",{}); }
+    else txt(s,L0+sc(f+v)+10,yy+17,(f?f+" false":"")+(f&&v?", ":"")+(v?v+" void":""),{});
+  });
+})();
+})();
+</script>
+</body>
+</html>

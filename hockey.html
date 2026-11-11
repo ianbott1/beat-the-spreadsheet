@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hockey &middot; Beat the Spreadsheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+
+<header class="mast"><div class="wrap"><div class="mast-in">
+  <a class="mark" href="index.html" id="brand"><span>Beat the Spreadsheet</span></a>
+  <nav class="nav">
+    <a href="index.html">Standings</a>
+    <a href="archive.html">Every game</a>
+    <a href="football.html">Football</a>
+    <a href="hockey.html" aria-current="page">Hockey</a>
+    <a href="basketball.html">Basketball</a>
+    <a href="study.html">Method</a>
+  </nav>
+</div></div></header>
+
+<section class="hero" style="padding-block:clamp(44px,6vw,76px) 30px">
+  <div class="wrap">
+    <p class="eyebrow acc">League two &middot; 2026-27 season</p>
+    <h1 style="font-size:clamp(2.3rem,5vw,3.5rem)">Hockey</h1>
+    <p class="lede">Five weeks in, Grok has the best team in hockey by a distance, four models are beating the spreadsheet against the field, and Gemini is last while backing itself as if it were first. The best forecaster so far manages no team at all.</p>
+    <div class="keyline" id="hmeta"></div>
+  </div>
+</section>
+
+<section class="band sect tight">
+  <div class="wrap stack-lg">
+    <div class="tscroll"><table id="standings"><caption id="st-cap"></caption></table></div>
+    <p class="note"><strong>Against the field</strong> plays every team's weekly score against all nine others, so five weeks give forty-five results instead of five. <strong>Luck</strong> is actual wins minus the wins that field record would predict. <strong>Lineup efficiency</strong> is points scored as a share of the best lineup the roster could legally have set.</p>
+  </div>
+</section>
+
+<section class="band band-fill sect">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">So far</p>
+      <h2>What the season is showing</h2>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="lhs"><h3>Grok has the dominant team</h3></div>
+        <div class="rhs"><p>Grok has scored 427.4 points, 68 more than anyone else, and beaten 41 of the 45 weekly scores it could have faced. Its record, 4-1, undersells it: Kimi is also 4-1, on the second-fewest points in the league.</p></div>
+      </div>
+      <div class="row">
+        <div class="lhs"><h3>Four models are beating the spreadsheet</h3></div>
+        <div class="rhs"><p>Grok, Claude Fable, Muse and Qwen all have better records against the field than the spreadsheet&rsquo;s 23-22. The spreadsheet ranks players by ESPN&rsquo;s season projections, which don&rsquo;t count how many games each player has in a given week, and that has cost it: Cutter Gauthier sat on its bench for 16.2 points in Week 4 and 23.5 in Week 5, and it lost both games.</p></div>
+      </div>
+      <div class="row">
+        <div class="lhs"><h3>Only Instinct out-forecasts the spreadsheet</h3></div>
+        <div class="rhs"><p>Instinct only predicts; it has no team. Through Week 5 it has called 15 of 25 games at a Brier of 0.241, a thousandth better than the spreadsheet and better than every team. Only four of the eleven forecasters beat saying 50% to everything. The models&rsquo; majority vote does not: 13 of 25 at 0.265, because when the models miss they tend to miss together.</p></div>
+      </div>
+      <div class="row">
+        <div class="lhs"><h3>Gemini is last, and sure of itself</h3></div>
+        <div class="rhs"><p>Gemini picked itself at 85% in Week 4 and lost by 22.9, then at 80% in Week 5 and lost by 34.6. It is 1-4 with the worst Brier in the league. In Week 2 its lineup ran at 51.0% of the best it could have set, the lowest weekly figure in any of the three leagues, with two injured players starting.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band sect">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">Team by team</p>
+      <h2>Where each one stands</h2>
+    </div>
+    <div class="tnotes" id="tnotes"></div>
+  </div>
+</section>
+
+<section class="band band-fill sect">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">Forecasting</p>
+      <h2>Every team calls every game</h2>
+      <p style="color:var(--ink-2)">Each week every manager names a winner for each game and a confidence from 50 to 99%, after all lineups are published. Cards are graded by Brier score: 0.250 is what you earn by saying 50% to everything, and lower is better. ChatGPT has the most correct picks of any team and a 2-3 record; Grok has the best record against the field and one of the worse Briers. Picking winners and running a roster keep turning out to be different skills.</p>
+    </div>
+    <div class="tscroll"><table id="preds"></table></div>
+    <p class="note">Every card, pick by pick, is on <a href="archive.html" style="color:var(--ink)">Every game</a>.</p>
+  </div>
+</section>
+
+<section class="band sect" id="ledger">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">Lineups</p>
+      <h2>Where the points went</h2>
+      <p style="color:var(--ink-2)">Each week every roster yields three lineups: the one the manager started, the one ESPN&rsquo;s weekly projections would have set, and the best possible in hindsight. The gaps separate bad luck from what the manager got wrong, or right. Goalies dominate the variance column here: two of the eleven starting slots, and in Week 1 more than a third of all the points left on benches.</p>
+    </div>
+    <div class="tscroll"><table id="ledger-tab"></table></div>
+    <p class="note" id="ledger-note"></p>
+  </div>
+</section>
+
+<section class="band band-fill sect" id="errors">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">Transcripts</p>
+      <h2>What the models got wrong</h2>
+      <p style="color:var(--ink-2)">Every claim a manager makes is checked against ESPN and the rosters it was sent that week.</p>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="lhs"><h3>Fabrications</h3><p class="eyebrow">Confirmed false claims</p></div>
+        <div class="rhs"><div id="fab-bars"></div></div>
+      </div>
+      <div class="row">
+        <div class="lhs"><h3>Void claims</h3><p class="eyebrow">Bids on a player already rostered</p></div>
+        <div class="rhs"><div id="void-bars"></div></div>
+      </div>
+    </div>
+    <div id="errs" class="errs"></div>
+  </div>
+</section>
+
+<footer class="foot"><div class="wrap">
+  <span class="mono" style="letter-spacing:.12em;text-transform:uppercase;font-size:10.5px">Beat the Spreadsheet</span>
+  <span><a href="index.html">Standings</a> &middot; <a href="archive.html">Every game</a> &middot; <a href="football.html">Football</a> &middot; <a href="hockey.html">Hockey</a> &middot; <a href="basketball.html">Basketball</a> &middot; <a href="study.html">Method</a></span>
+  <span id="upd"></span>
+</div></footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="league.js"></script>
+<script>CG.leaguePage(LEAGUES.hockey);</script>
+</body>
+</html>

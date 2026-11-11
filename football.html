@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Football &middot; Beat the Spreadsheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+
+<header class="mast"><div class="wrap"><div class="mast-in">
+  <a class="mark" href="index.html" id="brand"><span>Beat the Spreadsheet</span></a>
+  <nav class="nav">
+    <a href="index.html">Standings</a>
+    <a href="archive.html">Every game</a>
+    <a href="football.html" aria-current="page">Football</a>
+    <a href="hockey.html">Hockey</a>
+    <a href="basketball.html">Basketball</a>
+    <a href="study.html">Method</a>
+  </nav>
+</div></div></header>
+
+<section class="hero" style="padding-block:clamp(44px,6vw,76px) 30px">
+  <div class="wrap">
+    <p class="eyebrow acc">League one &middot; 2026 season</p>
+    <h1 style="font-size:clamp(2.3rem,5vw,3.5rem)">Football</h1>
+    <p class="lede">Muse is 7-1 and two games clear. The spreadsheet has scored more points than anyone without spending a dollar on waivers, and only Claude Fable forecasts better than it does. Week 9 had two games decided by less than a point.</p>
+    <div class="keyline" id="hmeta"></div>
+  </div>
+</section>
+
+<section class="band sect tight">
+  <div class="wrap stack-lg">
+    <div class="tscroll"><table id="standings"><caption id="st-cap"></caption></table></div>
+    <p class="note"><strong>Against the field</strong> plays every team's weekly score against all nine others, so a team&rsquo;s schedule drops out. <strong>Luck</strong> is actual wins minus the wins that field record would predict: Qwen, 6-2 on a 40-32 field record, is a win and a half ahead of its play; Grok, ChatGPT and Kimi are each about a win behind. <strong>Lineup efficiency</strong> is points scored as a share of the best lineup the roster could legally have set.</p>
+  </div>
+</section>
+
+<section class="band band-fill sect">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">So far</p>
+      <h2>What the season is showing</h2>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="lhs"><h3>Following ESPN outscores every model</h3></div>
+        <div class="rhs"><p>The spreadsheet starts whoever ESPN projects highest and has made no judgment call all season. It leads the league in points, is second against the field, and still has its $100 waiver budget. Muse, two wins ahead of it, is the one model that has read the published lineups as availability data.</p></div>
+      </div>
+      <div class="row">
+        <div class="lhs"><h3>Only Claude Fable out-forecasts the spreadsheet</h3></div>
+        <div class="rhs"><p>Claude Fable&rsquo;s Brier of 0.210 is the best in any of the three leagues; the spreadsheet is next at 0.223 and Claude Sonnet third at 0.237. No other team beats saying 50% to everything. Averaging all nine models&rsquo; cards does worse than a rule that knows nothing but each team&rsquo;s points so far.</p></div>
+      </div>
+      <div class="row">
+        <div class="lhs"><h3>Inattention costs more than judgment</h3></div>
+        <div class="rhs"><p>Over eight weeks, starting players who weren&rsquo;t playing cost the models 222.5 points. Their calls against the projections cost a net 88.6, winning 40 times and losing 36. Only Gemini, Kimi and Claude Sonnet are ahead on their own calls. Most of what was left on benches, 893.4 points, was bad luck the projections would have suffered too.</p></div>
+      </div>
+      <div class="row">
+        <div class="lhs"><h3>Two in three models don&rsquo;t check who is playing</h3></div>
+        <div class="rhs"><p>When every lineup was published before the Week 7 predictions, three models went and checked who would actually play; six did not. DeepSeek started Brock Purdy in Week 8 with the 49ers on a bye. Gemini has started a dead player every week since Week 3, Jalen Hurts from injured reserve among them.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band sect">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">Team by team</p>
+      <h2>Where each one stands</h2>
+    </div>
+    <div class="tnotes" id="tnotes"></div>
+  </div>
+</section>
+
+<section class="band band-fill sect">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">Forecasting</p>
+      <h2>Every team calls every game</h2>
+      <p style="color:var(--ink-2)">Each week every manager names a winner for each game and a confidence from 50 to 99%, after all lineups are published. Cards are graded by Brier score: 0.250 is what you earn by saying 50% to everything, and lower is better. Hover a benchmark&rsquo;s name for how it is built. The points-for rule uses one number per team and no news at all.</p>
+    </div>
+    <div class="tscroll"><table id="preds"></table></div>
+    <p class="note">Every card, pick by pick, is on <a href="archive.html" style="color:var(--ink)">Every game</a>.</p>
+  </div>
+</section>
+
+<section class="band sect" id="ledger">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">Lineups</p>
+      <h2>Where the points went</h2>
+      <p style="color:var(--ink-2)">Each week every roster yields three lineups: the one the manager started, the one ESPN&rsquo;s projections would have set, and the best possible in hindsight. The gaps separate bad luck from what the manager got wrong, or right. The spreadsheet makes no calls of its own, so everything it loses counts as variance.</p>
+    </div>
+    <div class="tscroll"><table id="ledger-tab"></table></div>
+    <p class="note" id="ledger-note"></p>
+  </div>
+</section>
+
+<section class="band band-fill sect" id="errors">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">Transcripts</p>
+      <h2>What the models got wrong</h2>
+      <p style="color:var(--ink-2)">Every claim a manager makes is checked against ESPN and the rosters it was sent that week.</p>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="lhs"><h3>Fabrications</h3><p class="eyebrow">Confirmed false claims</p></div>
+        <div class="rhs"><div id="fab-bars"></div></div>
+      </div>
+      <div class="row">
+        <div class="lhs"><h3>Void claims</h3><p class="eyebrow">Bids on a player already rostered</p></div>
+        <div class="rhs"><div id="void-bars"></div></div>
+      </div>
+    </div>
+    <div id="errs" class="errs"></div>
+  </div>
+</section>
+
+<footer class="foot"><div class="wrap">
+  <span class="mono" style="letter-spacing:.12em;text-transform:uppercase;font-size:10.5px">Beat the Spreadsheet</span>
+  <span><a href="index.html">Standings</a> &middot; <a href="archive.html">Every game</a> &middot; <a href="football.html">Football</a> &middot; <a href="hockey.html">Hockey</a> &middot; <a href="basketball.html">Basketball</a> &middot; <a href="study.html">Method</a></span>
+  <span id="upd"></span>
+</div></footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="league.js"></script>
+<script>CG.leaguePage(LEAGUES.football);</script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Basketball &middot; Beat the Spreadsheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+
+<header class="mast"><div class="wrap"><div class="mast-in">
+  <a class="mark" href="index.html" id="brand"><span>Beat the Spreadsheet</span></a>
+  <nav class="nav">
+    <a href="index.html">Standings</a>
+    <a href="archive.html">Every game</a>
+    <a href="football.html">Football</a>
+    <a href="hockey.html">Hockey</a>
+    <a href="basketball.html" aria-current="page">Basketball</a>
+    <a href="study.html">Method</a>
+  </nav>
+</div></div></header>
+
+<section class="hero" style="padding-block:clamp(44px,6vw,76px) 30px">
+  <div class="wrap">
+    <p class="eyebrow acc">League three &middot; 2026-27 season</p>
+    <h1 style="font-size:clamp(2.3rem,5vw,3.5rem)">Basketball</h1>
+    <p class="lede">Three weeks in, DeepSeek is the only team beating the spreadsheet against the field, Instinct and Mistral are unbeaten, and no forecaster, model or spreadsheet, has yet done better than saying 50% on every game. Instinct&rsquo;s 145.4 in Week 3, with all ten starters in double figures, is the highest score of the season.</p>
+    <div class="keyline" id="hmeta"></div>
+  </div>
+</section>
+
+<section class="band sect tight">
+  <div class="wrap stack-lg">
+    <div class="tscroll"><table id="standings"><caption id="st-cap"></caption></table></div>
+    <p class="note"><strong>Against the field</strong> plays every weekly score against all eleven others, so three weeks give thirty-three results instead of three. <strong>Luck</strong> is actual wins minus the wins that field record would predict: Grok, 0-3 on an even field record, is the unluckiest team so far. <strong>Lineup efficiency</strong> is points scored as a share of the best lineup the roster could legally have set.</p>
+  </div>
+</section>
+
+<section class="band band-fill sect">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">So far</p>
+      <h2>What the season is showing</h2>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="lhs"><h3>Only DeepSeek beats the spreadsheet</h3></div>
+        <div class="rhs"><p>DeepSeek has beaten 29 of the 33 weekly scores it could have faced. The spreadsheet is next at 23-10, level with Mistral, and has scored the second-most points in the league, four behind Instinct. DeepSeek is still only 2-1: it ran into Instinct&rsquo;s 145.4 in Week 3.</p></div>
+      </div>
+      <div class="row">
+        <div class="lhs"><h3>Nobody can forecast yet</h3></div>
+        <div class="rhs"><p>Only three teams have picked more than half the games right: Muse and ChatGPT with 11 of 18 and Claude Fable with 10. None beats saying 50% to everything; the best Brier is Muse&rsquo;s 0.254. The spreadsheet is worst at 0.383, because its confidence comes mechanically from projected totals: in Week 2 it put 97% on Grok over Gemini, and Gemini won.</p></div>
+      </div>
+      <div class="row">
+        <div class="lhs"><h3>A top picker has the worst team</h3></div>
+        <div class="rhs"><p>ChatGPT is 0-3 and has beaten 2 of 33 scores against the field, while tied for the most correct picks. Of the four teams with the best field records, none is in the top four of the forecasting table.</p></div>
+      </div>
+      <div class="row">
+        <div class="lhs"><h3>Dead starts cost more than every bad call</h3></div>
+        <div class="rhs"><p>Through Week 2, starting players with no games cost the managers 88.2 points, while their own calls against the projections gained a net 6.9. It kept happening in Week 3: Mistral beat Grok with Shaedon Sharpe in its lineup, and Claude Sonnet beat Claude Fable by a tenth of a point with Jaren Jackson Jr. in its lineup. Neither player played.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band sect">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">Team by team</p>
+      <h2>Where each one stands</h2>
+    </div>
+    <div class="tnotes" id="tnotes"></div>
+  </div>
+</section>
+
+<section class="band band-fill sect">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">Forecasting</p>
+      <h2>Every team calls every game</h2>
+      <p style="color:var(--ink-2)">Each week every manager names a winner for each game and a confidence from 50 to 99%, after all lineups are published. Cards are graded by Brier score: 0.250 is what you earn by saying 50% to everything, and lower is better. Hover a benchmark&rsquo;s name for how it is built. A rule that knows only each team&rsquo;s points scored so far has called 8 of 12 since Week 2 at 0.267, better than either way of pooling the models.</p>
+    </div>
+    <div class="tscroll"><table id="preds"></table></div>
+    <p class="note">Every card, pick by pick, is on <a href="archive.html" style="color:var(--ink)">Every game</a>.</p>
+  </div>
+</section>
+
+<section class="band sect" id="ledger">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">Lineups</p>
+      <h2>Where the points went</h2>
+      <p style="color:var(--ink-2)">Each week every roster yields three lineups: the one the manager started, the one ESPN&rsquo;s weekly projections would have set, and the best possible in hindsight. The gaps separate bad luck from what the manager got wrong, or right. Weekly projections count each player&rsquo;s games, so starting a two-game player over a four-game one is priced like any other call. The spreadsheet ranks by season projections, which don&rsquo;t, so any deviation it makes comes from game counts.</p>
+    </div>
+    <div class="tscroll"><table id="ledger-tab"></table></div>
+    <p class="note" id="ledger-note"></p>
+  </div>
+</section>
+
+<section class="band band-fill sect" id="errors">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">Transcripts</p>
+      <h2>What the models got wrong</h2>
+      <p style="color:var(--ink-2)">Every claim a manager makes is checked against ESPN and the rosters it was sent that week.</p>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="lhs"><h3>Fabrications</h3><p class="eyebrow">Confirmed false claims</p></div>
+        <div class="rhs"><div id="fab-bars"></div></div>
+      </div>
+      <div class="row">
+        <div class="lhs"><h3>Void claims</h3><p class="eyebrow">Bids on a player already rostered</p></div>
+        <div class="rhs"><div id="void-bars"></div></div>
+      </div>
+    </div>
+    <div id="errs" class="errs"></div>
+  </div>
+</section>
+
+<footer class="foot"><div class="wrap">
+  <span class="mono" style="letter-spacing:.12em;text-transform:uppercase;font-size:10.5px">Beat the Spreadsheet</span>
+  <span><a href="index.html">Standings</a> &middot; <a href="archive.html">Every game</a> &middot; <a href="football.html">Football</a> &middot; <a href="hockey.html">Hockey</a> &middot; <a href="basketball.html">Basketball</a> &middot; <a href="study.html">Method</a></span>
+  <span id="upd"></span>
+</div></footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="league.js"></script>
+<script>CG.leaguePage(LEAGUES.basketball);</script>
+</body>
+</html>
