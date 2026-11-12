@@ -65,7 +65,7 @@ var HYPOTHESES = [
     q:"When a model loses points, what went wrong? Every lineup is compared with two others built from the same roster: the one ESPN's projections would have set, and the best possible in hindsight. The gaps separate bad luck, inattention (starting a player who isn't playing) and deliberate calls against the projections.",
     how:"Weekly box scores plus ESPN's pregame projections make every start auditable after the fact. The models never see the projections; the comparison is run by the commissioner.",
     verdict:"Inattention, not judgment",
-    detail:"Across seven football weeks the league left 1,069.8 points on the table: 70% was variance that even perfect projection-following would have left, 20% was dead starts, and the managers' own calls against the projections cost a net 10%. Inattention has cost about twice as much as judgment. Hockey has the same shape: 102.1 points of dead starts against a net 25.3 from deviations." },
+    detail:"Across eight football weeks the league left 1,204.4 points on the table: 74% was variance that even perfect projection-following would have left, 18% was dead starts, and the managers' own calls against the projections cost a net 7%. Inattention has cost about two and a half times as much as judgment. Hockey has the same shape over five weeks: 102.1 points of dead starts against a net 42.6 from deviations." },
   { id:"Q3", title:"How well do the AI models forecast?",
     q:"Forecasting is its own faculty: turn public information into a probability and own the number. Every manager calls every game, every week, with a stated confidence, scored by Brier, where honesty about your own uncertainty is mathematically optimal.",
     how:"A 90% claim that misses costs far more than a 60% one. Calibration and accuracy are tracked separately, against mechanical and consensus benchmarks.",
@@ -442,9 +442,9 @@ LEAGUES.hockey = {
      Roster holes are folded in: a $0 free agent was always available. Qwen's Week 1 empty UTIL slot
      was a commissioner IR error and is excluded. */
   decisions:{
-    weeks:[1,2,3],   // weeks the ledger, dead-start and deviation tables cover
-attention:[["gemini", 5], ["kimi", 5], ["grok", 4], ["qwen", 4], ["chatgpt", 3], ["deepseek", 3], ["meta", 3], ["espn", 1]],
-    attentionNote:"Starts of a player who played no games that week, Weeks 1–4. Week 4 had three, the fewest yet: Grok's Josh Morrissey and Carter Hart, and Muse's Brandon Bussi. Gemini and Kimi, with five each through Week 3, had none.",
+    weeks:[1,2,3,4,5],   // weeks the ledger, dead-start and deviation tables cover
+attention:[["gemini", 5], ["kimi", 5], ["grok", 4], ["qwen", 4], ["chatgpt", 3], ["deepseek", 4], ["meta", 3], ["espn", 1]],
+    attentionNote:"Starts of a player who played no games that week, Weeks 1–5. Week 4 had three: Grok's Josh Morrissey and Carter Hart, and Muse's Brandon Bussi. Week 5 had one, the fewest yet: DeepSeek started Petr Mrazek in goal, listed Out. Gemini and Kimi, with five each through Week 3, have had none since.",
     /* Judgment = both players played that week and the benched one outscored the starter.
        judgment = [team, count, points lost]. */
     judgment:[["fable", 10, 55.9], ["meta", 11, 55.7], ["gemini", 6, 41.6], ["espn", 9, 38.8], ["sonnet", 8, 31.7], ["chatgpt", 8, 27.0], ["deepseek", 6, 21.8], ["kimi", 6, 18.7], ["grok", 6, 15.9], ["qwen", 5, 15.6]],
@@ -533,27 +533,25 @@ attention:[["gemini", 5], ["kimi", 5], ["grok", 4], ["qwen", 4], ["chatgpt", 3],
     ],
     /* ledger = [team, variance, deadStarts, deviationsNet, controllable, total], same definitions as football.
        variance = judgment points lost + deviations net (the residual the projections themselves left).
-       deadStarts priced vs the best live bench alternative; slots with no live alternative (10) carry no price yet.
+       deadStarts priced vs the best live bench alternative; slots with no live alternative (13) carry no price yet.
        deadCount kept in attention[]. */
     ledger:[
-      ["gemini",9.1,44.1,1.1,43.0,52.1],
-      ["kimi",0.2,26.5,-15.4,41.9,42.1],
-      ["meta",29.4,2.5,-9.3,11.8,41.2],
-      ["chatgpt",11.9,23.7,-4.6,28.3,40.2],
-      ["fable",37.6,0,-12.6,12.6,50.2],
-      ["espn",20.3,4.4,-3.2,7.6,27.9],
-      ["deepseek",18.4,0,0.7,-0.7,17.7],
-      ["sonnet",16.3,0,-0.7,0.7,17.0],
-      ["qwen",24.2,0.9,9.5,-8.6,15.6],
-      ["grok",23.0,0,9.2,-9.2,13.8]
+      ["gemini",54.8,44.1,-2.7,46.8,101.6],
+      ["espn",49.2,4.4,-20.1,24.5,73.7],
+      ["meta",63.4,2.5,0.8,1.7,65.1],
+      ["fable",67.9,0,6.8,-6.8,61.1],
+      ["chatgpt",26.3,23.7,-5.8,29.5,55.8],
+      ["kimi",9.1,26.5,-15.7,42.2,51.3],
+      ["qwen",54.2,0.9,9.5,-8.6,45.6],
+      ["sonnet",28,0,-15.5,15.5,43.5],
+      ["deepseek",31.4,0,-4.6,4.6,36],
+      ["grok",26.9,0,4.7,-4.7,22.2]
     ],
-    ledgerNote:"317.8 points left on the table in three weeks: 190.4 to variance, 102.1 to dead starts, and a net 25.3 to deviations, the same shape as football with inattention a larger share. Ten dead starts in slots with no live bench alternative are not yet priced; positional replacement values are being added. The spreadsheet ranks players by ESPN's season projections, which don't count how many games each player has that week; every one of its deviations comes from that. Its only dead start is a player ruled out after its lineup locked.",
+    ledgerNote:"555.9 points left on the table in five weeks: 411.2 to variance, 102.1 to dead starts, and a net 42.6 to deviations, the same shape as football with inattention a larger share. Thirteen dead starts in slots with no live bench alternative are not yet priced, so the dead-start figure is a floor. Of Weeks 4–5's four dead starts, only Muse's Brandon Bussi had a live alternative, a backup goalie who scored \u22123.0, so those weeks add nothing to that column. Week 5 is priced from the lineups the managers published, matching the commissioner's score adjustments for lineups ESPN did not apply. The spreadsheet ranks players by ESPN's season projections, which don't count how many games each player has that week; every one of its deviations comes from that. Its only dead start is a player ruled out after its lineup locked.",
     deviations:[
-      ["qwen",3,2,1,9.5],["grok",4,3,1,9.2],["gemini",2,2,0,1.1],["deepseek",3,2,1,0.7],
-      ["sonnet",2,1,1,-0.7],["espn",5,3,2,-3.2],["chatgpt",2,0,2,-4.6],["meta",6,1,5,-9.3],
-      ["fable",1,0,1,-12.6],["kimi",5,0,5,-15.4]
+      ["qwen",6,4,2,9.5],["fable",2,1,1,6.8],["grok",6,4,2,4.7],["meta",10,4,6,0.8],["gemini",5,3,2,-2.7],["deepseek",7,4,3,-4.6],["chatgpt",3,0,3,-5.8],["sonnet",7,2,5,-15.5],["kimi",8,2,6,-15.7],["espn",9,4,5,-20.1]
     ],
-    deviationsNote:"Same instrument as football: a start of a player projected below a benched alternative eligible for the same slot, each benched player counted once, dead starts excluded, priced against the alternative's actual points. Thirty-three calls in three weeks, 14 won and 19 lost, net \u221225.3.",
+    deviationsNote:"Same instrument as football: a start of a player projected below a benched alternative eligible for the same slot, each benched player counted once, dead starts excluded, priced against the alternative's actual points. Sixty-three calls in five weeks, 28 won and 35 lost, net \u221242.6. Week 5's best call was Claude Fable starting Mackenzie Blackwood (12.4) over Scott Wedgewood (\u22127.0); the costliest was the spreadsheet starting Steven Stamkos (8.8) over Cutter Gauthier (23.5).",
     judgmentNote:"Weeks 1–4, 75 judgment swaps costing 322.7 points. 209.1 came from calls the projection agreed with, which is variance. 113.6 came from starting the lower-projected player; the projection itself expected those calls to cost 27.0.",
     worstJudgment:[
       ["gemini",29.8,"Week 4: started Sergei Bobrovsky for −7.8 with Pyotr Kochetkov's 22.0 on the bench"],
