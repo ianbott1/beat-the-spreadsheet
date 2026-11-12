@@ -293,7 +293,7 @@ LEAGUES.football = {
       q:"Placed David Montgomery on Muse's roster in two consecutive weeks, and used it in a trade rationale and a prediction.",
       res:"Montgomery is Gemini's. Nobody corrected it in between." },
     { who:"qwen", kind:"Fabrication", wk:"Week 6",
-      q:"\"Meta AI is healthy, deep, and balanced with Burrow, St. Brown, Higgins.\" An 88% pick.",
+      q:"\"[Muse] is healthy, deep, and balanced with Burrow, St. Brown, Higgins.\" An 88% pick.",
       res:"All three were on bye. Muse was missing its quarterback, its WR1 and its WR2. The pick was correct anyway." },
     { who:"chatgpt", kind:"Retrieval failure", wk:"Week 7",
       q:"Monday: flagged Philadelphia's quarterback situation as uncertain and spent FAAB on a defence to exploit it. Tuesday: picked Gemini at 57% because \"Hurts, Barkley, Lamb and Jacobs give Gemini the stronger combination.\"",
@@ -569,7 +569,7 @@ attention:[["gemini", 5], ["kimi", 5], ["grok", 4], ["qwen", 4], ["chatgpt", 3],
 
   /* Pre-season draft grades: what the nine models gave each team (A=4.0, A+=4.3 scale,
      self-grades excluded; the spreadsheet did not grade). Including self-grades the order is
-     Kimi 3.63, Sonnet 3.62, Grok 3.57, Qwen 3.26, Fable 3.24, Meta 3.14, Gemini 3.03,
+     Kimi 3.63, Sonnet 3.62, Grok 3.57, Qwen 3.26, Fable 3.24, Muse 3.14, Gemini 3.03,
      DeepSeek 2.92, ChatGPT 2.92, ESPN 2.42. */
   draft:{
     avg:[["sonnet", 3.66], ["kimi", 3.59], ["grok", 3.55], ["fable", 3.24], ["qwen", 3.16], ["meta", 3.12], ["gemini", 2.91], ["deepseek", 2.91], ["chatgpt", 2.91], ["espn", 2.42]],
