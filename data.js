@@ -1054,16 +1054,16 @@ LEAGUES.basketball = {
       note:"Mean probability of the eleven models: 9 of 18." }
   ],
   decisions:{
-    weeks:[1,2],   // weeks the ledger, dead-start and deviation tables cover
-    /* ledger = [team, variance, deadStarts, deviationsNet, controllable, total], Weeks 1–2,
+    weeks:[1,2,3],   // weeks the ledger, dead-start and deviation tables cover
+    /* ledger = [team, variance, deadStarts, deviationsNet, controllable, total], Weeks 1–3,
        same definitions as football; total = sum of (best ten - actual), variance = total - deadStarts + deviationsNet. */
     ledger:[
-      ["meta",5.8,13.3,-4.1,17.4,23.2],["espn",11.1,13.2,0,13.2,24.3],["mistral",3.2,12.5,0,12.5,15.7],
-      ["gemini",0.4,13.0,0.4,12.6,13.0],["grok",0.6,7.9,-3.7,11.6,12.2],["fable",17.1,14.6,6.7,7.9,25.0],
-      ["instinct",10.4,0,-5.5,5.5,15.9],["qwen",10.6,0,-4.5,4.5,15.1],["kimi",4.0,7.7,4.0,3.7,7.7],
-      ["chatgpt",10.8,6.0,6.6,-0.6,10.2],["sonnet",17.3,0,2.4,-2.4,14.9],["deepseek",11.3,0,4.6,-4.6,6.7]
+      ["mistral",3.2,17.8,-3.1,20.9,24.1],["grok",4.4,7.9,-12.4,20.3,24.7],["meta",12.2,13.3,-5.4,18.7,30.9],
+      ["espn",18.7,13.2,0,13.2,31.9],["gemini",5.0,13.0,0.2,12.8,17.8],["fable",18.3,14.6,2.7,11.9,30.2],
+      ["sonnet",17.3,5.9,-1.0,6.9,24.2],["instinct",11.1,0,-5.4,5.4,16.5],["kimi",6.6,7.7,4.0,3.7,10.3],
+      ["qwen",15.3,0,-1.8,1.8,17.1],["deepseek",13.3,0,-0.1,0.1,13.4],["chatgpt",15.8,6.0,6.6,-0.6,15.2]
     ],
-    ledgerNote:"183.9 points left on the table in two weeks: 102.6 to variance, 88.2 to dead starts, and a net 6.9 gained from deviations. Here the managers' own calls against the projections are paying for themselves; starting players who don't play is costing more than everything else they control. Game volume is not a separate column: each start is compared against ESPN's weekly projection, which already counts the games a player has that week, so starting a two-game player over a four-game one is priced like any other call. The spreadsheet's two dead starts were both players ruled out after its lineup was set.",
+    ledgerNote:"256.3 points left on the table in three weeks: 141.2 to variance, 99.4 to dead starts, and a net 15.7 lost to deviations. Week 3 turned the managers' own calls negative: ten calls against the projections cost a net 22.6, led by Grok benching VJ Edgecombe (15.3) for Matas Buzelis (6.6). Two starters played no games in Week 3, Claude Sonnet's Jaren Jackson Jr. and Mistral's Shaedon Sharpe. Starting players who don't play is still costing more than everything else they control. Game volume is not a separate column: each start is compared against ESPN's projection per game times the games a player had that week, so starting a two-game player over a four-game one is priced like any other call. The spreadsheet's two dead starts were both players ruled out after its lineup was set.",
     attention:[["gemini",3],["mistral",3],["fable",2],["espn",2],["kimi",1],["chatgpt",1],["meta",1],["grok",1],["qwen",0],["sonnet",0],["deepseek",0],["instinct",0]],
     attentionLog:[
       ["fable","Week 2","Jalen Duren",9.2,true],
