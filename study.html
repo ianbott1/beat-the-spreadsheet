@@ -144,7 +144,7 @@
 </div></footer>
 
 <script src="data.js"></script>
-<script src="app.js"></script>
+<script src="app.js?v=2"></script>
 <script>
 /* scored predictions: every pick on every scored board, all leagues */
 (function(){ var n = 0; Object.keys(LEAGUES).forEach(function(k){ (LEAGUES[k].boards||[]).forEach(function(b){ if(b.scored) b.games.forEach(function(g){ n += Object.keys(g.picks).length; }); }); });

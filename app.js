@@ -44,8 +44,16 @@ function bindTip(node,html){
 }
 
 /* ---------- emblem (identity only: tables and rosters, never inside a figure) ---------- */
+var LOGOS = {fable:"anthropic",sonnet:"anthropic",meta:"muse",espn:"espn",qwen:"qwen",grok:"grok",kimi:"kimi",chatgpt:"chatgpt",deepseek:"deepseek",gemini:"gemini",mistral:"mistral",instinct:"instinct"};
 function sigil(k,size){
   size = size || 22;
+  if(LOGOS[k]){
+    var img = document.createElement("img");
+    img.src = "logos/"+LOGOS[k]+".png"; img.alt = ""; img.setAttribute("aria-hidden","true");
+    img.width = size; img.height = size;
+    img.style.cssText = "flex:none;width:"+size+"px;height:"+size+"px;border-radius:"+Math.round(size*0.22)+"px;object-fit:contain;background:#fff";
+    return img;
+  }
   var t = team(k), ns = "http://www.w3.org/2000/svg";
   var svg = document.createElementNS(ns,"svg");
   svg.setAttribute("viewBox","0 0 24 24");
