@@ -51,7 +51,7 @@
     <h2 id="q2b">Does skill carry from one sport to another?</h2>
     <p class="ans" id="a2b"></p>
     <div class="panel" style="padding:6px 22px 10px"><div class="tscroll"><table id="xsport"></table></div></div>
-    <p class="cap2">Spearman rank correlations across the nine models that play in all three leagues (the spreadsheet and Instinct are left out). Managing is the share of other weekly scores a team beat; forecasting is the Brier score of its weekly cards. 1.00 would mean identical rankings in both sports, 0 no relationship. Values in bold clear the 5% significance threshold for nine teams.</p>
+    <p class="cap2">Spearman rank correlations across the ten teams that play in all three leagues: the nine models and the spreadsheet. Instinct and Mistral, which play only basketball, are left out. Managing is the share of other weekly scores a team beat; forecasting is the Brier score of its weekly cards. 1.00 would mean identical rankings in both sports, 0 no relationship. Values in bold clear the 5% significance threshold for ten teams.</p>
   </section>
 
   <section class="q" aria-labelledby="q3">
@@ -196,18 +196,18 @@ sheet();
     var ma = ks.reduce(function(s,k){ return s+ra[k]; },0)/n, mb = ks.reduce(function(s,k){ return s+rb[k]; },0)/n, sab = 0, saa = 0, sbb = 0;
     ks.forEach(function(k){ var x = ra[k]-ma, y = rb[k]-mb; sab += x*y; saa += x*x; sbb += y*y; });
     return {r: sab/Math.sqrt(saa*sbb), n: n}; }
-  var TCRIT = {5:2.776,6:2.571,7:2.447,8:2.365,9:2.306,10:2.262,11:2.228};
+  var TCRIT = {4:2.776,5:2.571,6:2.447,7:2.365,8:2.306,9:2.262,10:2.228};
   function crit(n){ var t = TCRIT[n-2] || 2.2; return t/Math.sqrt(n-2+t*t); }
   var rows = [], tb = document.getElementById("xsport");
   for(var i=0;i<3;i++) for(var j=i+1;j<3;j++){
-    var A = LBL[lgs[i]], B = LBL[lgs[j]], ks = Object.keys(A).filter(function(k){ return k!=="espn" && k!=="instinct" && B[k] && A[k].b!=null && B[k].b!=null; });
+    var A = LBL[lgs[i]], B = LBL[lgs[j]], ks = Object.keys(A).filter(function(k){ return k!=="instinct" && k!=="mistral" && B[k] && A[k].b!=null && B[k].b!=null; });
     var ma = {}, mb = {}, fa = {}, fb = {};
     ks.forEach(function(k){ ma[k] = A[k].f; mb[k] = B[k].f; fa[k] = -A[k].b; fb[k] = -B[k].b; });
     var m = spearman(ma,mb), f = spearman(fa,fb);
     rows.push({pair:LN[lgs[i]]+" and "+LN[lgs[j]].toLowerCase(), m:m.r, f:f.r, n:ks.length, c:crit(ks.length)});
   }
   var head = el("thead"), hr = el("tr");
-  ["Sports compared","Managing","Forecasting","Models"].forEach(function(h){ hr.appendChild(el("th",null,h)); });
+  ["Sports compared","Managing","Forecasting","Teams"].forEach(function(h){ hr.appendChild(el("th",null,h)); });
   head.appendChild(hr); tb.appendChild(head);
   var body = el("tbody");
   rows.forEach(function(r){
@@ -218,7 +218,7 @@ sheet();
   tb.appendChild(body);
   var fh = rows[0], sig = function(v,c){ return Math.abs(v) >= c; };
   var bb = rows.slice(1), bbMax = Math.max.apply(null, bb.map(function(r){ return Math.max(Math.abs(r.m),Math.abs(r.f)); }));
-  var lead = sig(fh.m,fh.c) && sig(fh.f,fh.c) ? "<b>Between football and hockey, yes.</b> A model that ranks well in one tends to rank well in the other, at managing ("+fh.m.toFixed(2)+") and at forecasting ("+fh.f.toFixed(2)+"), both strong enough to rule out chance. "
+  var lead = sig(fh.m,fh.c) && sig(fh.f,fh.c) ? "<b>Between football and hockey, yes.</b> A team that ranks well in one tends to rank well in the other, at managing ("+fh.m.toFixed(2)+") and at forecasting ("+fh.f.toFixed(2)+"), both strong enough to rule out chance. "
     : "<b>Not clearly.</b> Football and hockey line up at "+fh.m.toFixed(2)+" for managing and "+fh.f.toFixed(2)+" for forecasting. ";
   var tail = bbMax < bb[0].c ? "Basketball doesn\u2019t line up with either yet: no correlation with it gets past "+bbMax.toFixed(2)+", against roughly "+bb[0].c.toFixed(2)+" needed to stand out from chance. The league is only "+["zero","one","two","three","four","five","six","seven","eight","nine","ten"][LEAGUES.basketball.meta.weeks.length]+" weeks old, and a good draft can carry a team that long."
     : "Basketball is starting to line up too.";
