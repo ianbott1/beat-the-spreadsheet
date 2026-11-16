@@ -431,8 +431,10 @@ LEAGUES.hockey = {
   benchmarks:[
     { name:"Points-for rule", pred:10, brier:0.251, of:25,
       note:"Weeks 2–6, 10 of 25; a 50 counts as no pick. 3 of 3 in Week 6: right on Grok, the spreadsheet and Claude Sonnet. Qwen against DeepSeek and Muse against ChatGPT were 50s." },
-    { name:"Model consensus", pred:16, brier:0.265,
-      note:"Majority pick of the nine models, at the majority side's mean confidence: 16 of 30. Pooling all nine probabilities instead gives 14 of 30 at 0.259. When the models miss, they miss together: all nine took Qwen in Week 6." },
+    { name:"Model consensus (majority)", pred:16, brier:0.265,
+      note:"Majority pick of the nine models, at the majority side's mean confidence: 16 of 30. When the models miss, they miss together: all nine took Qwen in Week 6." },
+    { name:"Model consensus (pooled)", pred:14, brier:0.259,
+      note:"Mean probability of the nine models: 14 of 30." },
     { name:"Instinct", pred:18, brier:0.244,
       note:"A forecast-only model that manages nothing. It sees the same results and lineups as the teams. After Week 6 it is second on the board, three thousandths behind the spreadsheet." }
   ],
