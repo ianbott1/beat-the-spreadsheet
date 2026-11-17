@@ -70,12 +70,12 @@ var HYPOTHESES = [
     q:"Forecasting is its own faculty: turn public information into a probability and own the number. Every manager calls every game, every week, with a stated confidence, scored by Brier, where honesty about your own uncertainty is mathematically optimal.",
     how:"A 90% claim that misses costs far more than a 60% one. Calibration and accuracy are tracked separately, against mechanical and consensus benchmarks.",
     verdict:"Rarely better than a coin flip",
-    detail:"Of thirty model-league forecasting records, six beat the 0.250 line that answering 50/50 to everything earns: Claude Fable and Claude Sonnet in football, Claude Sonnet and Instinct in hockey, Muse and Claude Fable in basketball. The models' own majority vote beats it in none of the three leagues. Accuracy and calibration keep crowning different models: ChatGPT has the most correct picks in hockey and is eighth of eleven by Brier." },
+    detail:"Of thirty model-league forecasting records, nine beat the 0.250 line that answering 50/50 to everything earns: Claude Fable, Claude Sonnet, Muse, Kimi and ChatGPT in football, Claude Sonnet and Instinct in hockey, Muse and Claude Fable in basketball. The models' own majority vote beats it in none of the three leagues. Accuracy and calibration keep crowning different models: ChatGPT has the most correct picks in hockey and is eighth of eleven by Brier." },
   { id:"Q4", title:"Does more public information help?",
     q:"Football is the most heavily covered fantasy sport on earth; hockey is the most niche of the three measured here. Where information is scarce, a model that can find and weigh it should pull further ahead of one that can't, so the gap between strong and weak models should widen as coverage thins. Whether the models as a group gain or lose ground on the spreadsheet is open: its projections already price in much of what there is to read.",
     how:"The same nine models manage teams in all three leagues, with basketball adding two more entrants. Correlating each model's results across sports separates stable skill from a lucky draft.",
     verdict:"Open",
-    detail:"Results travel between football and hockey. Ranked by all-play win share, the ten teams that play both, the nine models and the spreadsheet, line up with a rank correlation of 0.75 (p\u22480.01); ranked by Brier score, 0.78 (p\u22480.008). Basketball, four weeks in, lines up with neither: its managing ranks correlate 0.13 with football and 0.38 with hockey, its forecasting ranks 0.43 and 0.35. With ten teams a correlation has to clear about 0.63 to stand out from chance. Within each league the link between managing and forecasting is weaker still: 0.49 in football, 0.57 in hockey, \u22120.05 in basketball, none significant." }
+    detail:"Results travel between football and hockey. Ranked by all-play win share, the ten teams that play both, the nine models and the spreadsheet, line up with a rank correlation of 0.71 (p\u22480.03); ranked by Brier score, 0.76 (p\u22480.02). Neither yet survives a correction for the twelve correlations tested here. Basketball, four weeks in, lines up with neither: its managing ranks correlate 0.17 with football and 0.38 with hockey, its forecasting ranks 0.49 and 0.36. With ten teams a correlation has to clear about 0.63 to stand out from chance. Within each league the link between managing and forecasting is weaker still: 0.47 in football, 0.57 in hockey, \u22120.03 in basketball, none significant." }
 ];
 
 /* What a single weekly submission actually demands. Each entry is one ability,
@@ -134,7 +134,7 @@ LEAGUES.football = {
     weeks:[2,3,4,5,6,7,8,9,10],                 // scored weeks, index-aligned to scores[]
     through:10, current:11,
     status:"live",
-    statusNote:"Week 10 is scored, including lineup efficiency and the points ledger. Week 11 is next.",
+    statusNote:"Week 10 is scored, including lineup efficiency and the points ledger. Week 11 prediction cards are in; games start Thursday.",
     waiver:"$100 FAAB, sealed bid, highest bid wins",
     byes:""
   },
@@ -376,7 +376,16 @@ LEAGUES.football = {
         { a:"gemini", b:"kimi", w:"kimi", picks:{sonnet:["kimi",88],fable:["kimi",86],chatgpt:["kimi",76],gemini:["kimi",78],grok:["kimi",67],deepseek:["kimi",64],qwen:["kimi",85],meta:["kimi",68],kimi:["kimi",90],espn:["kimi",87]} },
         { a:"espn", b:"deepseek", w:"espn", picks:{sonnet:["espn",68],fable:["espn",62],chatgpt:["espn",68],gemini:["espn",65],grok:["espn",55],deepseek:["espn",81],qwen:["deepseek",58],meta:["espn",58],kimi:["espn",66],espn:["espn",72]} },
         { a:"meta", b:"qwen", w:"meta", picks:{sonnet:["meta",66],fable:["meta",60],chatgpt:["meta",82],gemini:["meta",72],grok:["meta",64],deepseek:["meta",62],qwen:["meta",65],meta:["meta",70],kimi:["meta",74],espn:["meta",61]} }
-      ] }
+      ] },
+   { wk:"Week 11", scored:false,
+     note:"All ten cards in, collected Tuesday after lineups were set. Every card takes Muse over Kimi. Grok and DeepSeek both pick against themselves, and the spreadsheet's Fantasycast has DeepSeek at 60% where six of the nine models take Qwen.",
+     games:[
+      { a:"fable", b:"sonnet", w:null, picks:{sonnet:["fable",60],fable:["fable",64],chatgpt:["fable",61],gemini:["fable",66],grok:["sonnet",54],deepseek:["fable",61],qwen:["sonnet",78],meta:["fable",53],kimi:["fable",56],espn:["fable",58]} },
+      { a:"gemini", b:"chatgpt", w:null, picks:{sonnet:["chatgpt",76],fable:["chatgpt",65],chatgpt:["chatgpt",72],gemini:["gemini",54],grok:["chatgpt",61],deepseek:["chatgpt",68],qwen:["chatgpt",62],meta:["chatgpt",66],kimi:["chatgpt",70],espn:["chatgpt",55]} },
+      { a:"espn", b:"grok", w:null, picks:{sonnet:["grok",66],fable:["grok",54],chatgpt:["grok",56],gemini:["grok",79],grok:["espn",67],deepseek:["espn",59],qwen:["grok",88],meta:["grok",60],kimi:["espn",58],espn:["espn",55]} },
+      { a:"meta", b:"kimi", w:null, picks:{sonnet:["meta",70],fable:["meta",70],chatgpt:["meta",84],gemini:["meta",74],grok:["meta",58],deepseek:["meta",74],qwen:["meta",82],meta:["meta",70],kimi:["meta",62],espn:["meta",64]} },
+      { a:"qwen", b:"deepseek", w:null, picks:{sonnet:["qwen",60],fable:["deepseek",70],chatgpt:["qwen",73],gemini:["deepseek",62],grok:["qwen",60],deepseek:["qwen",63],qwen:["qwen",76],meta:["deepseek",58],kimi:["qwen",63],espn:["deepseek",60]} }
+    ] }
   ]
 };
 
