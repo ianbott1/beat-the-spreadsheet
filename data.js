@@ -165,7 +165,7 @@ LEAGUES.football = {
       note:"Lost to Claude Fable by 12.28 while starting Jordan Addison, who was out, and Nick Folk, a kicker with no NFL team. It had noticed Addison was inactive but had no wide receiver left to replace him." },
     { k:"sonnet",   rec:"3-6", pf:738.58, pa:968.46, allplay:"18-63", pred:23, brier:0.213, faab:100, eff:[92.8, 81.6, 74.8, 92.2, 70.4, 76.7, 80.6, 100, 50.4], att:4,
       scores:[82.28, 98.14, 89.16, 141.94, 67.38, 76.38, 64.58, 57.52, 61.2],
-      note:"Scored 61.20 with its lineup at 50.4% of its best, the lowest single-week figure of the season: George Pickens scored 38.0 on its bench while Antonio Williams (11.2) played flex. Malik Willis, who was out, started at quarterback because the commissioner missed Sonnet's conditional to start Aaron Rodgers (15.62); it would not have changed the result. Its card was perfect." },
+      note:"Scored 61.20 with its lineup at 50.4% of its best, the lowest single-week figure of the season: George Pickens scored 38.0 on its bench while Antonio Williams (11.2) played flex. Malik Willis, who was out, started at quarterback. Its card was perfect." },
     { k:"deepseek", rec:"3-6", pf:775.88, pa:917.62, allplay:"25-56", pred:21, brier:0.262, faab:91, eff:[93.7, 84.1, 87.1, 75.8, 91.2, 88.1, 59.3, 87.7, 89.3], att:9,
       scores:[89.06, 65.44, 98.22, 79.74, 82.66, 98.62, 70.2, 104.48, 87.46],
       note:"Lost to the spreadsheet by 89.88 after picking the spreadsheet at 81%. Started Dameon Pierce, who did not play, with no healthy running back left to replace him." },
@@ -250,7 +250,6 @@ LEAGUES.football = {
   /* One entry per week. Newest first. */
   log:[
     {wk:"Week 10",h:"Every favourite wins, and nine starters can't score",p:"All five games went to the team most forecasters picked, and six of ten cards were perfect. The same week produced nine dead starts, the most of the season: Gemini alone started a quarterback on a bye, a running back who was out and another from injured reserve."},
-    {wk:"Week 10",h:"The commissioner misses a conditional",p:"Claude Sonnet had asked for Aaron Rodgers to start if Malik Willis was ruled out. Willis was out, the switch was never made, and Rodgers scored 15.62 on the bench. Sonnet lost by 39.52, so it did not change the result."},
     {wk:"Week 9",open:true,h:"Two games decided by less than a point",p:"Grok beat Claude Fable 123.06 to 122.38 on Kenneth Walker III's 34.3 at flex. ChatGPT beat Kimi 99.84 to 99.08 while Kimi had C.J. Stroud's 35.36 on its bench behind Patrick Mahomes. Seven of the nine models had picked Kimi; ChatGPT itself picked Kimi at 62%."},
     {wk:"Week 9",h:"Gemini backs itself at 81% and loses again",p:"The 1-7 team put the highest self-confidence on the board on beating Qwen and lost by 14.26. It is the seventh time this season Gemini has backed itself above 70%, and it has lost all seven. It also started Jauan Jennings, ruled Out, at flex, and three of its waiver bids targeted players already on other rosters."},
     { wk:"Week 7", open:true, h:"Every lineup made public, and three teams checked them",
@@ -370,7 +369,7 @@ LEAGUES.football = {
         { a:"gemini", b:"qwen", w:"qwen", picks:{qwen:["qwen",78],kimi:["qwen",75],chatgpt:["gemini",61],grok:["qwen",68],deepseek:["qwen",66],meta:["qwen",62],gemini:["gemini",81],sonnet:["qwen",70],fable:["qwen",64],espn:["qwen",57]} },
         { a:"espn", b:"meta", w:"meta", picks:{qwen:["meta",88],kimi:["meta",63],chatgpt:["meta",65],grok:["meta",67],deepseek:["meta",62],meta:["meta",63],gemini:["meta",65],sonnet:["meta",62],fable:["meta",55],espn:["espn",57]} }
       ] },
-    { wk:"Week 10", scored:true, note:"Every favourite won. Six of the ten forecasters were perfect: Claude Fable, Claude Sonnet, ChatGPT, Muse, Kimi and the spreadsheet. The spreadsheet's card is ESPN's own win probability from the Fantasycast, pulled after lineups were set.",
+    { wk:"Week 10", scored:true, note:"Every favourite won. Six of the ten forecasters were perfect: Claude Fable, Claude Sonnet, ChatGPT, Muse, Kimi and the spreadsheet. The spreadsheet's card is ESPN's own Fantasycast win probability, taken on Tuesday.",
       games:[
         { a:"fable", b:"chatgpt", w:"fable", picks:{sonnet:["fable",72],fable:["fable",60],chatgpt:["fable",58],gemini:["chatgpt",56],grok:["chatgpt",58],deepseek:["chatgpt",58],qwen:["fable",72],meta:["fable",60],kimi:["fable",60],espn:["fable",61]} },
         { a:"sonnet", b:"grok", w:"grok", picks:{sonnet:["grok",78],fable:["grok",78],chatgpt:["grok",62],gemini:["grok",84],grok:["grok",78],deepseek:["grok",76],qwen:["grok",78],meta:["grok",75],kimi:["grok",68],espn:["grok",68]} },
