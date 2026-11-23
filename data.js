@@ -27,7 +27,7 @@ var SITE = {
   title: "Beat the Spreadsheet",
   sub: "A season-long experiment in AI decision-making: eleven frontier AI models manage real fantasy teams, graded by real games, against a rules-based control.",
   commissioner: "Ian Bott",
-  updated: "16 November 2026"
+  updated: "23 November 2026"
 };
 
 /* Team identity. Each team's emblem is a 5x5 matrix where '#' is a filled cell.
@@ -60,22 +60,22 @@ var HYPOTHESES = [
     q:"Each league carries one team run on ESPN's numbers alone, the strategy any sensible casual plays. Can models that read the news, weigh sources and argue actually outperform it?",
     how:"Same information, same deadlines, same scoreboard. The spreadsheet is the baseline every model has to clear.",
     verdict:"Bot ahead so far",
-    detail:"The spreadsheet ranks first overall across the three leagues, first on average at both managing and forecasting, and first in about two-thirds of resamples of the weeks. In no league has a model beaten it at both jobs: it is second against the field in football, third in hockey and first in basketball, and first to third on every forecasting board. Muse manages better in football, Grok and Claude Fable in hockey; Claude Fable, the only flagship-tier model in a field of free tiers, forecasts better in football and basketball and is second overall." },
+    detail:"The spreadsheet ranks first overall across the three leagues, first on average at both managing and forecasting, and first in about six of seven resamples of the weeks. In no league has a model beaten it at both jobs: it is second against the field in football and hockey and first in basketball, and first to third on every forecasting board. Muse manages better in football and Grok in hockey; Claude Fable, the only flagship-tier model in a field of free tiers, forecasts better in football and basketball and is second overall." },
   { id:"Q2", title:"Where does the reasoning break down?",
     q:"When a model loses points, what went wrong? Every lineup is compared with two others built from the same roster: the one ESPN's projections would have set, and the best possible in hindsight. The gaps separate bad luck, inattention (starting a player who isn't playing) and deliberate calls against the projections.",
     how:"Weekly box scores plus ESPN's pregame projections make every start auditable after the fact. The models never see the projections; the comparison is run by the commissioner.",
     verdict:"Inattention, not judgment",
-    detail:"Across eight football weeks the league left 1,204.4 points on the table: 74% was variance that even perfect projection-following would have left, 18% was dead starts, and the managers' own calls against the projections cost a net 7%. Hockey has the same shape over six weeks: 115.8 points of dead starts against a net 33.5 from deviations. Basketball is starker: with lineups locked for a week, a starter who sits costs every game he misses, and dead starts are 44% of the 315.6 points lost in four weeks, while the managers' calls won back a net 8.7." },
+    detail:"Across eight football weeks the league left 1,204.4 points on the table: 74% was variance that even perfect projection-following would have left, 18% was dead starts, and the managers' own calls against the projections cost a net 7%. Hockey has the same shape over seven weeks: 123.6 points of dead starts against a net 72.6 from deviations. Basketball is starker: with lineups locked for a week, a starter who sits costs every game he misses, and dead starts are 45% of the 393.5 points lost in five weeks, while the managers' calls won back a net 19.7." },
   { id:"Q3", title:"How well do the AI models forecast?",
     q:"Forecasting is its own faculty: turn public information into a probability and own the number. Every manager calls every game, every week, with a stated confidence, scored by Brier, where honesty about your own uncertainty is mathematically optimal.",
     how:"A 90% claim that misses costs far more than a 60% one. Calibration and accuracy are tracked separately, against mechanical and consensus benchmarks.",
     verdict:"Rarely better than a coin flip",
-    detail:"Of thirty model-league forecasting records, nine beat the 0.250 line that answering 50/50 to everything earns: Claude Fable, Claude Sonnet, Muse, Kimi and ChatGPT in football, Claude Sonnet and Instinct in hockey, Muse and Claude Fable in basketball. The models' own majority vote beats it in none of the three leagues. Accuracy and calibration keep crowning different models: ChatGPT has the most correct picks in hockey and is eighth of eleven by Brier." },
+    detail:"Of thirty model-league forecasting records, eight beat the 0.250 line that answering 50/50 to everything earns: Claude Fable, Claude Sonnet, Muse, Kimi and ChatGPT in football, Instinct in hockey, Muse and Claude Fable in basketball. The models' own majority vote beats it in none of the three leagues. Accuracy and calibration keep crowning different models: in hockey ChatGPT and Claude Sonnet both have 20 of 35 right, yet Sonnet ranks third by Brier and ChatGPT ninth of eleven." },
   { id:"Q4", title:"Does more public information help?",
     q:"Football is the most heavily covered fantasy sport on earth; hockey is the most niche of the three measured here. Where information is scarce, a model that can find and weigh it should pull further ahead of one that can't, so the gap between strong and weak models should widen as coverage thins. Whether the models as a group gain or lose ground on the spreadsheet is open: its projections already price in much of what there is to read.",
     how:"The same nine models manage teams in all three leagues, with basketball adding two more entrants. Correlating each model's results across sports separates stable skill from a lucky draft.",
     verdict:"Open",
-    detail:"Results travel between football and hockey. Ranked by all-play win share, the ten teams that play both, the nine models and the spreadsheet, line up with a rank correlation of 0.71 (p\u22480.03); ranked by Brier score, 0.76 (p\u22480.02). Neither yet survives a correction for the twelve correlations tested here. Basketball, four weeks in, lines up with neither: its managing ranks correlate 0.17 with football and 0.38 with hockey, its forecasting ranks 0.49 and 0.36. With ten teams a correlation has to clear about 0.63 to stand out from chance. Within each league the link between managing and forecasting is weaker still: 0.47 in football, 0.57 in hockey, \u22120.03 in basketball, none significant." }
+    detail:"Results travel between football and hockey. Ranked by all-play win share, the ten teams that play both, the nine models and the spreadsheet, line up with a rank correlation of 0.73 (p≈0.02); ranked by Brier score, 0.85 (p≈0.003), the only one of the twelve correlations tested here that survives a correction for testing so many. Basketball, five weeks in, lines up more loosely: its managing ranks correlate 0.33 with football and 0.35 with hockey, its forecasting ranks 0.55 and 0.58. With ten teams a correlation has to clear about 0.63 to stand out from chance. Within each league the link between managing and forecasting is weaker still: 0.47 in football, 0.48 in hockey, 0.40 in basketball, none significant." }
 ];
 
 /* What a single weekly submission actually demands. Each entry is one ability,
@@ -97,7 +97,7 @@ var CAPABILITIES = [
   { n:"Calibrated forecasting", q:"Does its confidence mean anything?",
     instr:"Five picks a week with stated percentages, scored by Brier, where honesty is mathematically optimal.",
     f:"Accuracy and calibration are different leaderboards with different names on top.",
-    ev:"<b>Claude Sonnet</b> and <b>Gemini</b> share a 9/20 football record at 0.229 and 0.344 Brier. In hockey <b>ChatGPT</b> has the most correct picks, 19 of 30, and sits eighth of eleven by Brier, because its misses came at 76% and 88%. In basketball <b>Muse</b> leads the board after two perfect weeks while managing the third-worst team against the field." },
+    ev:"<b>Claude Sonnet</b> and <b>Gemini</b> share a 9/20 football record at 0.229 and 0.344 Brier. In hockey <b>ChatGPT</b> and <b>Claude Sonnet</b> both have 20 of 35 right; Sonnet is third by Brier and ChatGPT ninth of eleven, because ChatGPT's misses came at 88% and 89%. In basketball <b>Muse</b> leads the board, with the week's best card in Weeks 3, 4 and 5, while managing a team that is 28-27 against the field." },
   { n:"Updating on evidence", q:"When the premise dies, does the pick?",
     instr:"Lineups are published before predictions are collected, so a forecast built on a stale assumption can be fixed before it is scored.",
     f:"One clean belief update in seven football weeks, and one perfect inversion of it.",
@@ -398,10 +398,10 @@ LEAGUES.hockey = {
     sport:"Hockey", slug:"hockey", season:"2026-27",
     teams:10,
     format:"Head-to-head points, Monday–Sunday weeks with lineups locked once a week, 24-week regular season, top four make the playoffs",
-    weeks:[1,2,3,4,5,6],
-    through:6, current:7,
+    weeks:[1,2,3,4,5,6,7],
+    through:7, current:8,
     status:"live",
-    statusNote:"Week 6 is final. Week 7 (Nov 16–22) is under way: waivers and three trades settled, every lineup locked and published, all eleven prediction cards in.",
+    statusNote:"Week 7 is final. Week 8 (Nov 23–29) is next.",
     waiver:"$100 FAAB, sealed bid, highest bid wins",
     byes:null
   },
@@ -411,47 +411,47 @@ LEAGUES.hockey = {
      att  = starts of a player who played no games that week, Weeks 1–3, roster holes included.
      Week 2 scores are ESPN's current figures after stat corrections. */
   teams:[
-    { k:"grok", rec:"5-1", pf:507.7, pa:368.0, allplay:"49-5", pred:14, brier:0.262, faab:24, eff:[93.6, 96.5, 94.5, 97.2, 93.6, 75.5], att:4,
-      scores:[87.6, 103.8, 69.2, 74.3, 92.5, 80.3],
-      note:"5-1 and 49-5 against the field, the most lopsided record in any league. It scored 80.3 in Week 6 with its lineup at 75.5% of its best: Linus Ullmark (8.4) and Victor Olofsson (10.1) sat while Carter Hart started and scored −5.0." },
-    { k:"espn", rec:"4-2", pf:402.0, pa:345.9, allplay:"32-22", pred:18, brier:0.241, faab:0, eff:[78.6, 91.9, 92.8, 80.0, 74.7, 83.9], att:1,
-      scores:[61.3, 70.8, 64.8, 60.7, 60.4, 84.0],
-      note:"Scored 84.0 in Week 6, the week's high, while its own rule benched Cutter Gauthier for a third straight week (7.8) along with Bo Horvat (9.0). Its 0.241 Brier is the best in the league." },
-    { k:"kimi", rec:"4-2", pf:319.3, pa:386.6, allplay:"16-38", pred:14, brier:0.28, faab:49, eff:[78.7, 77.6, 79.1, 94.7, 92.2, 68.7], att:5,
-      scores:[53.6, 47.7, 52.3, 55.7, 72.0, 38.0],
-      note:"4-2 on a 16-38 record against the field, the second-worst. No team's record flatters it more. Lost Week 6 by 35.3 with David Pastrnak (4.7) and Sebastian Aho (6.6) on its bench." },
-    { k:"fable", rec:"3-3", pf:437.4, pa:367.5, allplay:"34-20", pred:16, brier:0.252, faab:11, eff:[68.9, 83.8, 76.3, 92.1, 96.7, 95.9], att:0,
-      scores:[43.0, 76.3, 51.8, 87.4, 100.8, 78.1],
-      note:"Second against the field at 34-20 and second in points. Lost Week 6 to Grok by 2.2 with its lineup at 95.9% of its best. Its calls against the projections have gained a net 20.0 points, the most in the league." },
-    { k:"meta", rec:"3-3", pf:379.3, pa:367.3, allplay:"30-23", pred:14, brier:0.266, faab:50, eff:[78.9, 91.0, 78.2, 78.8, 93.6, 82.4], att:4,
-      scores:[51.5, 68.6, 74.0, 63.2, 66.2, 55.8],
-      note:"Beat ChatGPT 55.8 to 49.2 in Week 6 while starting Dylan Guenther, who played no games. Its Week 6 card was the week's best: 4 of 5 at 0.192." },
-    { k:"deepseek", rec:"3-3", pf:358.6, pa:363.3, allplay:"20-34", pred:16, brier:0.255, faab:48, eff:[93.3, 87.8, 93.2, 88.5, 86.6, 72.9], att:6,
-      scores:[71.4, 65.2, 48.0, 59.2, 68.6, 46.2],
-      note:"Beat Qwen 46.2 to 45.9 in Week 6, the lowest winning score of the season, with two starters who played no games (Petr Mrazek and Nick Schmaltz) and Jeremy Swayman at −11.6. All eleven cards had picked Qwen. Leads the league with six dead starts." },
-    { k:"qwen", rec:"2-4", pf:360.9, pa:385.0, allplay:"25-29", pred:15, brier:0.291, faab:85, eff:[83.4, 92.5, 99.0, 98.1, 86.4, 90.0], att:5,
-      scores:[51.3, 71.5, 71.8, 45.8, 74.6, 45.9],
-      note:"Lost Week 6 by 0.3 with Miro Heiskanen, who played no games, on its blue line. It picked itself at 72 and has the second-worst Brier in the league (0.291)." },
-    { k:"sonnet", rec:"3-3", pf:385.6, pa:402.5, allplay:"25-29", pred:18, brier:0.247, faab:10, eff:[93.8, 95.8, 85.8, 74.7, 92.2, 93.0], att:0,
-      scores:[77.4, 66.1, 54.4, 43.4, 71.0, 73.3],
-      note:"Beat Kimi 73.3 to 38.0 in Week 6 behind Juuse Saros's 17.0. Third on the prediction board at 0.247, the best of the nine models with teams and the only one under the 50/50 line." },
-    { k:"chatgpt", rec:"2-4", pf:371.8, pa:407.9, allplay:"22-32", pred:19, brier:0.267, faab:94, eff:[69.8, 89.9, 86.2, 83.6, 94.7, 91.8], att:3,
-      scores:[51.0, 64.0, 68.7, 53.4, 85.5, 49.2],
-      note:"The most correct picks in the league, 19 of 30, but eighth by Brier, because its misses come at high confidence: it put 88% on Gemini in Week 6." },
-    { k:"gemini", rec:"1-5", pf:321.0, pa:449.6, allplay:"16-37", pred:16, brier:0.303, faab:26, eff:[86.2, 51.0, 75.3, 60.2, 80.6, 72.8], att:5,
-      scores:[59.8, 29.3, 61.3, 50.8, 66.2, 53.6],
-      note:"1-5. Picked itself at 88% against the spreadsheet in Week 6 and lost by 30.4, its third straight week backing itself at 80% or more and losing by more than 20. Worst Brier in the league (0.303)." }
+    { k:"grok", rec:"5-2", pf:573.7, pa:445.9, allplay:"55-8", pred:16, brier:0.267, faab:24, eff:[93.6, 96.5, 94.5, 97.2, 93.6, 75.5, 83.5], att:5,
+      scores:[87.6, 103.8, 69.2, 74.3, 92.5, 80.3, 66.0],
+      note:"5-2 and 55-8 against the field, still the most lopsided record in any league. Lost Week 7 to the spreadsheet 77.9 to 66.0 in a game every card, its own included, had given to Grok. Brandon Hagel started and played no games." },
+    { k:"espn", rec:"5-2", pf:479.9, pa:411.9, allplay:"41-22", pred:21, brier:0.238, faab:0, eff:[78.6, 91.9, 92.8, 80.0, 74.7, 83.9, 89.5], att:1,
+      scores:[61.3, 70.8, 64.8, 60.7, 60.4, 84.0, 77.9],
+      note:"5-2 after beating Grok 77.9 to 66.0, the week's high, in a game all eleven cards gave to Grok, its own included. First on the prediction board at 0.238, and its Week 7 card was the week's best: 3 of 5 at 0.226." },
+    { k:"kimi", rec:"4-3", pf:373.8, pa:461.3, allplay:"17-46", pred:15, brier:0.281, faab:49, eff:[78.7, 77.6, 79.1, 94.7, 92.2, 68.7, 78.2], att:5,
+      scores:[53.6, 47.7, 52.3, 55.7, 72.0, 38.0, 54.5],
+      note:"4-3 on a 17-46 record against the field, the worst in the league. Lost Week 7 to ChatGPT 74.7 to 54.5 while Adin Hill started at −4.6 and Ukko-Pekka Luukkonen scored 10.6 on its bench." },
+    { k:"fable", rec:"4-3", pf:501.3, pa:426.4, allplay:"39-24", pred:19, brier:0.254, faab:11, eff:[68.9, 83.8, 76.3, 92.1, 96.7, 95.9, 79.1], att:0,
+      scores:[43.0, 76.3, 51.8, 87.4, 100.8, 78.1, 63.9],
+      note:"4-3 and third against the field at 39-24. Beat Qwen 63.9 to 58.9 in Week 7 despite starting Mackenzie Blackwood (−1.0) over Scott Wedgewood (12.4). Its calls against the projections are still a net +13.9, the best in the league." },
+    { k:"meta", rec:"4-3", pf:440.2, pa:423.9, allplay:"34-28", pred:17, brier:0.266, faab:50, eff:[78.9, 91.0, 78.2, 78.8, 93.6, 82.4, 83.5], att:4,
+      scores:[51.5, 68.6, 74.0, 63.2, 66.2, 55.8, 60.9],
+      note:"4-3. Beat DeepSeek 60.9 to 56.6 in Week 7 behind Tage Thompson (15.5) and Leon Draisaitl (13.9), despite Logan Thompson's −9.6 in goal. Nine of the eleven cards had picked it." },
+    { k:"deepseek", rec:"3-4", pf:415.2, pa:424.2, allplay:"22-41", pred:16, brier:0.27, faab:48, eff:[93.3, 87.8, 93.2, 88.5, 86.6, 72.9, 69.3], att:7,
+      scores:[71.4, 65.2, 48.0, 59.2, 68.6, 46.2, 56.6],
+      note:"Lost Week 7 to Muse by 4.3 with its lineup at 69.3% of its best, the lowest of the week: Nick Schmaltz, listed on injured reserve, sat in its utility slot and played no games, and Jordan Binnington (−3.6) started over Spencer Knight (8.6). Leads the league with seven dead starts." },
+    { k:"qwen", rec:"2-5", pf:419.8, pa:448.9, allplay:"28-35", pred:15, brier:0.322, faab:85, eff:[83.4, 92.5, 99.0, 98.1, 86.4, 90.0, 80.9], att:5,
+      scores:[51.3, 71.5, 71.8, 45.8, 74.6, 45.9, 58.9],
+      note:"2-5. Lost Week 7 to Claude Fable by 5.0 with Jamie Drysdale (11.3) and Kasperi Kapanen (7.8) on its bench. Its card went 0 for 5 at 0.510, the week's worst, and it is last on the prediction board (0.322)." },
+    { k:"sonnet", rec:"3-4", pf:430.0, pa:469.0, allplay:"25-38", pred:20, brier:0.253, faab:10, eff:[93.8, 95.8, 85.8, 74.7, 92.2, 93.0, 77.4], att:1,
+      scores:[77.4, 66.1, 54.4, 43.4, 71.0, 73.3, 44.4],
+      note:"Lost Week 7 to Gemini 66.5 to 44.4, the week's lowest score, with Cale Makar, who played no games, on its blue line. Ten of the eleven cards had picked it. Third on the prediction board at 0.253, just over the 50/50 line." },
+    { k:"chatgpt", rec:"3-4", pf:446.5, pa:462.4, allplay:"30-33", pred:20, brier:0.283, faab:94, eff:[69.8, 89.9, 86.2, 83.6, 94.7, 91.8, 94.1], att:3,
+      scores:[51.0, 64.0, 68.7, 53.4, 85.5, 49.2, 74.7],
+      note:"Beat Kimi 74.7 to 54.5 in Week 7 behind Jake Oettinger's 19.8, the best single score of the week, after picking Kimi on its own card. 20 of 35 picks right, level with Claude Sonnet and behind only the spreadsheet and Instinct, but ninth of eleven by Brier (0.283)." },
+    { k:"gemini", rec:"2-5", pf:387.5, pa:494.0, allplay:"23-39", pred:18, brier:0.308, faab:26, eff:[86.2, 51.0, 75.3, 60.2, 80.6, 72.8, 77.0], att:5,
+      scores:[59.8, 29.3, 61.3, 50.8, 66.2, 53.6, 66.5],
+      note:"2-5. Beat Claude Sonnet 66.5 to 44.4 in Week 7; the only card that picked it was its own. Robert Thomas (14.0) and Vincent Trocheck (11.1) outscored Connor Hellebuyck's −8.6. Second-worst Brier (0.308)." }
   ],
 
   benchmarks:[
-    { name:"Points-for rule", pred:10, brier:0.251, of:25,
-      note:"Weeks 2–6, 10 of 25; a 50 counts as no pick. 3 of 3 in Week 6: right on Grok, the spreadsheet and Claude Sonnet. Qwen against DeepSeek and Muse against ChatGPT were 50s." },
-    { name:"Model consensus (majority)", pred:16, brier:0.265,
-      note:"Majority pick of the nine models, at the majority side's mean confidence: 16 of 30. When the models miss, they miss together: all nine took Qwen in Week 6." },
-    { name:"Model consensus (pooled)", pred:14, brier:0.259,
-      note:"Mean probability of the nine models: 14 of 30." },
-    { name:"Instinct", pred:18, brier:0.244,
-      note:"A forecast-only model that manages nothing. It sees the same results and lineups as the teams. After Week 6 it is second on the board, three thousandths behind the spreadsheet." }
+    { name:"Points-for rule", pred:13, brier:0.252, of:30,
+      note:"Weeks 2–7, 13 of 30; a 50 counts as no pick. 3 of 5 in Week 7: right on Claude Fable, ChatGPT and Muse, wrong on Grok and Claude Sonnet." },
+    { name:"Model consensus (majority)", pred:17, brier:0.277,
+      note:"Majority pick of the nine models, at the majority side's mean confidence: 17 of 35. When the models miss, they miss together: all nine took Qwen in Week 6 and Grok in Week 7, and the majority went 1 for 5 in Week 7." },
+    { name:"Model consensus (pooled)", pred:15, brier:0.268,
+      note:"Mean probability of the nine models: 15 of 35." },
+    { name:"Instinct", pred:21, brier:0.249,
+      note:"A forecast-only model that manages nothing. It sees the same results and lineups as the teams. After Week 7 it is second on the board at 0.249, behind only the spreadsheet, and the only model under the 50/50 line." }
   ],
 
   /* Weeks 1–3.
@@ -459,9 +459,9 @@ LEAGUES.hockey = {
      Roster holes are folded in: a $0 free agent was always available. Qwen's Week 1 empty UTIL slot
      was a commissioner IR error and is excluded. */
   decisions:{
-    weeks:[1,2,3,4,5,6],   // weeks the ledger, dead-start and deviation tables cover
-attention:[["deepseek", 6], ["gemini", 5], ["kimi", 5], ["qwen", 5], ["grok", 4], ["meta", 4], ["chatgpt", 3], ["espn", 1]],
-    attentionNote:"Starts of a player who played no games that week, Weeks 1–6. Week 6 had four: Muse's Dylan Guenther, Qwen's Miro Heiskanen, and DeepSeek's Petr Mrazek and Nick Schmaltz. DeepSeek now leads with six.",
+    weeks:[1,2,3,4,5,6,7],   // weeks the ledger, dead-start and deviation tables cover
+attention:[["deepseek", 7], ["gemini", 5], ["kimi", 5], ["qwen", 5], ["grok", 5], ["meta", 4], ["chatgpt", 3], ["espn", 1], ["sonnet", 1]],
+    attentionNote:"Starts of a player who played no games that week, Weeks 1–7. Week 7 had three: Grok's Brandon Hagel, Claude Sonnet's Cale Makar and DeepSeek's Nick Schmaltz, who was listed on injured reserve and started in its utility slot. DeepSeek leads with seven.",
     /* Judgment = both players played that week and the benched one outscored the starter.
        judgment = [team, count, points lost]. */
     judgment:[["fable", 10, 55.9], ["meta", 11, 55.7], ["gemini", 6, 41.6], ["espn", 9, 38.8], ["sonnet", 8, 31.7], ["chatgpt", 8, 27.0], ["deepseek", 6, 21.8], ["kimi", 6, 18.7], ["grok", 6, 15.9], ["qwen", 5, 15.6]],
@@ -553,22 +553,22 @@ attention:[["deepseek", 6], ["gemini", 5], ["kimi", 5], ["qwen", 5], ["grok", 4]
        deadStarts priced vs the best live bench alternative; slots with no live alternative (13) carry no price yet.
        deadCount kept in attention[]. */
     ledger:[
-      ["gemini",66.9,44.1,-10.6,54.7,121.6],
-      ["espn",65.3,4.4,-20.1,24.5,89.8],
-      ["meta",72,11.3,6.3,5,77],
-      ["kimi",22.1,26.5,-20,46.5,68.6],
-      ["fable",84.4,0,20,-20,64.4],
-      ["chatgpt",35.4,23.7,-1.1,24.8,60.2],
-      ["deepseek",43,4,-6.2,10.2,53.2],
-      ["qwen",55.2,1.8,6.3,-4.5,50.7],
-      ["sonnet",29.6,0,-19.4,19.4,49],
-      ["grok",59.5,0,11.3,-11.3,48.2]
+      ["gemini",95.5,44.1,-1.9,46,141.5],
+      ["espn",68.6,4.4,-25.9,30.3,98.9],
+      ["meta",88.8,11.3,11.1,0.2,89],
+      ["kimi",34.7,26.5,-22.6,49.1,83.8],
+      ["fable",95.2,0,13.9,-13.9,81.3],
+      ["deepseek",43.3,8.9,-26.1,35,78.3],
+      ["chatgpt",40.1,23.7,-1.1,24.8,64.9],
+      ["qwen",64.4,1.8,1.6,0.2,64.6],
+      ["sonnet",30.8,1.3,-29.9,31.2,62],
+      ["grok",67.9,1.6,8.3,-6.7,61.2]
     ],
-    ledgerNote:"682.7 points left on the table in six weeks: 533.4 to variance, 115.8 to dead starts, and a net 33.5 to deviations. Fourteen dead starts came in slots with no live bench alternative and carry no price, so the dead-start figure is a floor. Week 6 added four dead starts; Muse's Dylan Guenther alone cost 8.8. Claude Fable's calls against the projections have gained a net 20.0, the most in the league; the spreadsheet's, Kimi's and Claude Sonnet's have each cost about 20. The spreadsheet ranks players by ESPN's season projections, which don't count how many games each player has that week, so every one of its deviations comes from that blind spot.",
+    ledgerNote:"825.5 points left on the table in seven weeks: 629.3 to variance, 123.6 to dead starts, and a net 72.6 to deviations. Dead starts with no live bench alternative carry no price, so the dead-start figure is a floor. Week 7 alone cost 142.8, and its deviations a net 39.1, more than the six weeks before it combined; DeepSeek's calls cost 19.9 of that. Claude Fable's calls against the projections have gained a net 13.9, the most in the league; Claude Sonnet's have cost 29.9, the most. The spreadsheet ranks players by ESPN's season projections, which don't count how many games each player has that week, so every one of its deviations comes from that blind spot.",
     deviations:[
-      ["fable",3,2,1,20],["grok",8,5,3,11.3],["qwen",7,4,3,6.3],["meta",12,5,7,6.3],["chatgpt",7,2,4,-1.1],["deepseek",8,4,4,-6.2],["gemini",7,3,4,-10.6],["sonnet",9,3,6,-19.4],["kimi",9,2,7,-20],["espn",9,4,5,-20.1]
+      ["fable",5,3,2,13.9],["meta",13,6,7,11.1],["grok",10,5,5,8.3],["qwen",8,4,4,1.6],["chatgpt",7,2,4,-1.1],["gemini",11,5,6,-1.9],["kimi",12,4,8,-22.6],["espn",13,6,7,-25.9],["deepseek",11,4,7,-26.1],["sonnet",12,3,9,-29.9]
     ],
-    deviationsNote:"Same instrument as football: a start of a player projected below a benched alternative eligible for the same slot, each benched player counted once, dead starts excluded, priced against the alternative's actual points. Seventy-nine calls in six weeks, 34 won, 44 lost and one tie, net −33.5. Week 6's best call was Claude Fable starting Mackenzie Blackwood (10.6) over Scott Wedgewood (−2.6); the costliest was Claude Sonnet starting Victor Hedman (1.8) over Darren Raddysh (7.3).",
+    deviationsNote:"Same instrument as football: a start of a player projected below a benched alternative eligible for the same slot, each benched player counted once, dead starts excluded, priced against the alternative's actual points. 102 calls in seven weeks, 42 won, 59 lost and one tie, net −72.6. Week 7's best call was Gemini starting Cam Talbot (6.4) over Sergei Bobrovsky (−8.2); the costliest was Kimi starting Adin Hill (−4.6) over Ukko-Pekka Luukkonen (10.6).",
     judgmentNote:"Weeks 1–4, 75 judgment swaps costing 322.7 points. 209.1 came from calls the projection agreed with, which is variance. 113.6 came from starting the lower-projected player; the projection itself expected those calls to cost 27.0.",
     worstJudgment:[
       ["gemini",29.8,"Week 4: started Sergei Bobrovsky for −7.8 with Pyotr Kochetkov's 22.0 on the bench"],
@@ -646,6 +646,9 @@ attention:[["deepseek", 6], ["gemini", 5], ["kimi", 5], ["qwen", 5], ["grok", 4]
 
   /* Newest first. */
   log:[
+    { wk:"Week 7", h:"Eleven cards for Grok, and the spreadsheet wins", p:"For the second week running every forecaster missed the same game. The spreadsheet, whose own card gave Grok 57%, won 77.9 to 66.0 behind Matt Boldy (15.3) and Matthew Schaefer (12.6). ChatGPT had put 89% on Grok, Qwen 82%." },
+    { wk:"Week 7", h:"The majority goes 1 for 5", p:"The models' consensus was right only on Muse over DeepSeek. Gemini, alone in picking itself, beat Claude Sonnet by 22.1; ChatGPT beat Kimi after picking Kimi. Qwen missed all five at 0.510, while the spreadsheet's 3 of 5 at 0.226 was the week's best card and keeps it first on the board." },
+    { wk:"Week 7", h:"A starter from injured reserve", p:"DeepSeek started Nick Schmaltz, listed on injured reserve, in its utility slot; he played no games. It lost to Muse by 4.3 with its lineup at 69.3% of its best, the week's lowest, and leads the league with seven dead starts." },
     { wk:"Week 6", h:"Eleven cards for Qwen, and DeepSeek wins by 0.3", p:"Every forecaster picked Qwen. DeepSeek won 46.2 to 45.9, the lowest winning score of the season, while starting two players who played no games and a goalie who scored −11.6. Qwen started one of its own who never played." },
     { wk:"Week 6", h:"The spreadsheet benches Cutter Gauthier a third straight week and posts the high score anyway", p:"Its ownership rule sat Gauthier (7.8) and Bo Horvat (9.0) for Alex DeBrincat (0.7) and Alex Tuch (2.3). Joel Hofer's 15.4 carried it to 84.0 and a 30.4-point win over Gemini, which had picked itself at 88%." },
     { wk:"Week 5", h:"The spreadsheet's own rule costs it a second straight game", p:"Its season-projection rule, blind to games that week, started Alex Tuch (3.2) and left Cutter Gauthier (23.5) on the bench, a week after benching him for 16.2. It lost to Kimi 72.0 to 60.4; its best possible lineup that week scored 80.9." },
@@ -806,14 +809,14 @@ attention:[["deepseek", 6], ["gemini", 5], ["kimi", 5], ["qwen", 5], ["grok", 4]
       { a:"kimi", b:"sonnet", w:"sonnet", picks:{chatgpt:["sonnet",61],gemini:["sonnet",65],grok:["sonnet",62],qwen:["sonnet",65],meta:["sonnet",60],fable:["sonnet",55],sonnet:["sonnet",66],deepseek:["sonnet",57],espn:["sonnet",57],kimi:["sonnet",58],instinct:["sonnet",55]} },
       { a:"meta", b:"chatgpt", w:"meta", picks:{chatgpt:["meta",57],gemini:["meta",60],grok:["meta",57],qwen:["chatgpt",62],meta:["meta",60],fable:["meta",57],sonnet:["meta",54],deepseek:["chatgpt",53],espn:["meta",56],kimi:["chatgpt",63],instinct:["meta",65]} }
     ] },
-   { wk:"Week 7", scored:false,
-     note:"Final cards, collected after every locked lineup was published. Every forecaster, the spreadsheet included, picked Grok over the spreadsheet; Gemini is the only one picking itself.",
+   { wk:"Week 7", scored:true,
+     note:"Final cards, collected after every locked lineup was published. All eleven picked Grok, and the spreadsheet won; the models' majority went 1 for 5. The spreadsheet had the week's best card, 3 of 5 at 0.226, and Qwen went 0 for 5.",
      games:[
-      { a:"qwen", b:"fable", w:null, picks:{fable:["fable",55],sonnet:["fable",60],chatgpt:["qwen",56],gemini:["qwen",64],grok:["qwen",59],deepseek:["qwen",64],qwen:["qwen",78],meta:["fable",68],kimi:["qwen",55],espn:["fable",57],instinct:["fable",56]} },
-      { a:"grok", b:"espn", w:null, picks:{fable:["grok",62],sonnet:["grok",62],chatgpt:["grok",89],gemini:["grok",78],grok:["grok",64],deepseek:["grok",66],qwen:["grok",82],meta:["grok",70],kimi:["grok",55],espn:["grok",57],instinct:["grok",78]} },
-      { a:"gemini", b:"sonnet", w:null, picks:{fable:["sonnet",56],sonnet:["sonnet",66],chatgpt:["sonnet",58],gemini:["gemini",62],grok:["sonnet",57],deepseek:["sonnet",58],qwen:["sonnet",65],meta:["sonnet",62],kimi:["sonnet",57],espn:["sonnet",52],instinct:["sonnet",59]} },
-      { a:"kimi", b:"chatgpt", w:null, picks:{fable:["chatgpt",54],sonnet:["kimi",54],chatgpt:["kimi",54],gemini:["kimi",66],grok:["chatgpt",55],deepseek:["kimi",55],qwen:["kimi",68],meta:["chatgpt",60],kimi:["kimi",58],espn:["chatgpt",64],instinct:["chatgpt",69]} },
-      { a:"meta", b:"deepseek", w:null, picks:{fable:["meta",56],sonnet:["meta",58],chatgpt:["meta",57],gemini:["meta",71],grok:["meta",56],deepseek:["deepseek",57],qwen:["deepseek",62],meta:["meta",56],kimi:["meta",60],espn:["meta",53],instinct:["meta",63]} }
+      { a:"qwen", b:"fable", w:"fable", picks:{fable:["fable",55],sonnet:["fable",60],chatgpt:["qwen",56],gemini:["qwen",64],grok:["qwen",59],deepseek:["qwen",64],qwen:["qwen",78],meta:["fable",68],kimi:["qwen",55],espn:["fable",57],instinct:["fable",56]} },
+      { a:"grok", b:"espn", w:"espn", picks:{fable:["grok",62],sonnet:["grok",62],chatgpt:["grok",89],gemini:["grok",78],grok:["grok",64],deepseek:["grok",66],qwen:["grok",82],meta:["grok",70],kimi:["grok",55],espn:["grok",57],instinct:["grok",78]} },
+      { a:"gemini", b:"sonnet", w:"gemini", picks:{fable:["sonnet",56],sonnet:["sonnet",66],chatgpt:["sonnet",58],gemini:["gemini",62],grok:["sonnet",57],deepseek:["sonnet",58],qwen:["sonnet",65],meta:["sonnet",62],kimi:["sonnet",57],espn:["sonnet",52],instinct:["sonnet",59]} },
+      { a:"kimi", b:"chatgpt", w:"chatgpt", picks:{fable:["chatgpt",54],sonnet:["kimi",54],chatgpt:["kimi",54],gemini:["kimi",66],grok:["chatgpt",55],deepseek:["kimi",55],qwen:["kimi",68],meta:["chatgpt",60],kimi:["kimi",58],espn:["chatgpt",64],instinct:["chatgpt",69]} },
+      { a:"meta", b:"deepseek", w:"meta", picks:{fable:["meta",56],sonnet:["meta",58],chatgpt:["meta",57],gemini:["meta",71],grok:["meta",56],deepseek:["deepseek",57],qwen:["deepseek",62],meta:["meta",56],kimi:["meta",60],espn:["meta",53],instinct:["meta",63]} }
     ] }
   ],
 
@@ -1038,69 +1041,69 @@ LEAGUES.basketball = {
     sport:"Basketball", slug:"basketball", season:"2026-27",
     teams:12,
     format:"Head-to-head points, weekly lineup lock, 20-week regular season",
-    weeks:[1,2,3,4],
-    through:4, current:5,
+    weeks:[1,2,3,4,5],
+    through:5, current:6,
     status:"live",
-    statusNote:"Week 4 is final. Week 5 (Nov 16–22) is under way: waivers and trades processed, every lineup locked and published, all twelve prediction cards in.",
+    statusNote:"Week 5 is final. Week 6 (Nov 23–29) is next.",
     waiver:"$100 FAAB, sealed bid",
     byes:null,
     roster:"The football ten plus Mistral and Instinct.",
     names:{ meta:"Muse" }
   },
   teams:[
-    { k:"deepseek", rec:"2-2", pf:402.7, pa:447.7, allplay:"30-14", pred:12, brier:0.261, faab:33, eff:[95.3, 98.5, 94.2, 100.0], att:1, scores:[101.2, 112.3, 108.4, 80.8],
-      note:"Led the league against the field at 29-4 after three weeks, then scored a season-low 80.8 and lost to the spreadsheet by 37.7 with Brandon Ingram, who played no games, in its lineup. Now 30-14." },
-    { k:"qwen", rec:"3-1", pf:383.5, pa:376.8, allplay:"22-22", pred:13, brier:0.26, faab:63, eff:[96.6, 89.9, 98.0, 88.8], att:2, scores:[90.1, 105.5, 97.4, 90.5],
-      note:"3-1. Beat Kimi by 6.5 in Week 4 while starting Cason Wallace, who played no games, and Jaden Ivey, who has no NBA team. Its calls against the projections have gained a net 15.9 points, the most in the league." },
-    { k:"mistral", rec:"3-1", pf:395.9, pa:382.4, allplay:"26-18", pred:8, brier:0.287, faab:29, eff:[89.3, 95.6, 93.0, 100.0], att:5, scores:[90.9, 103.9, 112.3, 88.8],
-      note:"3-1 with five starts of players who played no games, the most in the league; the latest was Dereck Lively II in Week 4. Third-worst Brier (0.287)." },
-    { k:"sonnet", rec:"3-1", pf:433.0, pa:377.8, allplay:"29-15", pred:13, brier:0.272, faab:16, eff:[93.0, 92.8, 91.7, 98.5], att:1, scores:[89.4, 105.0, 102.9, 135.7],
-      note:"Scored 135.7 in Week 4, the second-highest score of the season, and beat Grok by 41.1. Fourth against the field at 29-15." },
-    { k:"espn", rec:"3-1", pf:442.9, pa:381.5, allplay:"33-11", pred:13, brier:0.248, faab:0, eff:[91.4, 86.1, 94.6, 96.7], att:2, scores:[99.4, 92.6, 132.4, 118.5],
-      note:"33-11 against the field, the best in the league, after beating DeepSeek by 37.7. Tied for second on the prediction board (0.248) since its confidence rule was recalibrated from margin ÷ 13 to margin ÷ 40." },
-    { k:"grok", rec:"0-4", pf:391.6, pa:447.3, allplay:"23-21", pred:10, brier:0.297, faab:62, eff:[96.4, 91.6, 89.4, 86.8], att:1, scores:[98.2, 93.1, 105.7, 94.6],
-      note:"0-4 with a winning record against the field, 23-21. In Week 4 it won Jamal Shead for $6 by dropping Matas Buzelis, its only forward-eligible starter, then played the week with its F slot empty. Its calls against the projections have cost a net 21.5, the most in the league." },
-    { k:"fable", rec:"2-2", pf:397.1, pa:345.2, allplay:"22-22", pred:14, brier:0.248, faab:13, eff:[91.7, 84.5, 95.2, 93.3], att:2, scores:[94.0, 89.9, 102.8, 110.4],
-      note:"Beat ChatGPT 110.4 to 76.7 for its second win. Tied for second on the prediction board at 0.248, with 14 of 24 right." },
-    { k:"instinct", rec:"4-0", pf:435.0, pa:381.5, allplay:"30-14", pred:12, brier:0.278, faab:52, eff:[90.4, 93.3, 99.6, 91.7], att:1, scores:[79.2, 104.0, 145.4, 106.4],
-      note:"4-0, the last unbeaten team, after edging Gemini 106.4 to 105.1. It started Trey Murphy III, who played no games, and won anyway." },
-    { k:"kimi", rec:"1-3", pf:369.3, pa:375.6, allplay:"18-26", pred:8, brier:0.325, faab:43, eff:[90.8, 100.0, 97.7, 99.2], att:1, scores:[75.4, 101.3, 108.6, 84.0],
-      note:"1-3 with the worst Brier in the league (0.325). Lost Week 4 to Qwen by 6.5." },
-    { k:"meta", rec:"2-2", pf:378.6, pa:379.6, allplay:"17-27", pred:17, brier:0.214, faab:37, eff:[95.9, 81.5, 93.4, 94.5], att:1, scores:[88.1, 85.6, 108.2, 96.7],
-      note:"Called all six games in Week 3 and again in Week 4, the only perfect cards in the league, and leads the prediction board at 0.214 with 17 of 24 right. As a manager it is 17-27 against the field, third from the bottom." },
-    { k:"gemini", rec:"1-3", pf:344.0, pa:401.7, allplay:"12-32", pred:11, brier:0.285, faab:10, eff:[89.7, 94.3, 94.3, 98.9], att:3, scores:[61.7, 98.1, 79.1, 105.1],
-      note:"Scored a season-high 105.1 in Week 4 and lost to Instinct by 1.3. 12-32 against the field." },
-    { k:"chatgpt", rec:"0-4", pf:322.0, pa:398.5, allplay:"2-42", pred:14, brier:0.256, faab:19, eff:[88.0, 100.0, 95.1, 97.0], att:2, scores:[74.9, 73.5, 96.9, 76.7],
-      note:"0-4 and 2-42 against the field, by far the worst in the league, yet fourth on the prediction board (0.256). Moved to a new chat in Week 5 after its old one ran out of memory." }
+    { k:"deepseek", rec:"2-3", pf:472.9, pa:518.9, allplay:"30-24", pred:16, brier:0.255, faab:33, eff:[95.3, 98.5, 94.2, 100.0, 98.2], att:2, scores:[101.2, 112.3, 108.4, 80.8, 70.2],
+      note:"2-3. Lost Week 5 to Kimi by 1.0 with Caleb Wilson, who played no games, in its lineup; each had picked the other to win. Fourth on the prediction board (0.255) after a 4-of-6 week." },
+    { k:"qwen", rec:"3-2", pf:453.7, pa:500.1, allplay:"22-32", pred:16, brier:0.271, faab:63, eff:[96.6, 89.9, 98.0, 88.8, 80.3], att:4, scores:[90.1, 105.5, 97.4, 90.5, 70.2],
+      note:"3-2. Lost Week 5 to Claude Fable 123.3 to 70.2 with two starters who played no games, Cason Wallace (for the second straight week) and Vince Williams Jr. Its calls against the projections are still a net +15.8, the most in the league." },
+    { k:"mistral", rec:"3-2", pf:503.1, pa:494.8, allplay:"32-23", pred:11, brier:0.282, faab:29, eff:[89.3, 95.6, 93.0, 100.0, 100.0], att:5, scores:[90.9, 103.9, 112.3, 88.8, 107.2],
+      note:"3-2. Lost Week 5 to the unbeaten Instinct 112.4 to 107.2 with its lineup at 100% of its best, the only perfect lineup in either league that week. Five dead starts, still the most in the league, and tied for the fewest correct picks (11 of 30)." },
+    { k:"sonnet", rec:"3-2", pf:552.7, pa:512.0, allplay:"37-18", pred:17, brier:0.271, faab:16, eff:[93.0, 92.8, 91.7, 98.5, 95.7], att:1, scores:[89.4, 105.0, 102.9, 135.7, 119.7],
+      note:"Scored 119.7 in Week 5 and lost to Muse, the week's high at 134.2, in the only game all twelve cards agreed on. 37-18 against the field, tied for second." },
+    { k:"espn", rec:"4-1", pf:571.3, pa:476.8, allplay:"43-12", pred:16, brier:0.252, faab:0, eff:[91.4, 86.1, 94.6, 96.7, 92.3], att:2, scores:[99.4, 92.6, 132.4, 118.5, 128.4],
+      note:"4-1 and 43-12 against the field, the best in the league, after beating Gemini 128.4 to 95.3 behind Nikola Jokic's 24.8. Third on the prediction board at 0.252." },
+    { k:"grok", rec:"0-5", pf:474.7, pa:530.8, allplay:"26-29", pred:14, brier:0.281, faab:62, eff:[96.4, 91.6, 89.4, 86.8, 92.4], att:2, scores:[98.2, 93.1, 105.7, 94.6, 83.1],
+      note:"0-5, the only winless team, with a 26-29 record against the field. Lost Week 5 to ChatGPT by 0.4 with Austin Reaves, who played no games, in its lineup; eleven of twelve cards had picked it. Its calls against the projections have cost a net 19.3, the most in the league." },
+    { k:"fable", rec:"3-2", pf:520.4, pa:415.4, allplay:"31-24", pred:18, brier:0.25, faab:13, eff:[91.7, 84.5, 95.2, 93.3, 95.2], att:2, scores:[94.0, 89.9, 102.8, 110.4, 123.3],
+      note:"3-2 after beating Qwen 123.3 to 70.2, the widest margin of the week. Second on the prediction board at 0.250, with 18 of 30 right." },
+    { k:"instinct", rec:"5-0", pf:547.4, pa:488.7, allplay:"37-18", pred:15, brier:0.276, faab:52, eff:[90.4, 93.3, 99.6, 91.7, 94.3], att:1, scores:[79.2, 104.0, 145.4, 106.4, 112.4],
+      note:"5-0, the last unbeaten team, after beating Mistral 112.4 to 107.2 behind Jalen Brunson (16.8) and Donovan Clingan (16.5)." },
+    { k:"kimi", rec:"2-3", pf:440.5, pa:445.8, allplay:"20-35", pred:11, brier:0.324, faab:43, eff:[90.8, 100.0, 97.7, 99.2, 99.3], att:1, scores:[75.4, 101.3, 108.6, 84.0, 71.2],
+      note:"2-3 with the worst Brier in the league (0.324). Beat DeepSeek 71.2 to 70.2 in Week 5, with its lineup at 99.3% of its best, after picking DeepSeek on its own card." },
+    { k:"meta", rec:"3-2", pf:512.8, pa:499.3, allplay:"28-27", pred:21, brier:0.209, faab:37, eff:[95.9, 81.5, 93.4, 94.5, 97.4], att:1, scores:[88.1, 85.6, 108.2, 96.7, 134.2],
+      note:"Beat Claude Sonnet 134.2 to 119.7 in Week 5, the week's high, in a game every card, its own included, gave to Sonnet. Still leads the prediction board at 0.209, with the week's best card again (4 of 6, 0.189). 28-27 against the field." },
+    { k:"gemini", rec:"1-4", pf:439.3, pa:530.1, allplay:"17-38", pred:13, brier:0.295, faab:10, eff:[89.7, 94.3, 94.3, 98.9, 87.3], att:4, scores:[61.7, 98.1, 79.1, 105.1, 95.3],
+      note:"1-4 and 17-38 against the field. Lost Week 5 to the spreadsheet 128.4 to 95.3 after picking itself at 62, with CJ McCollum, who played no games, in its lineup and Tre Jones (11.4) on its bench." },
+    { k:"chatgpt", rec:"1-4", pf:405.5, pa:481.6, allplay:"6-49", pred:17, brier:0.275, faab:19, eff:[88.0, 100.0, 95.1, 97.0, 93.8], att:3, scores:[74.9, 73.5, 96.9, 76.7, 83.5],
+      note:"1-4. Won for the first time in Week 5, beating Grok 83.5 to 83.1 after putting 82% on Grok on its own card. Still 6-49 against the field, by far the worst in the league." }
   ],
   benchmarks:[
-    { name:"Points-for rule", pred:12, brier:0.249, of:18,
-      note:"Weeks 2–4, 12 of 18. 4 of 5 in Week 4; its only miss was Mistral over Muse, and Claude Sonnet against Grok was a 50." },
-    { name:"Model consensus (majority)", pred:13, brier:0.265,
-      note:"Majority pick of the eleven models, at the majority side's mean confidence: 13 of 24." },
-    { name:"Model consensus (pooled)", pred:14, brier:0.261,
-      note:"Mean probability of the eleven models: 14 of 24." }
+    { name:"Points-for rule", pred:15, brier:0.253, of:24,
+      note:"Weeks 2–5, 15 of 24. 3 of 6 in Week 5: right on Claude Fable, the spreadsheet and Instinct; wrong on DeepSeek, Grok and Claude Sonnet." },
+    { name:"Model consensus (majority)", pred:17, brier:0.262,
+      note:"Majority pick of the eleven models, at the majority side's mean confidence: 17 of 30. All eleven took Claude Sonnet over Muse in Week 5, and Muse won." },
+    { name:"Model consensus (pooled)", pred:18, brier:0.262,
+      note:"Mean probability of the eleven models: 18 of 30." }
   ],
   decisions:{
-    weeks:[1,2,3,4],   // weeks the ledger, dead-start and deviation tables cover
+    weeks:[1,2,3,4,5],   // weeks the ledger, dead-start and deviation tables cover
     /* ledger = [team, variance, deadStarts, deviationsNet, controllable, total], Weeks 1–3,
        same definitions as football; total = sum of (best ten - actual), variance = total - deadStarts + deviationsNet. */
     ledger:[
-      ["grok",9.7,7.9,-21.5,29.4,39.1],
-      ["fable",26.9,14.6,3.4,11.2,38.1],
-      ["meta",19.4,13.3,-3.8,17.1,36.5],
-      ["espn",22.8,13.2,0,13.2,36],
-      ["qwen",23.4,21,15.9,5.1,28.5],
-      ["sonnet",17.6,5.9,-2.7,8.6,26.2],
-      ["instinct",13.6,15.6,3.1,12.5,26.1],
+      ["espn",31.8,13.2,-1.7,14.9,46.7],
+      ["grok",9.7,14.7,-21.5,36.2,45.9],
+      ["qwen",23.4,38.1,15.8,22.3,45.7],
+      ["fable",28.6,14.6,-1.1,15.7,44.3],
+      ["meta",37,13.3,10.2,3.1,40.1],
+      ["instinct",21.9,15.6,4.6,11,32.9],
+      ["gemini",9.9,21,-2,23,32.9],
+      ["sonnet",23,5.9,-2.7,8.6,31.6],
       ["mistral",3.2,17.8,-3.1,20.9,24.1],
-      ["gemini",7.6,13,1.6,11.4,19],
-      ["chatgpt",17.8,9.7,9.9,-0.2,17.6],
-      ["deepseek",13.3,0,-0.1,0.1,13.4],
-      ["kimi",9.3,7.7,6,1.7,11]
+      ["chatgpt",17.8,15.2,9.9,5.3,23.1],
+      ["deepseek",13.3,0,-1.4,1.4,14.7],
+      ["kimi",16.5,7.7,12.7,-5,11.5]
     ],
-    ledgerNote:"315.6 points left on the table in four weeks: 184.6 to variance, 139.7 to dead starts, and a net 8.7 won back by deviations. Dead starts are 44% of the total, more than twice their share in football or hockey: with lineups locked for a week, a starter who sits costs every game he misses. Week 4 added six: Qwen's Cason Wallace and Jaden Ivey (who has no NBA team), Mistral's Dereck Lively II, Instinct's Trey Murphy III, ChatGPT's Lauri Markkanen and DeepSeek's Brandon Ingram. Qwen's calls won back 17.7 of the 21.0 its dead starts cost. Grok's calls are the costliest in the league, a net 21.5.",
-    attention:[["mistral",5],["gemini",3],["fable",2],["espn",2],["chatgpt",2],["qwen",2],["kimi",1],["meta",1],["grok",1],["sonnet",1],["deepseek",1],["instinct",1]],
+    ledgerNote:"393.5 points left on the table in five weeks: 236.1 to variance, 177.1 to dead starts, and a net 19.7 won back by deviations. Dead starts are 45% of the total, more than twice their share in football or hockey: with lineups locked for a week, a starter who sits costs every game he misses. Week 5 added six: Qwen's Cason Wallace (his second straight week) and Vince Williams Jr., Grok's Austin Reaves, Gemini's CJ McCollum, ChatGPT's Jaren Jackson Jr. and DeepSeek's Caleb Wilson. Qwen's two cost 17.1, the most of the week. Mistral set the only perfect lineup of the week.",
+    attention:[["mistral",5],["gemini",4],["qwen",4],["chatgpt",3],["fable",2],["espn",2],["grok",2],["deepseek",2],["kimi",1],["meta",1],["sonnet",1],["instinct",1]],
     attentionLog:[
       ["fable","Week 2","Jalen Duren",9.2,true],
       ["fable","Week 2","Ivica Zubac",5.4,false],
@@ -1117,7 +1120,7 @@ LEAGUES.basketball = {
       ["espn","Week 1","Kon Knueppel",7.9,false],
       ["chatgpt","Week 1","Tobias Harris",6.0,false]
     ],
-    attentionNote:"Twenty-two starts of a player who played no games through four weeks. Week 3 had two (Claude Sonnet's Jaren Jackson Jr. and Mistral's Shaedon Sharpe); Week 4 had six. Mistral leads with five.",
+    attentionNote:"Twenty-eight starts of a player who played no games through five weeks. Week 5 had six, two of them Qwen's. Mistral leads with five; Gemini and Qwen have four each.",
     forced:[["mistral","Week 2","Jalen Williams"]],
     wk1:{
       deepseek:[101.1,106.1,0,0,5.0,30,31], espn:[99.2,108.5,7.9,2.6,-1.2,24,27], grok:[98.2,101.9,0,2.3,1.4,29,30],
@@ -1131,7 +1134,7 @@ LEAGUES.basketball = {
       gemini:[98.2,104.1,5.9,0,0,28,32], grok:[93.1,101.6,7.9,0,0.6,30,34], espn:[92.6,107.6,5.3,4.6,5.1,29,32],
       fable:[89.9,106.4,14.6,0,1.9,26,32], meta:[85.6,105.0,13.3,4.0,2.1,26,33], chatgpt:[73.1,73.1,0,0,0,26,26]
     },
-    deviation:[["qwen",7,4,3,15.9],["chatgpt",3,2,1,9.9],["kimi",2,2,0,6],["fable",4,2,2,3.4],["instinct",4,2,2,3.1],["gemini",3,2,1,1.6],["espn",0,0,0,0],["deepseek",4,2,2,-0.1],["sonnet",4,2,2,-2.7],["mistral",1,0,1,-3.1],["meta",6,3,3,-3.8],["grok",4,0,4,-19.3]],
+    deviation:[["qwen",8,4,4,15.8],["kimi",3,3,0,12.7],["meta",9,6,3,10.2],["chatgpt",3,2,1,9.9],["instinct",5,3,2,4.6],["fable",5,2,3,-1.1],["deepseek",5,2,3,-1.4],["espn",2,1,1,-1.7],["gemini",5,2,3,-2],["sonnet",4,2,2,-2.7],["mistral",1,0,1,-3.1],["grok",4,0,4,-19.3]],
     deviationLog:[
       ["fable","Week 2","Cooper Flagg",19.2,3,"Saddiq Bey",8.6,3,10.6],
       ["chatgpt","Week 2","Paul Reed",10.4,3,"Jalen Suggs",0,0,10.4],
@@ -1154,7 +1157,7 @@ LEAGUES.basketball = {
       ["chatgpt","Week 1","Herbert Jones",2.1,3,"Reed Sheppard",5.9,2,-3.8],
       ["fable","Week 1","James Harden",4.8,2,"Kyshawn George",8.7,3,-3.9]
     ],
-    deviationNote:"Lineup choices against ESPN's projections, priced against the player the projections preferred: 42 through four weeks, 21 won and 21 lost, net +10.9. Week 4's best was Qwen starting Brandin Podziemski (10.4) over Bennedict Mathurin (−0.2); its worst was Grok starting Julius Randle (6.2) over Jamal Shead (10.1).",
+    deviationNote:"Lineup choices against ESPN's projections, priced against the player the projections preferred: 54 through five weeks, 27 won and 27 lost, net +21.9. Week 5's best was Kimi starting Devin Vassell (9.1) over Deandre Ayton (2.4); its worst was the spreadsheet's rule starting VJ Edgecombe (12.2) over Ausar Thompson (17.7).",
     worstJudgment:[
       ["instinct",15.9,"Week 1: Jaylen Wells scored 10.0 on the bench. Week 2: Isaiah Hartenstein scored 8.8 on the bench"],
       ["qwen",15.1,"Week 2: Anthony Black 9.6 and Sam Hauser 6.2 on the bench; 11.1 of it from extra games"],
@@ -1162,6 +1165,9 @@ LEAGUES.basketball = {
     ]
   },
   log:[
+    { wk:"Week 5", h:"Every card picks Claude Sonnet, and Muse wins", p:"The week's only unanimous pick lost: Muse scored 134.2, the week's high, to Claude Sonnet's 119.7. Muse had given Sonnet 54%, the lowest confidence on the board, and still filed the week's best card (4 of 6, 0.189)." },
+    { wk:"Week 5", h:"ChatGPT wins for the first time, by 0.4, after betting against itself", p:"ChatGPT beat Grok 83.5 to 83.1 after putting 82% on Grok. Grok, which started Austin Reaves for a week he never played, is the league's only winless team at 0-5." },
+    { wk:"Week 5", h:"Kimi and DeepSeek each pick the other; Kimi wins by 1.0", p:"Both cards gave the opponent 62%. Kimi won 71.2 to 70.2. DeepSeek started Caleb Wilson, who played no games." },
     { wk:"Week 4", h:"Muse calls every game for the second week running", p:"No other forecaster has filed a perfect card. Muse now leads the prediction board at 0.214 while sitting 17-27 against the field as a manager, third from the bottom." },
     { wk:"Week 4", h:"Grok drops its own starter and plays a man short", p:"Grok won Jamal Shead on waivers by dropping Matas Buzelis, its only forward-eligible starter, and had no one left to fill the F slot. It played the week with nine starters and lost to Claude Sonnet by 41.1." },
     { wk:"Week 4", h:"A starter with no team", p:"Qwen started Jaden Ivey, who is not on an NBA roster, and Cason Wallace, who played no games. It still beat Kimi by 6.5, because its other calls against the projections gained 17.7." },
@@ -1344,15 +1350,15 @@ LEAGUES.basketball = {
       { a:"sonnet", b:"grok", w:"sonnet", picks:{gemini:["sonnet",68],qwen:["sonnet",70],sonnet:["sonnet",64],fable:["sonnet",60],meta:["sonnet",70],grok:["sonnet",58],deepseek:["sonnet",57],chatgpt:["grok",55],mistral:["sonnet",60],espn:["grok",55],kimi:["sonnet",57],instinct:["sonnet",62]} },
       { a:"meta", b:"mistral", w:"meta", picks:{gemini:["mistral",65],qwen:["mistral",70],sonnet:["mistral",56],fable:["mistral",60],meta:["meta",64],grok:["mistral",64],deepseek:["mistral",55],chatgpt:["mistral",62],mistral:["mistral",56],espn:["meta",72],kimi:["mistral",64],instinct:["mistral",60]} }
     ] },
-   { wk:"Week 5", scored:false,
-     note:"Final cards, collected after every locked lineup was published, before the first tip on 16 November. Claude Sonnet over Muse is the only unanimous pick.",
+   { wk:"Week 5", scored:true,
+     note:"Final cards, collected after every locked lineup was published, before the first tip on 16 November. Claude Sonnet over Muse was the only unanimous pick, and Muse won it. Muse still had the week's best card, 4 of 6 at 0.189.",
      games:[
-      { a:"deepseek", b:"kimi", w:null, picks:{fable:["kimi",54],sonnet:["kimi",54],chatgpt:["kimi",78],gemini:["kimi",66],grok:["kimi",58],mistral:["kimi",55],qwen:["kimi",65],meta:["kimi",64],deepseek:["kimi",62],kimi:["deepseek",62],espn:["kimi",67],instinct:["kimi",60]} },
-      { a:"qwen", b:"fable", w:null, picks:{fable:["fable",65],sonnet:["fable",55],chatgpt:["fable",59],gemini:["fable",58],grok:["fable",61],mistral:["fable",55],qwen:["fable",75],meta:["fable",66],deepseek:["qwen",55],kimi:["fable",66],espn:["fable",76],instinct:["qwen",52]} },
-      { a:"espn", b:"gemini", w:null, picks:{fable:["espn",65],sonnet:["espn",64],chatgpt:["espn",64],gemini:["gemini",62],grok:["espn",67],mistral:["espn",58],qwen:["espn",55],meta:["espn",79],deepseek:["espn",62],kimi:["espn",68],espn:["espn",67],instinct:["espn",58]} },
-      { a:"chatgpt", b:"grok", w:null, picks:{fable:["grok",62],sonnet:["grok",60],chatgpt:["grok",82],gemini:["grok",64],grok:["grok",56],mistral:["grok",55],qwen:["grok",65],meta:["grok",66],deepseek:["chatgpt",55],kimi:["grok",73],espn:["grok",77],instinct:["grok",58]} },
-      { a:"instinct", b:"mistral", w:null, picks:{fable:["instinct",54],sonnet:["instinct",62],chatgpt:["mistral",62],gemini:["mistral",61],grok:["instinct",60],mistral:["mistral",52],qwen:["mistral",60],meta:["instinct",66],deepseek:["instinct",58],kimi:["instinct",64],espn:["mistral",50],instinct:["instinct",62]} },
-      { a:"sonnet", b:"meta", w:null, picks:{fable:["sonnet",70],sonnet:["sonnet",76],chatgpt:["sonnet",84],gemini:["sonnet",74],grok:["sonnet",63],mistral:["sonnet",65],qwen:["sonnet",85],meta:["sonnet",54],deepseek:["sonnet",65],kimi:["sonnet",82],espn:["sonnet",69],instinct:["sonnet",72]} }
+      { a:"deepseek", b:"kimi", w:"kimi", picks:{fable:["kimi",54],sonnet:["kimi",54],chatgpt:["kimi",78],gemini:["kimi",66],grok:["kimi",58],mistral:["kimi",55],qwen:["kimi",65],meta:["kimi",64],deepseek:["kimi",62],kimi:["deepseek",62],espn:["kimi",67],instinct:["kimi",60]} },
+      { a:"qwen", b:"fable", w:"fable", picks:{fable:["fable",65],sonnet:["fable",55],chatgpt:["fable",59],gemini:["fable",58],grok:["fable",61],mistral:["fable",55],qwen:["fable",75],meta:["fable",66],deepseek:["qwen",55],kimi:["fable",66],espn:["fable",76],instinct:["qwen",52]} },
+      { a:"espn", b:"gemini", w:"espn", picks:{fable:["espn",65],sonnet:["espn",64],chatgpt:["espn",64],gemini:["gemini",62],grok:["espn",67],mistral:["espn",58],qwen:["espn",55],meta:["espn",79],deepseek:["espn",62],kimi:["espn",68],espn:["espn",67],instinct:["espn",58]} },
+      { a:"chatgpt", b:"grok", w:"chatgpt", picks:{fable:["grok",62],sonnet:["grok",60],chatgpt:["grok",82],gemini:["grok",64],grok:["grok",56],mistral:["grok",55],qwen:["grok",65],meta:["grok",66],deepseek:["chatgpt",55],kimi:["grok",73],espn:["grok",77],instinct:["grok",58]} },
+      { a:"instinct", b:"mistral", w:"instinct", picks:{fable:["instinct",54],sonnet:["instinct",62],chatgpt:["mistral",62],gemini:["mistral",61],grok:["instinct",60],mistral:["mistral",52],qwen:["mistral",60],meta:["instinct",66],deepseek:["instinct",58],kimi:["instinct",64],espn:["mistral",50],instinct:["instinct",62]} },
+      { a:"sonnet", b:"meta", w:"meta", picks:{fable:["sonnet",70],sonnet:["sonnet",76],chatgpt:["sonnet",84],gemini:["sonnet",74],grok:["sonnet",63],mistral:["sonnet",65],qwen:["sonnet",85],meta:["sonnet",54],deepseek:["sonnet",65],kimi:["sonnet",82],espn:["sonnet",69],instinct:["sonnet",72]} }
     ] }
   ],
   /* Final opening-night scores (kept as data, no longer rendered: single-night
