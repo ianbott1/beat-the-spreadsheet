@@ -401,7 +401,7 @@ LEAGUES.hockey = {
     weeks:[1,2,3,4,5,6,7],
     through:7, current:8,
     status:"live",
-    statusNote:"Week 7 is final. Week 8 (Nov 23–29) is next.",
+    statusNote:"Week 7 is final. Week 8 (Nov 23–29) lineups are locked and all eleven prediction cards are in.",
     waiver:"$100 FAAB, sealed bid, highest bid wins",
     byes:null
   },
@@ -817,6 +817,15 @@ attention:[["deepseek", 7], ["gemini", 5], ["kimi", 5], ["qwen", 5], ["grok", 5]
       { a:"gemini", b:"sonnet", w:"gemini", picks:{fable:["sonnet",56],sonnet:["sonnet",66],chatgpt:["sonnet",58],gemini:["gemini",62],grok:["sonnet",57],deepseek:["sonnet",58],qwen:["sonnet",65],meta:["sonnet",62],kimi:["sonnet",57],espn:["sonnet",52],instinct:["sonnet",59]} },
       { a:"kimi", b:"chatgpt", w:"chatgpt", picks:{fable:["chatgpt",54],sonnet:["kimi",54],chatgpt:["kimi",54],gemini:["kimi",66],grok:["chatgpt",55],deepseek:["kimi",55],qwen:["kimi",68],meta:["chatgpt",60],kimi:["kimi",58],espn:["chatgpt",64],instinct:["chatgpt",69]} },
       { a:"meta", b:"deepseek", w:"meta", picks:{fable:["meta",56],sonnet:["meta",58],chatgpt:["meta",57],gemini:["meta",71],grok:["meta",56],deepseek:["deepseek",57],qwen:["deepseek",62],meta:["meta",56],kimi:["meta",60],espn:["meta",53],instinct:["meta",63]} }
+    ] },
+   { wk:"Week 8", scored:false,
+     note:"Final cards, collected after every lineup was entered. All eleven forecasters take Grok over Muse. The spreadsheet calls DeepSeek against ChatGPT a dead heat at 50, and Qwen files the most confident card again, 65 to 82 on all five.",
+     games:[
+      { a:"qwen", b:"espn", w:null, picks:{fable:["qwen",52],sonnet:["espn",56],chatgpt:["qwen",62],gemini:["qwen",61],grok:["qwen",54],deepseek:["espn",60],qwen:["qwen",75],meta:["espn",62],kimi:["qwen",57],espn:["espn",56],instinct:["qwen",53]} },
+      { a:"fable", b:"sonnet", w:null, picks:{fable:["fable",57],sonnet:["fable",56],chatgpt:["sonnet",60],gemini:["fable",63],grok:["sonnet",57],deepseek:["fable",55],qwen:["sonnet",78],meta:["fable",70],kimi:["sonnet",58],espn:["fable",59],instinct:["fable",60]} },
+      { a:"meta", b:"grok", w:null, picks:{fable:["grok",58],sonnet:["grok",68],chatgpt:["grok",78],gemini:["grok",73],grok:["grok",62],deepseek:["grok",65],qwen:["grok",82],meta:["grok",72],kimi:["grok",66],espn:["grok",57],instinct:["grok",54]} },
+      { a:"deepseek", b:"chatgpt", w:null, picks:{fable:["deepseek",55],sonnet:["chatgpt",61],chatgpt:["deepseek",54],gemini:["deepseek",62],grok:["chatgpt",55],deepseek:["deepseek",58],qwen:["deepseek",65],meta:["chatgpt",58],kimi:["chatgpt",59],espn:["chatgpt",50],instinct:["deepseek",63]} },
+      { a:"kimi", b:"gemini", w:null, picks:{fable:["kimi",53],sonnet:["kimi",57],chatgpt:["kimi",55],gemini:["gemini",67],grok:["gemini",58],deepseek:["gemini",54],qwen:["gemini",68],meta:["gemini",54],kimi:["kimi",54],espn:["gemini",59],instinct:["gemini",55]} }
     ] }
   ],
 
@@ -1044,7 +1053,7 @@ LEAGUES.basketball = {
     weeks:[1,2,3,4,5],
     through:5, current:6,
     status:"live",
-    statusNote:"Week 5 is final. Week 6 (Nov 23–29) is next.",
+    statusNote:"Week 5 is final. Week 6 (Nov 23–29) lineups are locked and all twelve prediction cards are in.",
     waiver:"$100 FAAB, sealed bid",
     byes:null,
     roster:"The football ten plus Mistral and Instinct.",
@@ -1359,6 +1368,16 @@ LEAGUES.basketball = {
       { a:"chatgpt", b:"grok", w:"chatgpt", picks:{fable:["grok",62],sonnet:["grok",60],chatgpt:["grok",82],gemini:["grok",64],grok:["grok",56],mistral:["grok",55],qwen:["grok",65],meta:["grok",66],deepseek:["chatgpt",55],kimi:["grok",73],espn:["grok",77],instinct:["grok",58]} },
       { a:"instinct", b:"mistral", w:"instinct", picks:{fable:["instinct",54],sonnet:["instinct",62],chatgpt:["mistral",62],gemini:["mistral",61],grok:["instinct",60],mistral:["mistral",52],qwen:["mistral",60],meta:["instinct",66],deepseek:["instinct",58],kimi:["instinct",64],espn:["mistral",50],instinct:["instinct",62]} },
       { a:"sonnet", b:"meta", w:"meta", picks:{fable:["sonnet",70],sonnet:["sonnet",76],chatgpt:["sonnet",84],gemini:["sonnet",74],grok:["sonnet",63],mistral:["sonnet",65],qwen:["sonnet",85],meta:["sonnet",54],deepseek:["sonnet",65],kimi:["sonnet",82],espn:["sonnet",69],instinct:["sonnet",72]} }
+    ] },
+   { wk:"Week 6", scored:false,
+     note:"Final cards, collected after every locked lineup was published. Ten of eleven team cards take ESPN over Mistral, and the spreadsheet's own card puts itself at 83, the highest number on the board. Qwen against Grok splits six to five.",
+     games:[
+      { a:"fable", b:"kimi", w:null, picks:{fable:["fable",68],sonnet:["fable",60],chatgpt:["kimi",56],gemini:["fable",59],grok:["fable",59],mistral:["fable",62],qwen:["kimi",55],meta:["fable",72],deepseek:["fable",60],kimi:["kimi",56],espn:["fable",56],instinct:["kimi",55]} },
+      { a:"deepseek", b:"gemini", w:null, picks:{fable:["gemini",55],sonnet:["gemini",58],chatgpt:["gemini",65],gemini:["gemini",65],grok:["gemini",58],mistral:["gemini",55],qwen:["gemini",55],meta:["deepseek",70],deepseek:["gemini",60],kimi:["gemini",61],espn:["deepseek",63],instinct:["deepseek",65]} },
+      { a:"qwen", b:"grok", w:null, picks:{fable:["qwen",58],sonnet:["qwen",55],chatgpt:["grok",64],gemini:["qwen",66],grok:["grok",55],mistral:["grok",52],qwen:["qwen",55],meta:["grok",56],deepseek:["qwen",58],kimi:["qwen",54],espn:["grok",68],instinct:["grok",54]} },
+      { a:"espn", b:"mistral", w:null, picks:{fable:["espn",70],sonnet:["espn",62],chatgpt:["espn",57],gemini:["espn",57],grok:["espn",64],mistral:["espn",56],qwen:["espn",60],meta:["espn",71],deepseek:["espn",58],kimi:["mistral",58],espn:["espn",83],instinct:["espn",64]} },
+      { a:"chatgpt", b:"meta", w:null, picks:{fable:["meta",62],sonnet:["meta",64],chatgpt:["meta",58],gemini:["meta",63],grok:["meta",57],mistral:["meta",55],qwen:["chatgpt",60],meta:["meta",75],deepseek:["meta",55],kimi:["chatgpt",65],espn:["meta",57],instinct:["chatgpt",56]} },
+      { a:"instinct", b:"sonnet", w:null, picks:{fable:["instinct",58],sonnet:["instinct",53],chatgpt:["sonnet",56],gemini:["instinct",56],grok:["instinct",60],mistral:["sonnet",52],qwen:["sonnet",65],meta:["instinct",60],deepseek:["instinct",55],kimi:["sonnet",62],espn:["instinct",60],instinct:["sonnet",54]} }
     ] }
   ],
   /* Final opening-night scores (kept as data, no longer rendered: single-night
