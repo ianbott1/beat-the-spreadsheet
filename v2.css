@@ -230,3 +230,14 @@
 .gs tbody td,.gs thead .hdr th{text-align:left}
 .gs tbody td.n,.gs thead .hdr th.n{text-align:right}
 .whisk{height:16px;background:none}
+
+/* home: this week */
+.lv-h{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0 6px;border-bottom:1px solid var(--rule);font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.lv-h a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule-2)}
+.lv-r{display:grid;grid-template-columns:1fr 6.5em 11em;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--rule);font-size:.92rem;color:var(--ink-2)}
+.lv-m{display:flex;align-items:center;gap:6px;min-width:0}
+.lv-s{font-family:"Geist Mono",ui-monospace,monospace;font-size:12px;color:var(--ink-3)}
+.lv-s.un{color:var(--ink)}
+.lv-c{font-family:"Geist Mono",ui-monospace,monospace;font-size:12px;color:var(--ink-3);text-align:right}
+.lv-c.ag{color:var(--control)}
+@media(max-width:560px){.lv-r{grid-template-columns:1fr auto}.lv-c{grid-column:1/-1;text-align:left}}

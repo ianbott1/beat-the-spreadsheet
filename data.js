@@ -27,7 +27,7 @@ var SITE = {
   title: "Beat the Spreadsheet",
   sub: "A season-long experiment in AI decision-making: eleven frontier AI models manage real fantasy teams, graded by real games, against a rules-based control.",
   commissioner: "Ian Bott",
-  updated: "23 November 2026"
+  updated: "24 November 2026"
 };
 
 /* Team identity. Each team's emblem is a 5x5 matrix where '#' is a filled cell.
@@ -134,7 +134,7 @@ LEAGUES.football = {
     weeks:[2,3,4,5,6,7,8,9,10,11],                 // scored weeks, index-aligned to scores[]
     through:11, current:12,
     status:"live",
-    statusNote:"Week 11 is scored, including lineup efficiency and the points ledger. Week 12 is next.",
+    statusNote:"Week 11 is scored, including lineup efficiency and the points ledger. Week 12 cards are in; its games start Wednesday night.",
     waiver:"$100 FAAB, sealed bid, highest bid wins",
     byes:""
   },
@@ -386,6 +386,14 @@ LEAGUES.football = {
         { a:"espn", b:"grok", w:"espn", picks:{sonnet:["grok",66],fable:["grok",54],chatgpt:["grok",56],gemini:["grok",79],grok:["espn",67],deepseek:["espn",59],qwen:["grok",88],meta:["grok",60],kimi:["espn",58],espn:["espn",55]} },
         { a:"meta", b:"kimi", w:"kimi", picks:{sonnet:["meta",70],fable:["meta",70],chatgpt:["meta",84],gemini:["meta",74],grok:["meta",58],deepseek:["meta",74],qwen:["meta",82],meta:["meta",70],kimi:["meta",62],espn:["meta",64]} },
         { a:"qwen", b:"deepseek", w:"deepseek", picks:{sonnet:["qwen",60],fable:["deepseek",70],chatgpt:["qwen",73],gemini:["deepseek",62],grok:["qwen",60],deepseek:["qwen",63],qwen:["qwen",76],meta:["deepseek",58],kimi:["qwen",63],espn:["deepseek",60]} }
+      ] },
+   { wk:"Week 12", scored:false, note:"Final cards, collected after every lineup was entered. Muse over ChatGPT is unanimous, ChatGPT's own card included. Gemini against Claude Fable splits five to four for Gemini, while the spreadsheet's Fantasycast card gives Fable 67. DeepSeek is the only forecaster backing DeepSeek over Kimi.",
+      games:[
+        { a:"gemini", b:"fable", w:null, picks:{fable:["fable",62],sonnet:["fable",66],chatgpt:["gemini",68],gemini:["gemini",61],grok:["gemini",62],deepseek:["fable",62],qwen:["gemini",72],meta:["fable",68],kimi:["gemini",72],espn:["fable",67]} },
+        { a:"sonnet", b:"espn", w:null, picks:{fable:["espn",66],sonnet:["espn",56],chatgpt:["sonnet",65],gemini:["espn",74],grok:["sonnet",68],deepseek:["espn",64],qwen:["sonnet",78],meta:["sonnet",56],kimi:["espn",63],espn:["espn",61]} },
+        { a:"chatgpt", b:"meta", w:null, picks:{fable:["meta",62],sonnet:["meta",77],chatgpt:["meta",59],gemini:["meta",68],grok:["meta",71],deepseek:["meta",71],qwen:["meta",88],meta:["meta",75],kimi:["meta",74],espn:["meta",65]} },
+        { a:"grok", b:"qwen", w:null, picks:{fable:["grok",58],sonnet:["grok",60],chatgpt:["grok",53],gemini:["grok",82],grok:["grok",58],deepseek:["qwen",58],qwen:["qwen",62],meta:["qwen",54],kimi:["grok",58],espn:["qwen",52]} },
+        { a:"kimi", b:"deepseek", w:null, picks:{fable:["kimi",54],sonnet:["kimi",63],chatgpt:["kimi",76],gemini:["kimi",76],grok:["kimi",64],deepseek:["deepseek",56],qwen:["kimi",85],meta:["kimi",55],kimi:["kimi",68],espn:["kimi",55]} }
       ] }
   ]
 };
@@ -1072,7 +1080,7 @@ LEAGUES.basketball = {
     { k:"espn", rec:"4-1", pf:571.3, pa:476.8, allplay:"43-12", pred:16, brier:0.252, faab:0, eff:[91.4, 86.1, 94.6, 96.7, 92.3], att:2, scores:[99.4, 92.6, 132.4, 118.5, 128.4],
       note:"4-1 and 43-12 against the field, the best in the league, after beating Gemini 128.4 to 95.3 behind Nikola Jokic's 24.8. Third on the prediction board at 0.252." },
     { k:"grok", rec:"0-5", pf:474.7, pa:530.8, allplay:"26-29", pred:14, brier:0.281, faab:62, eff:[96.4, 91.6, 89.4, 86.8, 92.4], att:2, scores:[98.2, 93.1, 105.7, 94.6, 83.1],
-      note:"0-5, the only winless team, with a 26-29 record against the field. Lost Week 5 to ChatGPT by 0.4 with Austin Reaves, who played no games, in its lineup; eleven of twelve cards had picked it. Its calls against the projections have cost a net 19.3, the most in the league." },
+      note:"0-5, the only winless team, with a 26-29 record against the field. Lost Week 5 to ChatGPT by 0.4 with Austin Reaves, who played no games, in its lineup; eleven of twelve cards had picked it. Its calls against the projections have cost a net 21.5, the most in the league." },
     { k:"fable", rec:"3-2", pf:520.4, pa:415.4, allplay:"31-24", pred:18, brier:0.25, faab:13, eff:[91.7, 84.5, 95.2, 93.3, 95.2], att:2, scores:[94.0, 89.9, 102.8, 110.4, 123.3],
       note:"3-2 after beating Qwen 123.3 to 70.2, the widest margin of the week. Second on the prediction board at 0.250, with 18 of 30 right." },
     { k:"instinct", rec:"5-0", pf:547.4, pa:488.7, allplay:"37-18", pred:15, brier:0.276, faab:52, eff:[90.4, 93.3, 99.6, 91.7, 94.3], att:1, scores:[79.2, 104.0, 145.4, 106.4, 112.4],

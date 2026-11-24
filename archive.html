@@ -27,13 +27,13 @@
 
 <main id="main" class="wrap" style="padding-block:clamp(40px,6vw,72px) 80px">
   <h1>Every game</h1>
-  <p class="sec-intro" style="margin-top:14px">Every matchup of the season. Open one to see both lineups as they were locked, with ESPN&rsquo;s projection and the actual points for every player, and every forecaster&rsquo;s card for that game.</p>
+  <p class="sec-intro" style="margin-top:14px">Every matchup of the season. Open one to see both lineups as they were locked, with ESPN&rsquo;s projection and the actual points for every player, and every forecaster&rsquo;s card for that game. This week&rsquo;s games sit at the top with every card already filed, so you can see who called it before the results come in.</p>
 
   <div class="filters" role="search">
     <label>League<select id="f-lg"><option value="all">All leagues</option><option value="football">Football</option><option value="hockey">Hockey</option><option value="basketball">Basketball</option></select></label>
     <label>Week<select id="f-wk"></select></label>
     <label>Team<select id="f-tm"></select></label>
-    <label>Show<select id="f-sh"><option value="all">Every game</option><option value="upset">Upsets: most picked the loser</option><option value="dead">Games with a dead start</option><option value="close">Decided by under 5 points</option></select></label>
+    <label>Show<select id="f-sh"><option value="all">Every game</option><option value="open">Awaiting results: this week&rsquo;s cards</option><option value="upset">Upsets: most picked the loser</option><option value="dead">Games with a dead start</option><option value="close">Decided by under 5 points</option></select></label>
   </div>
   <p class="count" id="count"></p>
   <div class="panel" style="overflow-x:auto"><table class="games-t" id="games"></table></div>
@@ -48,7 +48,7 @@
 
 <script src="data.js"></script>
 <script src="app.js?v=2"></script>
-<script src="archive.js"></script>
+<script src="archive.js?v=3"></script>
 <script>
 (function(){
 "use strict";
@@ -69,8 +69,14 @@ Object.keys(LNAME).forEach(function(lg){
   Object.keys(boards).forEach(function(w){ w = Number(w); if(lg==="football" && ARCH.matchups[w]) return; boards[w].games.forEach(function(g){ pairs.push([w,g.a,g.b]); }); });
   pairs.forEach(function(p){
     var w = p[0], a = p[1], b = p[2], sa = score(a,w), sb = score(b,w);
+    var bd = boards[w], game0 = bd && bd.games.filter(function(g){ return (g.a===a&&g.b===b)||(g.a===b&&g.b===a); })[0];
+    if((sa==null || sb==null) && bd && !bd.scored && game0){   /* cards in, no result yet */
+      var na = Object.keys(game0.picks).filter(function(k){ return game0.picks[k][0]===a; }).length;
+      G.push({lg:lg, w:w, a:a, b:b, pending:true, picks:game0.picks, nA:na, nPick:Object.keys(game0.picks).length, box:null, dead:0, dev:0});
+      return;
+    }
     if(sa==null || sb==null) return;                     /* unscored weeks stay out */
-    var bd = boards[w], game = bd && bd.games.filter(function(g){ return (g.a===a&&g.b===b)||(g.a===b&&g.b===a); })[0];
+    var game = bd && bd.games.filter(function(g){ return (g.a===a&&g.b===b)||(g.a===b&&g.b===a); })[0];
     var win = sa>sb ? a : b, picks = game ? game.picks : null, nPick = 0, nRight = 0;
     if(picks) Object.keys(picks).forEach(function(k){ nPick++; if(picks[k][0]===win) nRight++; });
     var box = lg==="football" && ARCH.weeks[w] ? [ARCH.weeks[w][a], ARCH.weeks[w][b]] : null;
@@ -79,7 +85,7 @@ Object.keys(LNAME).forEach(function(lg){
     G.push({lg:lg, w:w, a:a, b:b, sa:sa, sb:sb, win:win, picks:picks, nPick:nPick, nRight:nRight, box:box, dead:dead, dev:dev, upset: nPick && nRight < nPick/2});
   });
 });
-G.sort(function(x,y){ return y.w-x.w || x.lg.localeCompare(y.lg); });
+G.sort(function(x,y){ return (y.pending?1:0)-(x.pending?1:0) || y.w-x.w || x.lg.localeCompare(y.lg); });
 
 /* ---------- filters ---------- */
 var fLg = document.getElementById("f-lg"), fWk = document.getElementById("f-wk"), fTm = document.getElementById("f-tm"), fSh = document.getElementById("f-sh");
@@ -109,13 +115,15 @@ function render(){
     if(lg!=="all" && g.lg!==lg) return false;
     if(wk!=="all" && String(g.w)!==wk) return false;
     if(tm!=="all" && g.a!==tm && g.b!==tm) return false;
+    if(sh==="open" && !g.pending) return false;
+    if(sh!=="all" && sh!=="open" && g.pending) return false;
     if(sh==="upset" && !g.upset) return false;
     if(sh==="dead" && !g.dead) return false;
     if(sh==="close" && Math.abs(g.sa-g.sb)>=5) return false;
     return true;
   });
-  var up = rows.filter(function(g){return g.upset;}).length;
-  document.getElementById("count").textContent = rows.length+" games · "+up+" upsets";
+  var up = rows.filter(function(g){return g.upset;}).length, op = rows.filter(function(g){return g.pending;}).length;
+  document.getElementById("count").textContent = (rows.length-op)+" games played · "+up+" upsets"+(op?" · "+op+" awaiting results":"");
   tb.innerHTML = "";
   var head = el("thead"), hr = el("tr");
   ["","League","Week","Winner","","Loser","","Margin","Forecasters","Notes"].forEach(function(x,i){ var th = el("th",null,x); if(i===4||i===6||i===7) th.style.textAlign="right"; hr.appendChild(th); });
@@ -123,18 +131,22 @@ function render(){
   var body = el("tbody");
   if(!rows.length){ var tr0 = el("tr"), td0 = el("td","empty","No games match these filters. Try another week or team."); td0.colSpan = 10; tr0.appendChild(td0); body.appendChild(tr0); }
   rows.forEach(function(g){
-    var L = LEAGUES[g.lg], lose = g.win===g.a ? g.b : g.a, ws = g.win===g.a ? g.sa : g.sb, ls = g.win===g.a ? g.sb : g.sa;
+    var L = LEAGUES[g.lg];
+    if(g.pending){ g.win = g.a; g.sa = g.sb = null; }
+    var lose = g.win===g.a ? g.b : g.a, ws = g.win===g.a ? g.sa : g.sb, ls = g.win===g.a ? g.sb : g.sa;
     var tr = el("tr","grow"); tr.tabIndex = 0; tr.setAttribute("aria-expanded","false");
     var tg = el("td"); tg.appendChild(el("span","tog","+")); tr.appendChild(tg);
     tr.appendChild(el("td",null,LNAME[g.lg]));
     tr.appendChild(el("td",null,"Week "+g.w));
     var w1 = el("td"); w1.appendChild(tmTag(g.win,L,"w")); tr.appendChild(w1);
-    tr.appendChild(el("td","num",ws.toFixed(g.lg==="football"?2:1)));
-    var l1 = el("td"); l1.appendChild(tmTag(lose,L,"l")); tr.appendChild(l1);
-    tr.appendChild(el("td","num",ls.toFixed(g.lg==="football"?2:1)));
-    tr.appendChild(el("td","num",(ws-ls).toFixed(1)));
-    tr.appendChild(el("td",null,g.nPick ? g.nRight+" of "+g.nPick+" picked it" : "No cards this week"));
+    var dash = function(v){ return v==null ? "—" : v.toFixed(g.lg==="football"?2:1); };
+    tr.appendChild(el("td","num",dash(ws)));
+    var l1 = el("td"); l1.appendChild(tmTag(lose,L,g.pending?"w":"l")); tr.appendChild(l1);
+    tr.appendChild(el("td","num",dash(ls)));
+    tr.appendChild(el("td","num",g.pending ? "—" : (ws-ls).toFixed(1)));
+    tr.appendChild(el("td",null,g.pending ? "Picks split "+g.nA+"–"+(g.nPick-g.nA) : g.nPick ? g.nRight+" of "+g.nPick+" picked it" : "No cards this week"));
     var fl = el("td"), fd = el("div","flags");
+    if(g.pending) fd.appendChild(el("span","chip dev","Awaiting result"));
     if(g.upset) fd.appendChild(el("span","chip up","Upset"));
     if(g.dead) fd.appendChild(el("span","chip dead",g.dead+" dead start"+(g.dead>1?"s":"")));
     if(g.dev) fd.appendChild(el("span","chip dev",g.dev+" deviation"+(g.dev>1?"s":"")));
@@ -185,20 +197,22 @@ function lineup(x, k, total, L){
 }
 function build(td,g){
   var L = LEAGUES[g.lg];
-  var bx = el("div","box");
   var sa = g.sa, sb = g.sb;
-  bx.appendChild(lineup(g.box && g.box[0], g.a, sa, L));
-  bx.appendChild(lineup(g.box && g.box[1], g.b, sb, L));
-  td.appendChild(bx);
+  if(!g.pending){
+    var bx = el("div","box");
+    bx.appendChild(lineup(g.box && g.box[0], g.a, sa, L));
+    bx.appendChild(lineup(g.box && g.box[1], g.b, sb, L));
+    td.appendChild(bx);
+  }
   [g.a,g.b].forEach(function(k){ var n = ARCH.notes && ARCH.notes[g.w+"-"+k]; if(n && g.lg==="football"){ var p = el("p","cap2",n); p.style.padding = "0 18px 10px"; td.appendChild(p); } });
   if(g.picks){
-    var cs = el("div","cards"); cs.appendChild(el("h5",null,"Prediction cards for this game: the pick, and how confident"));
+    var cs = el("div","cards"); cs.appendChild(el("h5",null,g.pending ? "Cards filed before the game: the pick, and how confident. Graded when the week ends." : "Prediction cards for this game: the pick, and how confident"));
     var grid = el("div","cardgrid");
     Object.keys(g.picks).sort(function(x,y){ return (y==="espn")-(x==="espn") || (g.picks[y][1]||0)-(g.picks[x][1]||0); }).forEach(function(k){
-      var p = g.picks[k], right = p[0]===g.win, c = el("div","pc "+(right?"right":"wrong")+(k==="espn"?" ctl":""));
+      var p = g.picks[k], right = p[0]===g.win, c = el("div","pc "+(g.pending?"":(right?"right":"wrong"))+(k==="espn"?" ctl":""));
       var w = el("span","who2"); w.appendChild(CG.sigil(k,13)); w.appendChild(el("span",null,nm(k,L))); c.appendChild(w);
       c.appendChild(el("b",null,(p[0]===k?"self":nm(p[0],L).split(" ").pop())+(p[1]!=null?" "+p[1]+"%":"")));
-      c.title = nm(k,L)+" picked "+nm(p[0],L)+(p[1]!=null?" at "+p[1]+"%":"")+(right?", right":", wrong");
+      c.title = nm(k,L)+" picked "+nm(p[0],L)+(p[1]!=null?" at "+p[1]+"%":"")+(g.pending?"":(right?", right":", wrong"));
       grid.appendChild(c);
     });
     cs.appendChild(grid); td.appendChild(cs);

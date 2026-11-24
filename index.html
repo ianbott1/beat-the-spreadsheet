@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&display=swap">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="theme.css">
-<link rel="stylesheet" href="v2.css">
+<link rel="stylesheet" href="v2.css?v=3">
 </head>
 <body class="v2">
 
@@ -38,6 +38,13 @@
       <div class="tabs2" role="tablist" aria-label="League" id="tabs2"><span class="note2" id="tnote"></span></div>
     </div>
     <p class="cap2" id="gcap"></p>
+  </section>
+
+  <section class="q" aria-labelledby="q1">
+    <h2 id="q1">What&rsquo;s on the board this week?</h2>
+    <p class="ans" id="a1"></p>
+    <div class="panel" style="padding:4px 22px 8px"><div id="live"></div></div>
+    <p class="cap2">Every card is filed before the first result. A split is how the cards other than the spreadsheet&rsquo;s divided; blue marks a spreadsheet pick against the room. Each league page has the full board for the week, game by game.</p>
   </section>
 
   <section class="q" aria-labelledby="q2">
@@ -102,6 +109,45 @@ var LN = {overall:"All leagues", football:"Football", hockey:"Hockey", basketbal
 var O = LB.overall, keys = Object.keys(O).sort(function(a,b){ return O[a].o-O[b].o; });
 var std = function(v){ return 100*(1-v); };
 var pct = function(v){ return Math.round(v*100)+"%"; };
+
+
+/* ---------- this week: open boards across the leagues ---------- */
+(function(){
+  var box = document.getElementById("live"), lines = [], nUn = 0, nAgainst = 0, nGames = 0;
+  ["football","hockey","basketball"].forEach(function(lg){
+    var L = LG[lg], b = (L.boards||[]).filter(function(x){ return !x.scored; }).pop();
+    if(!b) return;
+    var hd = el("div","lv-h"); var a = el("a",null,LN[lg]+" · "+b.wk); a.href = lg+".html#week"; hd.appendChild(a);
+    hd.appendChild(el("span",null,b.games.length+" games")); box.appendChild(hd);
+    b.games.forEach(function(g){
+      nGames++;
+      var crowd = Object.keys(g.picks).filter(function(k){ return k!=="espn"; });
+      var nA = crowd.filter(function(k){ return g.picks[k][0]===g.a; }).length, nB = crowd.length-nA;
+      var room = nA>nB ? g.a : nB>nA ? g.b : null, sp = g.picks.espn;
+      var r = el("div","lv-r");
+      var m = el("span","lv-m"); m.appendChild(CG.sigil(g.a,13)); m.appendChild(document.createTextNode(" "+CG.teamName(g.a,L).replace("Claude ","")+" v "+CG.teamName(g.b,L).replace("Claude ","")+" ")); m.appendChild(CG.sigil(g.b,13));
+      r.appendChild(m);
+      var sp1 = el("span","lv-s", nA===0||nB===0 ? "Unanimous" : Math.max(nA,nB)+"–"+Math.min(nA,nB));
+      if(nA===0||nB===0){ sp1.className += " un"; nUn++; }
+      r.appendChild(sp1);
+      var c = el("span","lv-c");
+      if(sp){ c.textContent = "Spreadsheet: "+(sp[0]==="espn"?"itself":CG.teamName(sp[0],L).replace("Claude ",""))+" "+sp[1];
+        if(room && room!==sp[0]){ c.className += " ag"; nAgainst++; } }
+      r.appendChild(c);
+      box.appendChild(r);
+    });
+  });
+  var uT = 0, uL = 0;
+  ["football","hockey","basketball"].forEach(function(lg){ (LG[lg].boards||[]).forEach(function(bd){ if(!bd.scored) return; bd.games.forEach(function(g){
+    if(!g.w) return; var ks = Object.keys(g.picks).filter(function(k){ return k!=="espn"; });
+    var sides = {}; ks.forEach(function(k){ sides[g.picks[k][0]] = 1; });
+    if(ks.length && Object.keys(sides).length===1){ uT++; if(Object.keys(sides)[0]!==g.w) uL++; } }); }); });
+  if(!nGames){ document.querySelector('[aria-labelledby="q1"]').style.display = "none"; return; }
+  document.getElementById("a1").textContent = nGames+" games across the leagues have every card in and no result yet. "
+    + (nUn ? nUn+(nUn===1?" is":" are")+" unanimous among the models, " : "None is unanimous among the models, ")
+    + "and in "+nAgainst+" the spreadsheet is betting against the room."
+    + (uT ? " Be careful with the unanimous ones: of the "+uT+" scored games where every model picked the same side, that side lost "+uL+"." : "");
+})();
 
 /* ---------- the sheet: standings ---------- */
 var COLS = "ABCDEFGHI".split("");

@@ -73,3 +73,25 @@ caption{font-family:var(--body)!important;text-transform:none!important;letter-s
 .tn-h{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .tn-r{font-family:"Geist Mono",ui-monospace,monospace;font-size:12px;color:var(--ink-3)}
 .tn p{color:var(--ink-2);font-size:.95rem;line-height:1.5}
+
+/* this week */
+.wkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:0 36px;border-top:1px solid var(--rule)}
+.wkg{padding:16px 0 14px;border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:8px}
+.wkg-t{display:flex;justify-content:space-between;gap:12px}
+.wkg-s{display:flex;flex-direction:column;gap:3px}.wkg-s.r{align-items:flex-end;text-align:right}
+.wkg-bar{position:relative;display:flex;gap:3px;height:10px;margin-top:4px}
+.wkg-bar i{display:block;background:var(--rule-2);border-radius:2px;min-width:0}
+.wkg-bar i.lead{background:var(--ink-2)}
+.wkg-tk{position:absolute;top:-5px;width:3px;height:20px;margin-left:-1.5px;background:var(--control);border-radius:2px}
+.wkg-n{display:flex;justify-content:space-between;font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;color:var(--ink-3)}
+.wkg-p{color:var(--ink-2);font-size:.93rem;line-height:1.5}
+.wk-det summary{cursor:pointer;font-family:"Geist Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);padding:6px 0 14px;list-style:none}
+.wk-det summary::before{content:"+ "}.wk-det[open] summary::before{content:"− "}
+.wk-key{font-size:.85rem;color:var(--ink-3)}.wk-key b{display:inline-block;width:3px;height:12px;background:var(--control);vertical-align:-1px;margin:0 4px 0 2px;border-radius:2px}
+/* week by week */
+.lglist{display:flex;flex-direction:column;border-top:1px solid var(--rule)}
+.lg{display:grid;grid-template-columns:7.5em 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.lg-w{font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding-top:4px}
+.lg h3{font-size:1.05rem;margin:0 0 4px;color:var(--ink)}
+.lg p{color:var(--ink-2);font-size:.95rem;line-height:1.55;margin:0}
+@media(max-width:560px){.lg{grid-template-columns:1fr;gap:4px}}

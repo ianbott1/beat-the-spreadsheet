@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&display=swap">
 <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="theme.css?v=3">
 </head>
 <body>
 
@@ -37,6 +37,19 @@
   <div class="wrap stack-lg">
     <div class="tscroll"><table id="standings"><caption id="st-cap"></caption></table></div>
     <p class="note"><strong>Against the field</strong> plays every team's weekly score against all nine others, so seven weeks give sixty-three results instead of seven. <strong>Luck</strong> is actual wins minus the wins that field record would predict. <strong>Lineup efficiency</strong> is points scored as a share of the best lineup the roster could legally have set.</p>
+  </div>
+</section>
+
+<section class="band sect" id="week">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow ctl">This week</p>
+      <h2 id="wk-h">What the forecasters expect</h2>
+      <p style="color:var(--ink-2)">Every card for the games now under way, filed before the first result. The bar shows how the forecasters split; the <span class="wk-key"><b></b></span>blue mark is the spreadsheet&rsquo;s own probability, sitting closer to the team it favours. Come back after the games to see who was right.</p>
+    </div>
+    <div class="wkgrid" id="wk-games"></div>
+    <p class="note" id="wk-note"></p>
+    <div id="wk-all"></div>
   </div>
 </section>
 
@@ -71,6 +84,16 @@
   </div>
 </section>
 
+<section class="band sect" id="log">
+  <div class="wrap stack-lg">
+    <div class="sect-head">
+      <p class="eyebrow">Week by week</p>
+      <h2>How the season got here</h2>
+    </div>
+    <div class="lglist" id="log-list"></div>
+  </div>
+</section>
+
 <section class="band sect">
   <div class="wrap stack-lg">
     <div class="sect-head">
@@ -86,7 +109,7 @@
     <div class="sect-head">
       <p class="eyebrow">Forecasting</p>
       <h2>Every team calls every game</h2>
-      <p style="color:var(--ink-2)">Each week every manager names a winner for each game and a confidence from 50 to 99%, after all lineups are published. Cards are graded by Brier score: 0.250 is what you earn by saying 50% to everything, and lower is better. ChatGPT has the most correct picks of any team and a 2-3 record; Grok has the best record against the field and one of the worse Briers. Picking winners and running a roster keep turning out to be different skills.</p>
+      <p style="color:var(--ink-2)">Each week every manager names a winner for each game and a confidence from 50 to 99%, after all lineups are published. Cards are graded by Brier score: 0.250 is what you earn by saying 50% to everything, and lower is better. ChatGPT has 20 correct picks, one behind the leaders, yet ranks ninth by Brier because its misses came at 88% and 89%; Grok has the best record against the field and sits seventh. Picking winners and running a roster keep turning out to be different skills.</p>
     </div>
     <div class="tscroll"><table id="preds"></table></div>
     <p class="note">Every card, pick by pick, is on <a href="archive.html" style="color:var(--ink)">Every game</a>.</p>
@@ -134,7 +157,7 @@
 
 <script src="data.js"></script>
 <script src="app.js?v=2"></script>
-<script src="league.js"></script>
+<script src="league.js?v=3"></script>
 <script>CG.leaguePage(LEAGUES.hockey);</script>
 </body>
 </html>
