@@ -70,7 +70,7 @@ var HYPOTHESES = [
     q:"Forecasting is its own faculty: turn public information into a probability and own the number. Every manager calls every game, every week, with a stated confidence, scored by Brier, where honesty about your own uncertainty is mathematically optimal.",
     how:"A 90% claim that misses costs far more than a 60% one. Calibration and accuracy are tracked separately, against mechanical and consensus benchmarks.",
     verdict:"Rarely better than a coin flip",
-    detail:"Of thirty model-league forecasting records, eight beat the 0.250 line that answering 50/50 to everything earns: Claude Fable, Claude Sonnet, Muse, Kimi and ChatGPT in football, Instinct in hockey, Muse and Claude Fable in basketball. The models' own majority vote beats it in none of the three leagues. Accuracy and calibration keep crowning different models: in hockey ChatGPT and Claude Sonnet both have 20 of 35 right, yet Sonnet ranks third by Brier and ChatGPT ninth of eleven." },
+    detail:"Of thirty model-league forecasting records, seven beat the 0.250 line that answering 50/50 to everything earns: Claude Fable, Claude Sonnet, Muse and Kimi in football, Instinct in hockey, Muse and Claude Fable in basketball. The models' own majority vote beats it in none of the three leagues. Accuracy and calibration keep crowning different models: in hockey ChatGPT and Claude Sonnet both have 20 of 35 right, yet Sonnet ranks third by Brier and ChatGPT ninth of eleven." },
   { id:"Q4", title:"Does more public information help?",
     q:"Football is the most heavily covered fantasy sport on earth; hockey is the most niche of the three measured here. Where information is scarce, a model that can find and weigh it should pull further ahead of one that can't, so the gap between strong and weak models should widen as coverage thins. Whether the models as a group gain or lose ground on the spreadsheet is open: its projections already price in much of what there is to read.",
     how:"The same nine models manage teams in all three leagues, with basketball adding two more entrants. Correlating each model's results across sports separates stable skill from a lucky draft.",
@@ -131,10 +131,10 @@ LEAGUES.football = {
   meta:{
     sport:"Football", slug:"football", season:"2026",
     teams:10, format:"Head-to-head points, 14-week regular season",
-    weeks:[2,3,4,5,6,7,8,9,10],                 // scored weeks, index-aligned to scores[]
-    through:10, current:11,
+    weeks:[2,3,4,5,6,7,8,9,10,11],                 // scored weeks, index-aligned to scores[]
+    through:11, current:12,
     status:"live",
-    statusNote:"Week 10 is scored, including lineup efficiency and the points ledger. Week 11 prediction cards are in; games start Thursday.",
+    statusNote:"Week 11 is scored, including lineup efficiency and the points ledger. Week 12 is next.",
     waiver:"$100 FAAB, sealed bid, highest bid wins",
     byes:""
   },
@@ -142,36 +142,36 @@ LEAGUES.football = {
   /* key, record, points for/against, all-play, prediction record, brier,
      FAAB spent, lineup efficiency by week (W2–W8), attention failures */
   teams:[
-    { k:"fable",    rec:"6-3", pf:983.66, pa:846.66, allplay:"50-31", pred:30, brier:0.195, faab:74, eff:[93.6, 89.1, 79.2, 89.6, 87.5, 82.8, 100, 87.1, 86.4], att:0,
-      scores:[106.84, 128.56, 130.08, 123.84, 92.7, 87.92, 100.48, 122.38, 90.86],
-      note:"Beat ChatGPT 90.86 to 78.58 after taking itself at 60%. Its perfect card lowers its Brier to 0.195, still the best of any forecaster in any league." },
-    { k:"meta",     rec:"8-1", pf:1068.58, pa:848.90, allplay:"63-18", pred:26, brier:0.233, faab:88, eff:[91.7, 94, 85.2, 79.6, 94.9, 87.3, 85.3, 83.3, 93.2], att:2,
-      scores:[105.08, 116.78, 116.52, 102.2, 99.14, 118.38, 147.88, 127.64, 134.96],
-      note:"8-1 and two games clear of the field after beating Qwen 134.96 to 120.78. Every forecaster, Qwen included, picked it." },
-    { k:"espn",     rec:"6-3", pf:1127.04, pa:953.66, allplay:"60-21", pred:29, brier:0.205, faab:0, eff:[95.4, 76.7, 93.8, 80.7, 99.6, 100, 84.5, 87.1, 100], att:0,
-      scores:[182.32, 108.72, 94.82, 105.5, 116.1, 100.62, 129.36, 112.26, 177.34],
-      note:"Scored 177.34, the second-highest total of the season after its own 182.32 in Week 2, and its lineup was perfect: nothing on the bench would have scored more. Leads the league in points by 59." },
-    { k:"qwen",     rec:"6-3", pf:963.60, pa:880.04, allplay:"47-34", pred:22, brier:0.266, faab:85, eff:[97, 93.1, 87.7, 80.9, 100, 90.3, 91.6, 93, 96.3], att:3,
-      scores:[103.02, 128.78, 81.38, 129.54, 85.04, 112.2, 121.98, 80.88, 120.78],
-      note:"Lost to Muse 120.78 to 134.96 after picking Muse at 65%. Its card's only miss was the only pick against the spreadsheet, DeepSeek at 58%. Starting the Lions D/ST (13.0) over the Steelers (−7.0) was the best call of the week." },
-    { k:"grok",     rec:"5-4", pf:1004.48, pa:980.68, allplay:"53-28", pred:23, brier:0.252, faab:89, eff:[100, 94.5, 85.9, 95.9, 98.5, 65.2, 100, 89.1, 95.1], att:1,
-      scores:[114.92, 107.56, 110.16, 139.46, 96.5, 87.24, 124.86, 123.06, 100.72],
-      note:"Beat Claude Sonnet 100.72 to 61.20 even though Drake Maye scored 3.02 at quarterback. 5-4, and fifth." },
-    { k:"kimi",     rec:"4-5", pf:953.76, pa:915.64, allplay:"42-39", pred:24, brier:0.238, faab:38, eff:[86.2, 86.3, 97.2, 90, 89.4, 77.4, 93.3, 84, 97], att:3,
-      scores:[78.08, 102.14, 133.1, 117.92, 110.18, 92.8, 101.54, 99.08, 118.92],
-      note:"Beat Gemini 118.92 to 64.40 behind Patrick Mahomes's 35.42, and started Alvin Kamara (14.9) over Tank Dell (3.6), the call that gained it 11.3." },
-    { k:"chatgpt",  rec:"3-6", pf:915.56, pa:934.34, allplay:"39-42", pred:23, brier:0.244, faab:97, eff:[95.1, 88.5, 95, 77, 94.4, 92.9, 74.8, 89.6, 84], att:2,
-      scores:[94.1, 93.64, 113.28, 105.32, 134.22, 94.9, 101.68, 99.84, 78.58],
-      note:"Lost to Claude Fable by 12.28 while starting Jordan Addison, who was out, and Nick Folk, a kicker with no NFL team. It had noticed Addison was inactive but had no wide receiver left to replace him." },
-    { k:"sonnet",   rec:"3-6", pf:738.58, pa:968.46, allplay:"18-63", pred:23, brier:0.213, faab:100, eff:[92.8, 81.6, 74.8, 92.2, 70.4, 76.7, 80.6, 100, 50.4], att:4,
-      scores:[82.28, 98.14, 89.16, 141.94, 67.38, 76.38, 64.58, 57.52, 61.2],
-      note:"Scored 61.20 with its lineup at 50.4% of its best, the lowest single-week figure of the season: George Pickens scored 38.0 on its bench while Antonio Williams (11.2) played flex. Malik Willis, who was out, started at quarterback. Its card was perfect." },
-    { k:"deepseek", rec:"3-6", pf:775.88, pa:917.62, allplay:"25-56", pred:21, brier:0.262, faab:91, eff:[93.7, 84.1, 87.1, 75.8, 91.2, 88.1, 59.3, 87.7, 89.3], att:9,
-      scores:[89.06, 65.44, 98.22, 79.74, 82.66, 98.62, 70.2, 104.48, 87.46],
-      note:"Lost to the spreadsheet by 89.88 after picking the spreadsheet at 81%. Started Dameon Pierce, who did not play, with no healthy running back left to replace him." },
-    { k:"gemini",   rec:"1-8", pf:635.82, pa:920.96, allplay:"8-73", pred:21, brier:0.300, faab:81, eff:[94.2, 79.5, 90.5, 86.6, 84.5, 77.6, 98.9, 89.5, 97], att:13,
-      scores:[99.96, 80.52, 85.82, 52.4, 59, 66.3, 60.8, 66.62, 64.4],
-      note:"1-8. Started three players who could not score: Baker Mayfield on a bye, David Montgomery, who was out, and Tyrone Tracy Jr. from injured reserve. Its first-choice quarterback depended on a waiver claim for Trevor Lawrence, who is on Qwen's roster, for the third straight week." }
+    { k:"fable",    rec:"7-3", pf:1091.52, pa:937.84, allplay:"58-32", pred:32, brier:0.207, faab:74, eff:[93.6, 89.1, 79.2, 89.6, 87.5, 82.8, 100, 87.1, 86.4, 85], att:0,
+      scores:[106.84, 128.56, 130.08, 123.84, 92.7, 87.92, 100.48, 122.38, 90.86, 107.86],
+      note:"Beat Claude Sonnet 107.86 to 91.18 after taking itself at 64%. Started Jordyn Tyson (1.5) at wide receiver with Jameson Williams (17.3) on its bench, the costliest call of the week. Still the best forecaster in any league at 0.207." },
+    { k:"meta",     rec:"8-2", pf:1165.98, pa:949.46, allplay:"68-22", pred:28, brier:0.246, faab:88, eff:[91.7, 94, 85.2, 79.6, 94.9, 87.3, 85.3, 83.3, 93.2, 94.8], att:3,
+      scores:[105.08, 116.78, 116.52, 102.2, 99.14, 118.38, 147.88, 127.64, 134.96, 97.4],
+      note:"Lost to Kimi 97.40 to 100.56 in a game all ten forecasters gave it, Kimi's own card included. Started Brock Bowers, who was out, at tight end. Still 8-2 and a game clear." },
+    { k:"espn",     rec:"7-3", pf:1215.90, pa:1025.76, allplay:"63-27", pred:32, brier:0.211, faab:0, eff:[95.4, 76.7, 93.8, 80.7, 99.6, 100, 84.5, 87.1, 100, 95.4], att:0,
+      scores:[182.32, 108.72, 94.82, 105.5, 116.1, 100.62, 129.36, 112.26, 177.34, 88.86],
+      note:"Beat Grok 88.86 to 72.10 and had the week's best card, 3 of 5 at 0.250, in a week when the models' majority went 1 for 5. 7-3, and still first in points by 50." },
+    { k:"qwen",     rec:"6-4", pf:1022.04, pa:1016.74, allplay:"47-43", pred:22, brier:0.308, faab:85, eff:[97, 93.1, 87.7, 80.9, 100, 90.3, 91.6, 93, 96.3, 95.8], att:7,
+      scores:[103.02, 128.78, 81.38, 129.54, 85.04, 112.2, 121.98, 80.88, 120.78, 58.44],
+      note:"Scored 58.44, the week's lowest, with four starters who could not score: Drake London and Rhamondre Stevenson on byes, Dalton Kincaid and Marvin Harrison Jr. out, and no live replacement on its bench at any of the four positions. Its card went 0 for 5 at 0.603." },
+    { k:"grok",     rec:"5-5", pf:1076.58, pa:1069.54, allplay:"54-36", pred:24, brier:0.257, faab:89, eff:[100, 94.5, 85.9, 95.9, 98.5, 65.2, 100, 89.1, 95.1, 92.7], att:1,
+      scores:[114.92, 107.56, 110.16, 139.46, 96.5, 87.24, 124.86, 123.06, 100.72, 72.1],
+      note:"Lost to the spreadsheet 72.10 to 88.86 after picking the spreadsheet at 67% over itself. Ja'Marr Chase scored 5.6 against a projection of 21.0." },
+    { k:"kimi",     rec:"5-5", pf:1054.32, pa:1013.04, allplay:"48-42", pred:26, brier:0.250, faab:38, eff:[86.2, 86.3, 97.2, 90, 89.4, 77.4, 93.3, 84, 97, 98.3], att:3,
+      scores:[78.08, 102.14, 133.1, 117.92, 110.18, 92.8, 101.54, 99.08, 118.92, 100.56],
+      note:"Beat Muse 100.56 to 97.40 after picking Muse at 62%. Started Patrick Mahomes (24.96) over C.J. Stroud (20.46), the best call of the week. Back to 5-5." },
+    { k:"chatgpt",  rec:"3-7", pf:994.76, pa:1035.22, allplay:"41-49", pred:24, brier:0.269, faab:97, eff:[95.1, 88.5, 95, 77, 94.4, 92.9, 74.8, 89.6, 84, 100], att:3,
+      scores:[94.1, 93.64, 113.28, 105.32, 134.22, 94.9, 101.68, 99.84, 78.58, 79.2],
+      note:"Lost to Gemini 79.20 to 100.88, a game eight of nine models gave it. Started Nick Folk, a kicker with no NFL team, for the second week running." },
+    { k:"sonnet",   rec:"3-7", pf:829.76, pa:1076.32, allplay:"22-68", pred:24, brier:0.237, faab:100, eff:[92.8, 81.6, 74.8, 92.2, 70.4, 76.7, 80.6, 100, 50.4, 82.4], att:4,
+      scores:[82.28, 98.14, 89.16, 141.94, 67.38, 76.38, 64.58, 57.52, 61.2, 91.18],
+      note:"Lost to Claude Fable 91.18 to 107.86. Started exactly the lineup the projections would have set and still left 19.5 points on its bench. Its card went 1 for 5." },
+    { k:"deepseek", rec:"4-6", pf:912.58, pa:976.06, allplay:"34-56", pred:23, brier:0.272, faab:91, eff:[93.7, 84.1, 87.1, 75.8, 91.2, 88.1, 59.3, 87.7, 89.3, 83.4], att:10,
+      scores:[89.06, 65.44, 98.22, 79.74, 82.66, 98.62, 70.2, 104.48, 87.46, 136.7],
+      note:"Beat Qwen 136.70 to 58.44, the week's high, after picking Qwen at 63%. Jonah Coleman scored 32.9, and Dak Prescott scored 35.9 on its bench while Brock Purdy (22.2) started. DeMario Douglas started at flex on a bye." },
+    { k:"gemini",   rec:"2-8", pf:736.70, pa:1000.16, allplay:"15-75", pred:24, brier:0.304, faab:81, eff:[94.2, 79.5, 90.5, 86.6, 84.5, 77.6, 98.9, 89.5, 97, 85.4], att:13,
+      scores:[99.96, 80.52, 85.82, 52.4, 59, 66.3, 60.8, 66.62, 64.4, 100.88],
+      note:"Beat ChatGPT 100.88 to 79.20, the only forecaster to pick it, at 54%. Its second win of the season. Started Seth McGowan (1.3) at running back over David Montgomery (13.9)." }
   ],
 
   /* Synthetic benchmarks. Not teams. They do not play. Computed after the fact
@@ -180,18 +180,18 @@ LEAGUES.football = {
      points    = whoever has scored more points, confidence = Φ(gap / margin SD) */
   /* Benchmarks are forecasters that never played a game. */
   benchmarks:[
-    { name:"Points-for rule", pred:25, brier:0.225,
-      note:"Picks whichever team has scored more total points so far, with confidence set by the size of the gap scaled to the league's own week-to-week scoring spread. No rosters, no news, one number per team. Went 5 for 5 in Week 10 and is now better than every model except Claude Fable and Claude Sonnet." },
-    { name:"Consensus, majority vote", pred:23, brier:0.262,
-      note:"Whichever side more of the nine models picked, at the average confidence of that winning side. A majority vote manufactures confidence no single model stated, and the models tend to miss together: in Week 9 seven of nine took Kimi over ChatGPT. In Week 10 every favourite won and the vote went 5 for 5." },
-    { name:"Consensus, pooled probability", pred:23, brier:0.244,
-      note:"The same nine cards averaged as probabilities instead of votes, the statistically correct way to pool opinions. After a week in which every favourite won, it is just better than answering fifty per cent to everything." }
+    { name:"Points-for rule", pred:27, brier:0.239,
+      note:"Picks whichever team has scored more total points so far, with confidence set by the size of the gap scaled to the league's own week-to-week scoring spread. No rosters, no news, one number per team. Went 2 for 5 in Week 11 and is still better than every model except Claude Fable and Claude Sonnet." },
+    { name:"Consensus, majority vote", pred:24, brier:0.278,
+      note:"Whichever side more of the nine models picked, at the average confidence of that winning side. A majority vote manufactures confidence no single model stated, and the models tend to miss together: in Week 11 all nine took Muse over Kimi, eight of nine took ChatGPT over Gemini, and the vote went 1 for 5." },
+    { name:"Consensus, pooled probability", pred:24, brier:0.257,
+      note:"The same nine cards averaged as probabilities instead of votes, the statistically correct way to pool opinions. It took the same misses as the vote in Week 11 but at lower confidence, which is why it stays the better of the two." }
   ],
 
   /* Decision classification, Weeks 3–6. Judgment errors are listed as the
      largest single-week cost rather than a count, because every team has them. */
   decisions:{
-    weeks:[2,3,4,5,6,7,8,9,10],   // weeks the ledger, dead-start and deviation tables cover
+    weeks:[2,3,4,5,6,7,8,9,10,11],   // weeks the ledger, dead-start and deviation tables cover
     /* THREE-LINEUP LEDGER. Every team-week, from the ESPN box page (projection at lock + actual
        for every rostered player, IR excluded):
          actual   = the lineup the manager started
@@ -205,8 +205,8 @@ LEAGUES.football = {
        controllable = deadStarts - deviations ; total = variance + controllable = best - actual + est
        ledger = [team, variance, deadStarts, deviationsNet, controllable, total]
        deviations = [team, calls, won, lost, net]  (calls paired by position; pair deltas sum exactly to net) */
-    attention:[["gemini",15,102.1],["deepseek",8,70.9],["sonnet",3,47.3],["qwen",2,25.3],["kimi",3,21.1],["meta",2,9.7],["chatgpt",2,8.4],["grok",1,5.2]],
-    attentionNote:"Thirty-six dead starts across nine weeks, 290 points. Week 10 had nine, the most of any week: three from Gemini, two each from ChatGPT and Claude Sonnet, one each from DeepSeek and Qwen. Each is priced against the player ESPN's projections would have started in that slot. Only where the roster held no live alternative at all is the slot estimated (marked est), at the 25th percentile of that week's starters at the position: the realistic value of a waiver pickup.",
+    attention:[["gemini",15,102.1],["deepseek",9,79.5],["sonnet",3,47.3],["qwen",6,46.7],["kimi",3,21.1],["chatgpt",3,16.4],["meta",3,14],["grok",1,5.2]],
+    attentionNote:"Forty-three dead starts across ten weeks, 332.3 points. Week 11 had seven: four from Qwen, whose bench had no live player at any of the four positions, and one each from ChatGPT, DeepSeek and Muse. Each is priced against the player ESPN's projections would have started in that slot. Only where the roster held no live alternative at all is the slot estimated (marked est), at the 25th percentile of that week's starters at the position: the realistic value of a waiver pickup.",
     attentionDetail:[
       ["sonnet","Week 4","Trey Benson",31.7,false],["qwen","Week 5","Marvin Harrison Jr.",22.8,false],
       ["gemini","Week 6","Jalen Hurts",14.6,true],["kimi","Week 6","James Conner",9.7,false],
@@ -220,21 +220,21 @@ LEAGUES.football = {
       ["meta","Week 2","Brock Bowers",2.1,true],["gemini","Week 3","Dallas Goedert",1.0,false],
       ["kimi","Week 7","James Conner",8.6,false],["gemini","Week 7","Jalen Hurts",6.7,false],
       ["gemini","Week 7","David Montgomery",6.7,false],["gemini","Week 7","Deebo Samuel Sr.",6.6,false],
-      ["deepseek","Week 8","Brock Purdy",19.8,false],["deepseek","Week 8","Dameon Pierce",18.4,false],["gemini","Week 9","Jauan Jennings",7.8,false],["gemini","Week 10","Baker Mayfield",19.4,true],["gemini","Week 10","David Montgomery",7.2,true],["gemini","Week 10","Tyrone Tracy Jr.",7.2,true],["sonnet","Week 10","Malik Willis",15.6,false],["sonnet","Week 10","T.J. Hockenson",0,false],["chatgpt","Week 10","Nick Folk",7,true],["chatgpt","Week 10","Jordan Addison",1.4,false],["deepseek","Week 10","Dameon Pierce",7.2,true],["qwen","Week 10","Marvin Harrison Jr.",2.5,false]],
+      ["deepseek","Week 8","Brock Purdy",19.8,false],["deepseek","Week 8","Dameon Pierce",18.4,false],["gemini","Week 9","Jauan Jennings",7.8,false],["gemini","Week 10","Baker Mayfield",19.4,true],["gemini","Week 10","David Montgomery",7.2,true],["gemini","Week 10","Tyrone Tracy Jr.",7.2,true],["sonnet","Week 10","Malik Willis",15.6,false],["sonnet","Week 10","T.J. Hockenson",0,false],["chatgpt","Week 10","Nick Folk",7,true],["chatgpt","Week 10","Jordan Addison",1.4,false],["deepseek","Week 10","Dameon Pierce",7.2,true],["qwen","Week 10","Marvin Harrison Jr.",2.5,false],["qwen","Week 11","Drake London",5.5,true],["qwen","Week 11","Marvin Harrison Jr.",5.5,true],["qwen","Week 11","Dalton Kincaid",4.3,true],["qwen","Week 11","Rhamondre Stevenson",6.1,true],["chatgpt","Week 11","Nick Folk",8,true],["deepseek","Week 11","DeMario Douglas",8.6,false],["meta","Week 11","Brock Bowers",4.3,false]],
     ledger:[
-      ["sonnet",139.9,47.3,-10.8,58.1,198],["deepseek",109.7,70.9,1.9,69,178.7],["meta",103.6,9.7,-35.4,45.1,148.7],["fable",114.4,0,-21.1,21.1,135.5],["chatgpt",88.2,8.4,-33.9,42.3,130.5],["gemini",28.8,102.1,15,87.1,115.9],["kimi",123.3,21.1,28.7,-7.6,115.7],["espn",114.2,0,0,0,114.2],["grok",88.1,5.2,-10.4,15.6,103.7],["qwen",59.7,25.3,-3.8,29.1,88.8]
+      ["sonnet",159.4,47.3,-10.8,58.1,217.5],["deepseek",109.7,79.5,-16.8,96.3,206],["fable",117.7,0,-36.9,36.9,154.6],["meta",108.9,14,-31.1,45.1,154],["gemini",33.4,102.1,2.4,99.7,133.1],["chatgpt",80.2,16.4,-33.9,50.3,130.5],["espn",118.5,0,0,0,118.5],["kimi",129.5,21.1,33.2,-12.1,117.4],["grok",93.8,5.2,-10.4,15.6,109.4],["qwen",39.8,46.7,-4.8,51.5,91.3]
     ],
-    ledgerNote:"1,329.7 points left on the table in nine weeks: 969.9 to variance, 290 to dead starts, and a net 69.8 to deviations. Week 10 had nine dead starts, the most of any week, costing 67.5. The models' calls against the projections have won 45 and lost 39 and still cost points on balance. The spreadsheet makes no calls, so every point it loses is variance; in Week 10 it lost none, the only perfect lineup of the week. Projections are ESPN's final pregame figures.",
+    ledgerNote:"1,432.3 points left on the table in ten weeks: 990.9 to variance, 332.3 to dead starts, and a net 109.1 to deviations. Week 11 had seven dead starts, four of them Qwen's, costing 42.3. The models' calls against the projections have won 47 and lost 45 and still cost points on balance. The spreadsheet makes no calls, so every point it loses is variance; in Week 11 it lost 4.3. Projections are ESPN's final pregame figures.",
     deviations:[
-      ["kimi",10,8,2,28.7],["gemini",5,3,2,15],["deepseek",12,7,5,1.9],["qwen",13,6,7,-3.8],["grok",7,4,2,-10.4],["sonnet",10,5,5,-10.8],["fable",8,4,4,-21.1],["chatgpt",8,3,5,-33.9],["meta",12,5,7,-35.4]
+      ["kimi",11,9,2,33.2],["gemini",6,3,3,2.4],["qwen",14,6,8,-4.8],["grok",7,4,2,-10.4],["sonnet",10,5,5,-10.8],["deepseek",15,7,8,-16.8],["meta",13,6,7,-31.1],["chatgpt",8,3,5,-33.9],["fable",9,4,5,-36.9]
     ],
-    deviationsNote:"Every start that differs from the lineup ESPN's projections would have set, dead starts excluded, priced against the player the projections preferred. 85 calls in nine weeks, 45 won and 39 lost, net −69.8. The spreadsheet never deviates: it starts the projections' lineup by definition. Week 10's costliest call was Claude Sonnet starting Antonio Williams (11.2) at flex with George Pickens (38.0) on its bench; its best was Qwen starting the Lions D/ST (13.0) over the Steelers (−7.0)."
+    deviationsNote:"Every start that differs from the lineup ESPN's projections would have set, dead starts excluded, priced against the player the projections preferred. 93 calls in ten weeks, 47 won and 45 lost, net −109.1. The spreadsheet never deviates: it starts the projections' lineup by definition. Week 11's costliest call was Claude Fable starting Jordyn Tyson (1.5) at wide receiver with Jameson Williams (17.3) on its bench; DeepSeek benched Dak Prescott (35.9) for Brock Purdy (22.2). The best was Kimi starting Patrick Mahomes (24.96) over C.J. Stroud (20.46)."
   },
 
   /* Hard counts behind the transcript, Weeks 2-8. */
   counts:{
     fabrications:[["kimi",2],["deepseek",2],["qwen",2],["gemini",1],["meta",1],["chatgpt",1],["grok",1]],
-    voidClaims:[["gemini",8],["grok",4],["deepseek",4],["kimi",2],["chatgpt",1]]
+    voidClaims:[["gemini",10],["grok",4],["deepseek",4],["kimi",2],["chatgpt",1]]
   },
 
   /* Pre-season draft grades: what the nine models gave each team (A=4.0 scale,
@@ -249,6 +249,8 @@ LEAGUES.football = {
 
   /* One entry per week. Newest first. */
   log:[
+    {wk:"Week 11",h:"The majority goes 1 for 5",p:"Muse over Kimi was unanimous, Kimi's own card included, and Kimi won 100.56 to 97.40. Gemini, the only forecaster that picked Gemini, beat ChatGPT by 21.68. The models' majority was right only on Claude Fable, the spreadsheet's 3 of 5 was the week's best card, and Qwen missed all five."},
+    {wk:"Week 11",h:"Four starters who can't score, and no one to replace them",p:"Qwen scored 58.44 with Drake London and Rhamondre Stevenson on byes and Dalton Kincaid and Marvin Harrison Jr. ruled out. Its bench held no live player at any of those positions. DeepSeek beat it by 78.26 while leaving Dak Prescott's 35.9 on its own bench."},
     {wk:"Week 10",h:"Every favourite wins, and nine starters can't score",p:"All five games went to the team most forecasters picked, and six of ten cards were perfect. The same week produced nine dead starts, the most of the season: Gemini alone started a quarterback on a bye, a running back who was out and another from injured reserve."},
     {wk:"Week 9",open:true,h:"Two games decided by less than a point",p:"Grok beat Claude Fable 123.06 to 122.38 on Kenneth Walker III's 34.3 at flex. ChatGPT beat Kimi 99.84 to 99.08 while Kimi had C.J. Stroud's 35.36 on its bench behind Patrick Mahomes. Seven of the nine models had picked Kimi; ChatGPT itself picked Kimi at 62%."},
     {wk:"Week 9",h:"Gemini backs itself at 81% and loses again",p:"The 1-7 team put the highest self-confidence on the board on beating Qwen and lost by 14.26. It is the seventh time this season Gemini has backed itself above 70%, and it has lost all seven. It also started Jauan Jennings, ruled Out, at flex, and three of its waiver bids targeted players already on other rosters."},
@@ -377,15 +379,14 @@ LEAGUES.football = {
         { a:"espn", b:"deepseek", w:"espn", picks:{sonnet:["espn",68],fable:["espn",62],chatgpt:["espn",68],gemini:["espn",65],grok:["espn",55],deepseek:["espn",81],qwen:["deepseek",58],meta:["espn",58],kimi:["espn",66],espn:["espn",72]} },
         { a:"meta", b:"qwen", w:"meta", picks:{sonnet:["meta",66],fable:["meta",60],chatgpt:["meta",82],gemini:["meta",72],grok:["meta",64],deepseek:["meta",62],qwen:["meta",65],meta:["meta",70],kimi:["meta",74],espn:["meta",61]} }
       ] },
-   { wk:"Week 11", scored:false,
-     note:"All ten cards in, collected Tuesday after lineups were set. Every card takes Muse over Kimi. Grok and DeepSeek both pick against themselves, and the spreadsheet's Fantasycast has DeepSeek at 60% where six of the nine models take Qwen.",
-     games:[
-      { a:"fable", b:"sonnet", w:null, picks:{sonnet:["fable",60],fable:["fable",64],chatgpt:["fable",61],gemini:["fable",66],grok:["sonnet",54],deepseek:["fable",61],qwen:["sonnet",78],meta:["fable",53],kimi:["fable",56],espn:["fable",58]} },
-      { a:"gemini", b:"chatgpt", w:null, picks:{sonnet:["chatgpt",76],fable:["chatgpt",65],chatgpt:["chatgpt",72],gemini:["gemini",54],grok:["chatgpt",61],deepseek:["chatgpt",68],qwen:["chatgpt",62],meta:["chatgpt",66],kimi:["chatgpt",70],espn:["chatgpt",55]} },
-      { a:"espn", b:"grok", w:null, picks:{sonnet:["grok",66],fable:["grok",54],chatgpt:["grok",56],gemini:["grok",79],grok:["espn",67],deepseek:["espn",59],qwen:["grok",88],meta:["grok",60],kimi:["espn",58],espn:["espn",55]} },
-      { a:"meta", b:"kimi", w:null, picks:{sonnet:["meta",70],fable:["meta",70],chatgpt:["meta",84],gemini:["meta",74],grok:["meta",58],deepseek:["meta",74],qwen:["meta",82],meta:["meta",70],kimi:["meta",62],espn:["meta",64]} },
-      { a:"qwen", b:"deepseek", w:null, picks:{sonnet:["qwen",60],fable:["deepseek",70],chatgpt:["qwen",73],gemini:["deepseek",62],grok:["qwen",60],deepseek:["qwen",63],qwen:["qwen",76],meta:["deepseek",58],kimi:["qwen",63],espn:["deepseek",60]} }
-    ] }
+   { wk:"Week 11", scored:true, note:"The upset week. The models' majority was right only on Claude Fable over Claude Sonnet. Muse, picked by all ten forecasters, lost to Kimi by 3.16, and Gemini, picked only by itself, beat ChatGPT by 21.68. The spreadsheet's Fantasycast card, 3 of 5 at 0.250, was the week's best; Qwen went 0 for 5 at 0.603.",
+      games:[
+        { a:"fable", b:"sonnet", w:"fable", picks:{sonnet:["fable",60],fable:["fable",64],chatgpt:["fable",61],gemini:["fable",66],grok:["sonnet",54],deepseek:["fable",61],qwen:["sonnet",78],meta:["fable",53],kimi:["fable",56],espn:["fable",58]} },
+        { a:"gemini", b:"chatgpt", w:"gemini", picks:{sonnet:["chatgpt",76],fable:["chatgpt",65],chatgpt:["chatgpt",72],gemini:["gemini",54],grok:["chatgpt",61],deepseek:["chatgpt",68],qwen:["chatgpt",62],meta:["chatgpt",66],kimi:["chatgpt",70],espn:["chatgpt",55]} },
+        { a:"espn", b:"grok", w:"espn", picks:{sonnet:["grok",66],fable:["grok",54],chatgpt:["grok",56],gemini:["grok",79],grok:["espn",67],deepseek:["espn",59],qwen:["grok",88],meta:["grok",60],kimi:["espn",58],espn:["espn",55]} },
+        { a:"meta", b:"kimi", w:"kimi", picks:{sonnet:["meta",70],fable:["meta",70],chatgpt:["meta",84],gemini:["meta",74],grok:["meta",58],deepseek:["meta",74],qwen:["meta",82],meta:["meta",70],kimi:["meta",62],espn:["meta",64]} },
+        { a:"qwen", b:"deepseek", w:"deepseek", picks:{sonnet:["qwen",60],fable:["deepseek",70],chatgpt:["qwen",73],gemini:["deepseek",62],grok:["qwen",60],deepseek:["qwen",63],qwen:["qwen",76],meta:["deepseek",58],kimi:["qwen",63],espn:["deepseek",60]} }
+      ] }
   ]
 };
 
